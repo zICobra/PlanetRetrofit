@@ -1,0 +1,266 @@
+[
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\GameJamSoSe2024.Build.cs",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\GameJamSoSe2024.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\GameJamSoSe2024.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\Character\\PlayerCharacter.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\DataAssets\\InputConfig.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\DefaultGameInstance.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\DefaultGameMode.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\MainMenuGameMode.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\SaveGame\\DefaultSaveGame.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\ButtonBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\CommonActivatableWidgetBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\CommonUserWidgetBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\GamePlayWidgetBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\MainMenuUI.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\MainMenuWidgetBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\PauseMenuBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\SettingsMenuBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Private\\UI\\SliderBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\Character\\PlayerCharacter.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\DataAssets\\InputConfig.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\DefaultGameInstance.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\DefaultGameMode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\MainMenuGameMode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\SaveGame\\DefaultSaveGame.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\ButtonBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\CommonActivatableWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\CommonUserWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\GamePlayWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\MainMenuUI.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\MainMenuWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\PauseMenuBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\SettingsMenuBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\Source\\GameJamSoSe2024\\Public\\UI\\SliderBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default\\GameJamSoSe2024.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	}
+]
