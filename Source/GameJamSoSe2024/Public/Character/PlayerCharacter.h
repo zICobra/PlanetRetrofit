@@ -50,12 +50,22 @@ protected:
 		return; 
 	}
 
+	UPROPERTY()
+	int32 StoneAmount = 0;
+	UPROPERTY()
+	int32 IronAmount = 0;
+	UPROPERTY()
+	int32 CopperAmount = 0;
+	UPROPERTY()
+	int32 AmethystAmount = 0;
+	UPROPERTY()
+	int32 PlatinAmount = 0;
 
 	UPROPERTY()
 	AActor* HitActor = nullptr;
 
-	UPROPERTY()
-	AActor* PreviouslyOutlinedActor = nullptr;
+
+	class IOutlineInterface* PreviouslyOutlinedActor = nullptr;
 
 
 #pragma endregion Variables

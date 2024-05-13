@@ -21,6 +21,8 @@ protected:
 	class UOverlay* Overlay;
 
 	UPROPERTY(meta = (BindWidget))
+	class UOverlay* MaterialOverlay;
+	UPROPERTY(meta = (BindWidget))
 	class UCommonLazyImage* PhoneImage;
 	UPROPERTY(meta = (BindWidget))
 	class UCommonLazyImage* StoneImage;
@@ -50,6 +52,8 @@ public:
 
 	UPROPERTY()
 	class UDefaultGameInstance* GameInstance = nullptr;
+	
+	bool MaterialUIIsActive = false;
 
 	void PullUpMaterialUI(const int32 StoneAmount, const int32 IronAmount, const int32 CopperAmount, const int32 AmethystAmount, const int32 PlatinAmount);
 

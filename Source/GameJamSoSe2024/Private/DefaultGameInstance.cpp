@@ -36,7 +36,24 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
 {
     SaveGame = Cast<UDefaultSaveGame>(UGameplayStatics::CreateSaveGameObject(UDefaultSaveGame::StaticClass()));
     
-    if (UDefaultSaveGame* LoadedGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SettingsSaveSlotName, 0)))
+    if(UDefaultSaveGame* LoadedGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveGame->SaveSlotName, 0)))
+    {
+        SaveGame->StoneAmount = LoadedGame->StoneAmount;
+        SaveGame->IronAmount = LoadedGame->IronAmount;
+        SaveGame->CopperAmount = LoadedGame->CopperAmount;
+        SaveGame->AmethystAmount = LoadedGame->AmethystAmount;
+        SaveGame->PlatinAmount = LoadedGame->PlatinAmount;
+    }
+    else
+    {
+        SaveGame->StoneAmount = 0;
+        SaveGame->IronAmount = 0;
+        SaveGame->CopperAmount = 0;
+        SaveGame->AmethystAmount = 0;
+        SaveGame->PlatinAmount = 0;
+    }
+
+    if(UDefaultSaveGame* LoadedGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SettingsSaveSlotName, 0)))
     {
         SaveGame->MasterSliderVolume = LoadedGame->MasterSliderVolume;
         SaveGame->MusicSliderVolume = LoadedGame->MusicSliderVolume;
