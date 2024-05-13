@@ -1,12 +1,12 @@
 {
     "configurations": [
         {
-            "name": "GameJamSoSe2024Editor Editor Win64 Development (GameJamSoSe2024)",
+            "name": "PlanetRetrofitEditor Editor Win64 Development (PlanetRetrofit)",
             "compilerPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
             "cStandard": "c17",
             "cppStandard": "c++20",
             "intelliSenseMode": "msvc-x64",
-            "compileCommands": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_GameJamSoSe2024.json"
+            "compileCommands": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit.json"
         },
         {
             "name": "Win32",
@@ -14,7 +14,7 @@
             "cStandard": "c17",
             "cppStandard": "c++20",
             "intelliSenseMode": "msvc-x64",
-            "compileCommands": "E:\\UnrealProjects\\GameJams\\GameJamSoSe2024\\.vscode\\compileCommands_Default.json"
+            "compileCommands": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_Default.json"
         }
     ],
     "version": 4
