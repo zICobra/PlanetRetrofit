@@ -9,6 +9,7 @@
 #include "InputMappingContext.h"
 #include "InputActionValue.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
@@ -52,6 +53,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
 	if (UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
 	{
@@ -103,6 +105,38 @@ void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+#pragma region Outline
+
+	static FVector StartPoint = FVector::Zero();
+	static FVector EndPoint = FVector::Zero();
+	static FRotator PlayerRotation = FRotator::ZeroRotator;
+
+	Controller->GetPlayerViewPoint(StartPoint, PlayerRotation);
+
+	EndPoint = StartPoint + PlayerRotation.Vector() * InteractionRange;
+
+	FHitResult HitResult;
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(GetOwner());
+
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
+
+	if(bSuccess && HitResult.GetActor() && HitResult.GetActor() != PreviouslyOutlinedActor)
+	{
+		
+	}
+	else if(!bSuccess && PreviouslyOutlinedActor)
+	{
+
+		PreviouslyOutlinedActor = nullptr;
+	}
+
+#pragma endregion Outline
+
+
+
 }
 
 
@@ -124,6 +158,20 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PEI->BindAction(InputActions->InputMove, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
 	PEI->BindAction(InputActions->InputLook, ETriggerEvent::Triggered, this, &APlayerCharacter::Look);
 	PEI->BindAction(InputActions->InputControllerLook, ETriggerEvent::Triggered, this, &APlayerCharacter::LookController);
+
+	PEI->BindAction(InputActions->InputJump, ETriggerEvent::Started, this, &APlayerCharacter::StartJump);
+	PEI->BindAction(InputActions->InputJump, ETriggerEvent::Canceled, this, &APlayerCharacter::StopJump);
+
+	PEI->BindAction(InputActions->InputSprint, ETriggerEvent::Started, this, &APlayerCharacter::StartSprint);
+	PEI->BindAction(InputActions->InputSprint, ETriggerEvent::Completed, this, &APlayerCharacter::StopSprint);
+
+	PEI->BindAction(InputActions->InputControllerSprint, ETriggerEvent::Started, this, &APlayerCharacter::ControllerSprint);
+
+	PEI->BindAction(InputActions->InputPullUpMaterialUI, ETriggerEvent::Started, this, &APlayerCharacter::PullUpMaterialUI);
+
+	PEI->BindAction(InputActions->InputMine, ETriggerEvent::Started, this, &APlayerCharacter::Mine);
+
+	PEI->BindAction(InputActions->InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PEI->BindAction(InputActions->InputPauseMenu, ETriggerEvent::Started, this, &APlayerCharacter::CallPauseMenu);
 }
 
@@ -188,6 +236,72 @@ void APlayerCharacter::LookController(const FInputActionValue& Value)
 			AddControllerPitchInput(LookValue.Y * GameInstance->SaveGame->ControllerSensitivity);
 		}
 	}
+}
+
+void APlayerCharacter::StartJump()
+{
+	Jump();
+}
+
+void APlayerCharacter::StopJump()
+{
+	StopJumping();
+}
+
+void APlayerCharacter::StartSprint()
+{
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+}
+
+void APlayerCharacter::StopSprint()
+{
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+}
+
+void APlayerCharacter::ControllerSprint()
+{
+	if(GetCharacterMovement()->MaxWalkSpeed = SprintSpeed)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+		return;
+	}
+
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+}
+
+
+void APlayerCharacter::Interact()
+{
+	static FVector StartPoint = FVector::Zero();
+	static FVector EndPoint = FVector::Zero();
+	static FRotator PlayerRotation = FRotator::ZeroRotator;
+
+	Controller->GetPlayerViewPoint(StartPoint, PlayerRotation);
+
+	EndPoint = StartPoint + PlayerRotation.Vector() * InteractionRange;
+
+	FHitResult HitResult;
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(GetOwner());
+
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
+
+	if(bSuccess && HitResult.GetActor())
+	{
+		
+	}
+}
+
+void APlayerCharacter::PullUpMaterialUI()
+{
+	
+}
+
+void APlayerCharacter::Mine()
+{
+	
 }
 
 #pragma region UI

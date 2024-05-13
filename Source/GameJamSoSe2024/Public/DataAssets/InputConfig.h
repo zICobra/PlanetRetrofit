@@ -20,21 +20,30 @@ public:
 	UInputAction* InputMove;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UInputAction* InputSprint;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UInputAction* InputControllerSprint;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* InputLook;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* InputControllerLook;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UInputAction* InputSprint;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UInputAction* InputControllerSprint;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UInputAction* InputJump;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* InputInteract;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* InputPauseMenu;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UInputAction* InputPullUpMaterialUI;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UInputAction* InputMine;
 
 };
