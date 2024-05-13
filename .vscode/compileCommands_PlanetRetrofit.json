@@ -1,0 +1,330 @@
+[
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\PlanetRetrofit.Build.cs",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\PlanetRetrofit.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\PlanetRetrofit.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Character\\PlayerCharacter.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\DataAssets\\InputConfig.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\DefaultGameInstance.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\DefaultGameMode.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interfaces\\InteractableInterface.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interfaces\\OreInterface.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interfaces\\OutlineInterface.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\MainMenuGameMode.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Ore\\OreBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\SaveGame\\DefaultSaveGame.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\ButtonBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\CommonActivatableWidgetBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\CommonUserWidgetBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\GamePlayWidgetBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\MainMenuUI.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\MainMenuWidgetBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\PauseMenuBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\SettingsMenuBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\SliderBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Character\\PlayerCharacter.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\DataAssets\\InputConfig.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\DefaultGameInstance.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\DefaultGameMode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Interfaces\\InteractableInterface.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Interfaces\\OreInterface.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Interfaces\\OutlineInterface.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\MainMenuGameMode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Ore\\OreBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\SaveGame\\DefaultSaveGame.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\ButtonBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\CommonActivatableWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\CommonUserWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\GamePlayWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\MainMenuUI.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\MainMenuWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\PauseMenuBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\SettingsMenuBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\SliderBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	}
+]
