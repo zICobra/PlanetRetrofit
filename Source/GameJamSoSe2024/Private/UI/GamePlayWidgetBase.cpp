@@ -20,7 +20,9 @@ void UGamePlayWidgetBase::NativeConstruct()
 
 void UGamePlayWidgetBase::PullUpMaterialUI(const int32 StoneAmount, const int32 IronAmount, const int32 CopperAmount, const int32 AmethystAmount, const int32 PlatinAmount)
 {
-    PhoneImage->SetVisibility(ESlateVisibility::Visible);
+    MaterialOverlay->SetVisibility(ESlateVisibility::Visible);
+
+    MaterialUIIsActive = true;
 
     FString StoneText = FString::Printf(TEXT("%d"), StoneAmount);
     FString IronText = FString::Printf(TEXT("%d"), IronAmount);
@@ -37,6 +39,8 @@ void UGamePlayWidgetBase::PullUpMaterialUI(const int32 StoneAmount, const int32 
 
 void UGamePlayWidgetBase::RemoveMaterialUI()
 {
-    PhoneImage->SetVisibility(ESlateVisibility::Collapsed);
+    MaterialOverlay->SetVisibility(ESlateVisibility::Collapsed);
+
+    MaterialUIIsActive = false;
 }
 

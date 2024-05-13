@@ -17,6 +17,17 @@ class GAMEJAMSOSE2024_API UDefaultSaveGame : public USaveGame
 public:
 
 	UPROPERTY()
+	int32 StoneAmount = 0;
+	UPROPERTY()
+	int32 IronAmount = 0;
+	UPROPERTY()
+	int32 CopperAmount = 0;
+	UPROPERTY()
+	int32 AmethystAmount = 0;
+	UPROPERTY()
+	int32 PlatinAmount = 0;
+	
+	UPROPERTY()
 	FString SaveSlotName = "SavedGameState";
 
 	UPROPERTY()

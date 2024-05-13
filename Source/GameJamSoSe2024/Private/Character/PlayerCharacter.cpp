@@ -175,6 +175,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PEI->BindAction(InputActions->InputPauseMenu, ETriggerEvent::Started, this, &APlayerCharacter::CallPauseMenu);
 }
 
+#pragma region Movement
+
 void APlayerCharacter::Move(const FInputActionValue& Value)
 {
 	
@@ -269,6 +271,7 @@ void APlayerCharacter::ControllerSprint()
 	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
 }
 
+#pragma endregion Movement
 
 void APlayerCharacter::Interact()
 {
@@ -296,7 +299,14 @@ void APlayerCharacter::Interact()
 
 void APlayerCharacter::PullUpMaterialUI()
 {
-	
+	if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
+	{
+		CreatedGamePlayMenu->RemoveMaterialUI();
+	}
+	else if(CreatedGamePlayMenu)
+	{
+		CreatedGamePlayMenu->PullUpMaterialUI(StoneAmount, IronAmount, CopperAmount, AmethystAmount, PlatinAmount);
+	}
 }
 
 void APlayerCharacter::Mine()
