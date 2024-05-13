@@ -75,6 +75,7 @@ void APlayerCharacter::BeginPlay()
 		ActivePlayerController->SetInputMode(GameOnlyInputMode);
 	}
 
+	OxygenTag = GetGameplayTagsManager().RequestGameplayTag(FName("HasOxygen"));
 
 #pragma region UI
 
@@ -162,7 +163,18 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 #pragma endregion Outline
 
+#pragma region Oxygen
 
+	if(!GameplayTags.HasTag(OxygenTag))
+	{
+		CurrentOxygen -= DeltaTime;
+		if(CurrentOxygen <= 0)
+		{
+			CurrentHealth -= DeltaTime * 10.0f;
+		}
+	}
+
+#pragma endregion Oxygen
 
 }
 
@@ -384,3 +396,9 @@ void APlayerCharacter::CallSettingsMenu()
 }
 
 #pragma endregion UI
+
+UGameplayTagsManager& APlayerCharacter::GetGameplayTagsManager()
+{
+	static UGameplayTagsManager& GameplayTagsManager = UGameplayTagsManager::Get();
+	return GameplayTagsManager;
+}

@@ -56,6 +56,14 @@
 		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
 	},
 	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interactables\\InteractableBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_Default\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interfaces\\InteractableInterface.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
@@ -201,6 +209,14 @@
 	},
 	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\DefaultGameMode.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_Default\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Interactables\\InteractableBase.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
 			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_Default\\PlanetRetrofit.1.rsp"
