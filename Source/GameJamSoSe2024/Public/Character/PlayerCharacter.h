@@ -64,8 +64,8 @@ protected:
 	UPROPERTY()
 	AActor* HitActor = nullptr;
 
-	UPROPERTY()
-	AActor* PreviouslyOutlinedActor = nullptr;
+
+	class IOutlineInterface* PreviouslyOutlinedActor = nullptr;
 
 
 #pragma endregion Variables

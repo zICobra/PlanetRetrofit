@@ -28,6 +28,10 @@
 #include "Math/UnrealMathUtility.h"
 #include "DrawDebugHelpers.h"
 
+#include "Interfaces/InteractableInterface.h"
+#include "Interfaces/OutlineInterface.h"
+#include "Interfaces/OreInterface.h"
+
 #include "Sound/SoundCue.h"
 #include "NiagaraSystem.h"
 
@@ -122,14 +126,37 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Params.AddIgnoredActor(GetOwner());
 
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
-
-	if(bSuccess && HitResult.GetActor() && HitResult.GetActor() != PreviouslyOutlinedActor)
+	// DrawDebugLine(GetWorld(), StartPoint, EndPoint, FColor::Red, false, 10, 0, 1);
+	if(bSuccess)
 	{
-		
+		if(IOutlineInterface* OutlineActor = Cast<IOutlineInterface>(HitResult.GetActor()))
+		{
+			if(OutlineActor != PreviouslyOutlinedActor)
+			{
+				OutlineActor->OutlineTarget();
+				PreviouslyOutlinedActor = OutlineActor;
+			}
+			else if(OutlineActor == PreviouslyOutlinedActor)
+			{
+
+			}
+			else
+			{
+				PreviouslyOutlinedActor->RemoveOutline();
+				UE_LOG(LogTemp, Warning, TEXT("remove"));
+				PreviouslyOutlinedActor = nullptr;
+			}
+		}
+		else if(PreviouslyOutlinedActor)
+		{
+			PreviouslyOutlinedActor->RemoveOutline();
+			PreviouslyOutlinedActor = nullptr;
+		}
+
 	}
-	else if(!bSuccess && PreviouslyOutlinedActor)
+	else if(PreviouslyOutlinedActor)
 	{
-
+		PreviouslyOutlinedActor->RemoveOutline();
 		PreviouslyOutlinedActor = nullptr;
 	}
 
@@ -293,7 +320,10 @@ void APlayerCharacter::Interact()
 
 	if(bSuccess && HitResult.GetActor())
 	{
-		
+		if(IInteractableInterface* Interactable = Cast<IInteractableInterface>(HitResult.GetActor()))
+		{
+			Interactable->Interact();
+		}
 	}
 }
 
