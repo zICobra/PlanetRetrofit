@@ -9,7 +9,10 @@
 
 void UButtonBase::NativePreConstruct()
 {
-    ButtonNameText->SetText(FText::FromString(ButtonText));
+    if(ButtonNameText)
+    {
+        ButtonNameText->SetText(FText::FromString(ButtonText));
+    }
 }
 
 void UButtonBase::NativeOnClicked()

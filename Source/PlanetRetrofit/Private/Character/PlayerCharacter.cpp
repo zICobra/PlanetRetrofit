@@ -9,6 +9,7 @@
 #include "InputMappingContext.h"
 #include "InputActionValue.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
@@ -26,6 +27,10 @@
 
 #include "Math/UnrealMathUtility.h"
 #include "DrawDebugHelpers.h"
+
+#include "Interfaces/InteractableInterface.h"
+#include "Interfaces/OutlineInterface.h"
+#include "Interfaces/OreInterface.h"
 
 #include "Sound/SoundCue.h"
 #include "NiagaraSystem.h"
@@ -52,6 +57,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
 	if (UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
 	{
@@ -103,6 +109,61 @@ void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+#pragma region Outline
+
+	static FVector StartPoint = FVector::Zero();
+	static FVector EndPoint = FVector::Zero();
+	static FRotator PlayerRotation = FRotator::ZeroRotator;
+
+	Controller->GetPlayerViewPoint(StartPoint, PlayerRotation);
+
+	EndPoint = StartPoint + PlayerRotation.Vector() * InteractionRange;
+
+	FHitResult HitResult;
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(GetOwner());
+
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
+	// DrawDebugLine(GetWorld(), StartPoint, EndPoint, FColor::Red, false, 10, 0, 1);
+	if(bSuccess)
+	{
+		if(IOutlineInterface* OutlineActor = Cast<IOutlineInterface>(HitResult.GetActor()))
+		{
+			if(OutlineActor != PreviouslyOutlinedActor)
+			{
+				OutlineActor->OutlineTarget();
+				PreviouslyOutlinedActor = OutlineActor;
+			}
+			else if(OutlineActor == PreviouslyOutlinedActor)
+			{
+
+			}
+			else
+			{
+				PreviouslyOutlinedActor->RemoveOutline();
+				UE_LOG(LogTemp, Warning, TEXT("remove"));
+				PreviouslyOutlinedActor = nullptr;
+			}
+		}
+		else if(PreviouslyOutlinedActor)
+		{
+			PreviouslyOutlinedActor->RemoveOutline();
+			PreviouslyOutlinedActor = nullptr;
+		}
+
+	}
+	else if(PreviouslyOutlinedActor)
+	{
+		PreviouslyOutlinedActor->RemoveOutline();
+		PreviouslyOutlinedActor = nullptr;
+	}
+
+#pragma endregion Outline
+
+
+
 }
 
 
@@ -124,8 +185,24 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PEI->BindAction(InputActions->InputMove, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
 	PEI->BindAction(InputActions->InputLook, ETriggerEvent::Triggered, this, &APlayerCharacter::Look);
 	PEI->BindAction(InputActions->InputControllerLook, ETriggerEvent::Triggered, this, &APlayerCharacter::LookController);
+
+	PEI->BindAction(InputActions->InputJump, ETriggerEvent::Started, this, &APlayerCharacter::StartJump);
+	PEI->BindAction(InputActions->InputJump, ETriggerEvent::Canceled, this, &APlayerCharacter::StopJump);
+
+	PEI->BindAction(InputActions->InputSprint, ETriggerEvent::Started, this, &APlayerCharacter::StartSprint);
+	PEI->BindAction(InputActions->InputSprint, ETriggerEvent::Completed, this, &APlayerCharacter::StopSprint);
+
+	PEI->BindAction(InputActions->InputControllerSprint, ETriggerEvent::Started, this, &APlayerCharacter::ControllerSprint);
+
+	PEI->BindAction(InputActions->InputPullUpMaterialUI, ETriggerEvent::Started, this, &APlayerCharacter::PullUpMaterialUI);
+
+	PEI->BindAction(InputActions->InputMine, ETriggerEvent::Started, this, &APlayerCharacter::Mine);
+
+	PEI->BindAction(InputActions->InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PEI->BindAction(InputActions->InputPauseMenu, ETriggerEvent::Started, this, &APlayerCharacter::CallPauseMenu);
 }
+
+#pragma region Movement
 
 void APlayerCharacter::Move(const FInputActionValue& Value)
 {
@@ -188,6 +265,83 @@ void APlayerCharacter::LookController(const FInputActionValue& Value)
 			AddControllerPitchInput(LookValue.Y * GameInstance->SaveGame->ControllerSensitivity);
 		}
 	}
+}
+
+void APlayerCharacter::StartJump()
+{
+	Jump();
+}
+
+void APlayerCharacter::StopJump()
+{
+	StopJumping();
+}
+
+void APlayerCharacter::StartSprint()
+{
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+}
+
+void APlayerCharacter::StopSprint()
+{
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+}
+
+void APlayerCharacter::ControllerSprint()
+{
+	if(GetCharacterMovement()->MaxWalkSpeed = SprintSpeed)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+		return;
+	}
+
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+}
+
+#pragma endregion Movement
+
+void APlayerCharacter::Interact()
+{
+	static FVector StartPoint = FVector::Zero();
+	static FVector EndPoint = FVector::Zero();
+	static FRotator PlayerRotation = FRotator::ZeroRotator;
+
+	Controller->GetPlayerViewPoint(StartPoint, PlayerRotation);
+
+	EndPoint = StartPoint + PlayerRotation.Vector() * InteractionRange;
+
+	FHitResult HitResult;
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(GetOwner());
+
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
+
+	if(bSuccess && HitResult.GetActor())
+	{
+		if(IInteractableInterface* Interactable = Cast<IInteractableInterface>(HitResult.GetActor()))
+		{
+			Interactable->Interact();
+		}
+	}
+}
+
+void APlayerCharacter::PullUpMaterialUI()
+{
+	if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
+	{
+		CreatedGamePlayMenu->RemoveMaterialUI();
+	}
+	else if(CreatedGamePlayMenu)
+	{
+		CreatedGamePlayMenu->PullUpMaterialUI(StoneAmount, IronAmount, CopperAmount, AmethystAmount, PlatinAmount);
+	}
+}
+
+void APlayerCharacter::Mine()
+{
+	
 }
 
 #pragma region UI
