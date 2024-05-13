@@ -34,6 +34,12 @@ protected:
 	FInputModeGameOnly GameOnlyInputMode;
 	FInputModeUIOnly UIOnlyInputMode;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sprint")
+	float SprintSpeed = 800.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sprint")
+	float WalkSpeed = 600.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Interact")
+	float InteractionRange = 1000.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameplayTags")
 	FGameplayTagContainer GameplayTags;
@@ -43,6 +49,13 @@ protected:
 		TagContainer = GameplayTags; 
 		return; 
 	}
+
+
+	UPROPERTY()
+	AActor* HitActor = nullptr;
+
+	UPROPERTY()
+	AActor* PreviouslyOutlinedActor = nullptr;
 
 
 #pragma endregion Variables
@@ -67,6 +80,20 @@ private:
 
 	void Look(const FInputActionValue& Value);
 	void LookController(const FInputActionValue& Value);
+
+	void StartJump();
+	void StopJump();
+
+	void StartSprint();
+	void StopSprint();
+
+	void ControllerSprint();
+
+	void Interact();
+
+	void PullUpMaterialUI();
+
+	void Mine();
 
 	UFUNCTION()
 	void CallPauseMenu();
