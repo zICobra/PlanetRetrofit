@@ -53,6 +53,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
 	if (UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
 	{
