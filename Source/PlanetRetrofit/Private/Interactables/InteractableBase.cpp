@@ -7,7 +7,13 @@
 AInteractableBase::AInteractableBase()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+    RootComponent = Root;
+
+    Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+    Mesh->SetupAttachment(Root);
 
 }
 
@@ -18,15 +24,19 @@ void AInteractableBase::BeginPlay()
 	
 }
 
-// Called every frame
-void AInteractableBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 
 void AInteractableBase::Interact()
 {
 	
+}
+
+void AInteractableBase::OutlineTarget()
+{
+	Mesh->SetRenderCustomDepth(true);
+}
+
+void AInteractableBase::RemoveOutline()
+{
+	Mesh->SetRenderCustomDepth(false);
 }
 

@@ -84,7 +84,7 @@ void UDefaultGameInstance::SaveGameState()
     }
     if(UGameplayStatics::SaveGameToSlot(SaveGame, SaveGame->SaveSlotName, 0))
     {
-
+        UE_LOG(LogTemp, Warning, TEXT("Saved"));
     }
 }
 

@@ -40,13 +40,11 @@ void AOreBase::Tick(float DeltaTime)
 
 void AOreBase::OutlineTarget()
 {
-	UE_LOG(LogTemp, Warning, TEXT("true"));
 	Mesh->SetRenderCustomDepth(true);
 }
 
 void AOreBase::RemoveOutline()
 {
-	UE_LOG(LogTemp, Warning, TEXT("false"));
 	Mesh->SetRenderCustomDepth(false);
 }
 
