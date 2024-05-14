@@ -21,6 +21,11 @@ protected:
 	class UOverlay* Overlay;
 
 	UPROPERTY(meta = (BindWidget))
+	class UProgressBar* HealthBar;
+	UPROPERTY(meta = (BindWidget))
+	class UProgressBar* OxygenBar;
+
+	UPROPERTY(meta = (BindWidget))
 	class UOverlay* MaterialOverlay;
 	UPROPERTY(meta = (BindWidget))
 	class UCommonLazyImage* PhoneImage;
@@ -58,6 +63,9 @@ public:
 	void PullUpMaterialUI(const int32 StoneAmount, const int32 IronAmount, const int32 CopperAmount, const int32 AmethystAmount, const int32 PlatinAmount);
 
 	void RemoveMaterialUI();
+
+	void SetOxygenBar(const float MaxOxygen, const float CurrentOxygen);
+	void SetHealthBar(const float MaxHealth, const float CurrentHealth);
 private:
 
 

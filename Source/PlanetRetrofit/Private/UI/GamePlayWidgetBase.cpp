@@ -3,12 +3,14 @@
 
 #include "UI/GamePlayWidgetBase.h"
 
+#include "Kismet/KismetMaterialLibrary.h"
+#include "Materials/MaterialInstance.h"
 #include "DefaultGameInstance.h"
+
 #include "Components/Overlay.h"
 #include "CommonLazyImage.h"
 #include "CommonTextBlock.h"
-#include "Materials/MaterialInstance.h"
-#include "Kismet/KismetMaterialLibrary.h"
+#include "Components/ProgressBar.h"
 
 void UGamePlayWidgetBase::NativeConstruct()
 {
@@ -42,5 +44,15 @@ void UGamePlayWidgetBase::RemoveMaterialUI()
     MaterialOverlay->SetVisibility(ESlateVisibility::Collapsed);
 
     MaterialUIIsActive = false;
+}
+
+void UGamePlayWidgetBase::SetOxygenBar(const float MaxOxygen, const float CurrentOxygen)
+{
+    OxygenBar->SetPercent(CurrentOxygen / MaxOxygen);
+}
+
+void UGamePlayWidgetBase::SetHealthBar(const float MaxHealth, const float CurrentHealth)
+{
+    HealthBar->SetPercent(CurrentHealth / MaxHealth);
 }
 

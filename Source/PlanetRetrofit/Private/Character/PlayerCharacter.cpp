@@ -168,10 +168,23 @@ void APlayerCharacter::Tick(float DeltaTime)
 	if(!GameplayTags.HasTag(OxygenTag))
 	{
 		CurrentOxygen -= DeltaTime;
+		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
 		if(CurrentOxygen <= 0)
 		{
 			CurrentHealth -= DeltaTime * 10.0f;
+			CreatedGamePlayMenu->SetHealthBar(MaxHealth, CurrentHealth);
+			if(CurrentHealth <= 0)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Dead"));
+			}
 		}
+	}
+	else
+	{
+		CurrentOxygen = FMath::Clamp(CurrentOxygen + DeltaTime * 2, 0, MaxOxygen);
+		CurrentHealth = FMath::Clamp(CurrentHealth + DeltaTime * 2, 0, MaxHealth);
+		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
+		CreatedGamePlayMenu->SetHealthBar(MaxHealth, CurrentHealth);
 	}
 
 #pragma endregion Oxygen
@@ -401,4 +414,14 @@ UGameplayTagsManager& APlayerCharacter::GetGameplayTagsManager()
 {
 	static UGameplayTagsManager& GameplayTagsManager = UGameplayTagsManager::Get();
 	return GameplayTagsManager;
+}
+
+void APlayerCharacter::AddGameplayTag()
+{
+	GameplayTags.AddTag(OxygenTag);
+}
+
+void APlayerCharacter::RemoveGameplayTag()
+{
+	GameplayTags.RemoveTag(OxygenTag);
 }

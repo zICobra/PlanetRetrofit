@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameplayTagAssetInterface.h"
+#include "Interfaces/GamplayTagsInterface.h"
 #include "InputActionValue.h"
 #include "GameplayTagContainer.h"
 #include "GameplayTagsManager.h"
@@ -12,7 +13,7 @@
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
-class PLANETRETROFIT_API APlayerCharacter : public ACharacter, public IGameplayTagAssetInterface
+class PLANETRETROFIT_API APlayerCharacter : public ACharacter, public IGameplayTagAssetInterface, public IGamplayTagsInterface
 {
 	GENERATED_BODY()
 
@@ -91,8 +92,7 @@ protected:
 
 public:
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;	
 
 private:
 	void Move(const FInputActionValue& Value);
@@ -172,6 +172,10 @@ private:
 	UGameplayTagsManager& GetGameplayTagsManager();
 
 	FGameplayTag OxygenTag;
+
+public:
+	virtual void AddGameplayTag() override;
+	virtual void RemoveGameplayTag() override;
 
 };
 
