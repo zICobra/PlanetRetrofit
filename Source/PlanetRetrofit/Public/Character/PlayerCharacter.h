@@ -40,6 +40,15 @@ protected:
 	float WalkSpeed = 600.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Interact")
 	float InteractionRange = 1000.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Oxygen")
+	float MaxHealth = 100.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Oxygen")
+	float MaxOxygen = 100.0f;
+
+	UPROPERTY()
+	float CurrentHealth = MaxHealth;
+	UPROPERTY()
+	float CurrentOxygen = MaxOxygen;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameplayTags")
 	FGameplayTagContainer GameplayTags;
@@ -161,6 +170,8 @@ private:
 	class UDefaultGameInstance* GameInstance = nullptr;
 
 	UGameplayTagsManager& GetGameplayTagsManager();
+
+	FGameplayTag OxygenTag;
 
 };
 
