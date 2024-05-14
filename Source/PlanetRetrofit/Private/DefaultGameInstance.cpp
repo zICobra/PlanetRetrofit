@@ -38,11 +38,22 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
     
     if(UDefaultSaveGame* LoadedGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveGame->SaveSlotName, 0)))
     {
-        SaveGame->StoneAmount = LoadedGame->StoneAmount;
-        SaveGame->IronAmount = LoadedGame->IronAmount;
-        SaveGame->CopperAmount = LoadedGame->CopperAmount;
-        SaveGame->AmethystAmount = LoadedGame->AmethystAmount;
-        SaveGame->PlatinAmount = LoadedGame->PlatinAmount;
+        if(LoadGame)
+        {
+            SaveGame->StoneAmount = LoadedGame->StoneAmount;
+            SaveGame->IronAmount = LoadedGame->IronAmount;
+            SaveGame->CopperAmount = LoadedGame->CopperAmount;
+            SaveGame->AmethystAmount = LoadedGame->AmethystAmount;
+            SaveGame->PlatinAmount = LoadedGame->PlatinAmount;
+        }
+        else
+        {
+            SaveGame->StoneAmount = 0;
+            SaveGame->IronAmount = 0;
+            SaveGame->CopperAmount = 0;
+            SaveGame->AmethystAmount = 0;
+            SaveGame->PlatinAmount = 0;
+        }
     }
     else
     {
