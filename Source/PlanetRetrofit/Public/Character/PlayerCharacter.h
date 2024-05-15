@@ -25,8 +25,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// UFUNCTION(BlueprintImplementableEvent)
+	// void RestartLevel();
+
 	UFUNCTION(BlueprintImplementableEvent)
-	void RestartLevel();
+	void CameraAnimation();
 
 #pragma region Variables
 
@@ -45,6 +48,9 @@ protected:
 	float MaxHealth = 100.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Oxygen")
 	float MaxOxygen = 100.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
+	float HeadMovementIntensity = 1.5f;
 
 	UPROPERTY()
 	float CurrentHealth = MaxHealth;
@@ -66,6 +72,7 @@ protected:
 
 	class IOutlineInterface* PreviouslyOutlinedActor = nullptr;
 	class ABuildingInteractableBase* BuildingBase = nullptr;
+	class AOreBase* Ore = nullptr;
 
 #pragma endregion Variables
 
@@ -101,7 +108,9 @@ private:
 
 	void PullUpMaterialUI();
 
+	void StartMine();
 	void Mine();
+	void StopMine();
 
 	UFUNCTION()
 	void CallPauseMenu();
@@ -115,7 +124,7 @@ private:
 
 protected:
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UCameraComponent* Camera;
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
@@ -181,6 +190,7 @@ private:
 	void ClearBuildingMenu();
 	UFUNCTION()
 	void SpawnBuilding(int32 BuildingIndex);
+
 
 };
 

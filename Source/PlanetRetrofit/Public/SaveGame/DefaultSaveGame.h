@@ -26,6 +26,8 @@ public:
 	int32 AmethystAmount = 0;
 	UPROPERTY()
 	int32 PlatinAmount = 0;
+	UPROPERTY()
+	float OxygenDepletionMultiplier = 8.0f;
 	
 	UPROPERTY()
 	FString SaveSlotName = "SavedGameState";
