@@ -79,6 +79,8 @@ void APlayerCharacter::BeginPlay()
 		ActivePlayerController->SetInputMode(GameOnlyInputMode);
 	}
 
+	CameraAnimation();
+
 	OxygenTag = GetGameplayTagsManager().RequestGameplayTag(FName("HasOxygen"));
 
 #pragma region UI
@@ -179,11 +181,11 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 	if(!GameplayTags.HasTag(OxygenTag))
 	{
-		CurrentOxygen -= DeltaTime * 10;
+		CurrentOxygen -= DeltaTime * GameInstance->SaveGame->OxygenDepletionMultiplier;
 		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
 		if(CurrentOxygen <= 0)
 		{
-			CurrentHealth -= DeltaTime * 10.0f;
+			CurrentHealth -= DeltaTime * 7.0f;
 			CreatedGamePlayMenu->SetHealthBar(MaxHealth, CurrentHealth);
 			if(CurrentHealth <= 0)
 			{
@@ -234,7 +236,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PEI->BindAction(InputActions->InputPullUpMaterialUI, ETriggerEvent::Started, this, &APlayerCharacter::PullUpMaterialUI);
 
+	PEI->BindAction(InputActions->InputMine, ETriggerEvent::Started, this, &APlayerCharacter::StartMine);
 	PEI->BindAction(InputActions->InputMine, ETriggerEvent::Triggered, this, &APlayerCharacter::Mine);
+	PEI->BindAction(InputActions->InputMine, ETriggerEvent::Completed, this, &APlayerCharacter::StopMine);
 
 	PEI->BindAction(InputActions->InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PEI->BindAction(InputActions->InputPauseMenu, ETriggerEvent::Started, this, &APlayerCharacter::CallPauseMenu);
@@ -284,6 +288,8 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 		{
 			AddControllerPitchInput(-LookValue.Y * GameInstance->SaveGame->MouseSensitivity);
 		}
+
+		UE_LOG(LogTemp, Warning, TEXT("MouseSens: %f"), GameInstance->SaveGame->MouseSensitivity);
 	}
 }
 
@@ -385,7 +391,7 @@ void APlayerCharacter::PullUpMaterialUI()
 	}
 }
 
-void APlayerCharacter::Mine()
+void APlayerCharacter::StartMine()
 {
 	static FVector StartPoint = FVector::Zero();
 	static FVector EndPoint = FVector::Zero();
@@ -405,34 +411,63 @@ void APlayerCharacter::Mine()
 
 	if(bSuccess && HitResult.GetActor())
 	{
-		if(AOreBase* Ore = Cast<AOreBase>(HitResult.GetActor()))
-		{	
-			if(!Ore->DoneMining())
+		Ore = Cast<AOreBase>(HitResult.GetActor());
+		if(Ore)
+		{
+			Ore->PlayMineAnimation();
+		}
+	}
+}
+
+void APlayerCharacter::Mine()
+{
+	
+	if(Ore)
+	{	
+		if(!Ore->DoneMining())
+		{
+			Ore->StartMining(GetActorLocation());
+			if(Ore->DoneMining() && Ore->OreType() == "Stone")
 			{
-				Ore->StartMining(GetActorLocation());
-				if(Ore->DoneMining() && Ore->OreType() == "Stone")
-				{
-					GameInstance->SaveGame->StoneAmount += Ore->StoneAmountPerOreMined;
-					UE_LOG(LogTemp, Warning, TEXT("%d"), GameInstance->SaveGame->StoneAmount);
-				}
-				else if(Ore->DoneMining() && Ore->OreType() == "Iron")
-				{
-					GameInstance->SaveGame->IronAmount += Ore->IronAmountPerOreMined;
-				}
-				else if(Ore->DoneMining() && Ore->OreType() == "Copper")
-				{
-					GameInstance->SaveGame->CopperAmount += Ore->CopperAmountPerOreMined;
-				}
-				else if(Ore->DoneMining() && Ore->OreType() == "Amethyst")
-				{
-					GameInstance->SaveGame->AmethystAmount += Ore->AmethystAmountPerOreMined;
-				}
-				else if(Ore->DoneMining() && Ore->OreType() == "Platin")
-				{
-					GameInstance->SaveGame->PlatinAmount += Ore->PlatinAmountPerOreMined;
-				}
+				GameInstance->SaveGame->StoneAmount += Ore->StoneAmountPerOreMined;
+				UE_LOG(LogTemp, Warning, TEXT("%d"), GameInstance->SaveGame->StoneAmount);
+			}
+			else if(Ore->DoneMining() && Ore->OreType() == "Iron")
+			{
+				GameInstance->SaveGame->IronAmount += Ore->IronAmountPerOreMined;
+			}
+			else if(Ore->DoneMining() && Ore->OreType() == "Copper")
+			{
+				GameInstance->SaveGame->CopperAmount += Ore->CopperAmountPerOreMined;
+			}
+			else if(Ore->DoneMining() && Ore->OreType() == "Amethyst")
+			{
+				GameInstance->SaveGame->AmethystAmount += Ore->AmethystAmountPerOreMined;
+			}
+			else if(Ore->DoneMining() && Ore->OreType() == "Platin")
+			{
+				GameInstance->SaveGame->PlatinAmount += Ore->PlatinAmountPerOreMined;
 			}
 		}
+		else
+		{
+			Ore->RemoveMineAnimation();
+			Ore = nullptr;
+			if(CreatedGamePlayMenu->MaterialUIIsActive)
+			{
+				CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
+			}
+		}
+	}
+	
+}
+
+void APlayerCharacter::StopMine()
+{
+	if(Ore)
+	{
+		Ore->RemoveMineAnimation();
+		Ore = nullptr;
 	}
 }
 

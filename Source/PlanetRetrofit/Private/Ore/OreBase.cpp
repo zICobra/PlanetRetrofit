@@ -5,8 +5,15 @@
 
 #include "Components/BillboardComponent.h"
 #include "Components/SphereComponent.h"
-#include "NiagaraSystem.h"
+
+#include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
+#include "NiagaraSystem.h"
+
+#include "Interfaces/GamplayTagsInterface.h" 
 
 
 // Sets default values
@@ -24,15 +31,16 @@ AOreBase::AOreBase()
 	OreTypeText = CreateDefaultSubobject<UBillboardComponent>(TEXT("OreTypeText"));
 	OreTypeText->SetupAttachment(Root);
 
-	FishRadius = CreateDefaultSubobject<USphereComponent>(TEXT("Fish Radius"));
-	FishRadius->SetupAttachment(Root);
+	PlayerRadius = CreateDefaultSubobject<USphereComponent>(TEXT("Player Radius"));
+	PlayerRadius->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned
 void AOreBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	PlayerRadius->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOreBase::OnBeginOverlap);
+	PlayerRadius->OnComponentEndOverlap.AddUniqueDynamic(this, &AOreBase::OnEndOverlap);
 }
 
 // Called every frame
@@ -40,11 +48,29 @@ void AOreBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if(Player)
+	{
+		if(CreatedFishParticleSystem)
+		{
+			CreatedFishParticleSystem->SetVectorParameter(TEXT("PlayerPosition"), Player->GetActorLocation());
+		}
+
+		if(CreatedMiningParticleSystem)
+		{
+			CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), Player->GetActorLocation());
+		}
+	}
+
 	if(IsMined)
 	{
 		DestroyTime -= DeltaTime;
 		if(DestroyTime <= 0)
 		{
+			PlayerRadius->OnComponentBeginOverlap.RemoveDynamic(this, &AOreBase::OnBeginOverlap);
+			PlayerRadius->OnComponentEndOverlap.RemoveDynamic(this, &AOreBase::OnEndOverlap);
+
+			RemoveFishNiagara();
+			RemoveMineAnimation();
 			Destroy();
 		}
 	}
@@ -170,5 +196,71 @@ void AOreBase::MiningScaleAndRotation()
 	}
 
 	Mesh->SetWorldRotation(FRotator(Mesh->GetComponentRotation().Pitch, Mesh->GetComponentRotation().Yaw + 5, Mesh->GetComponentRotation().Roll));
+}
+
+void AOreBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(IGamplayTagsInterface* Interface = Cast<IGamplayTagsInterface>(OtherActor))
+	{
+		Player = OtherActor;
+		OreTypeText->SetHiddenInGame(false);
+		PlayFishNiagara();
+	}
+}
+
+void AOreBase::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	OreTypeText->SetHiddenInGame(true);
+	RemoveFishNiagara();
+	Player = nullptr;
+}
+
+void AOreBase::PlayFishNiagara()
+{
+	CreatedFishParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), FishParticleSystem, GetActorLocation());
+}
+
+void AOreBase::RemoveFishNiagara()
+{
+	if(CreatedFishParticleSystem)
+	{
+		CreatedFishParticleSystem->Deactivate();
+		CreatedFishParticleSystem->DestroyComponent();
+		CreatedFishParticleSystem = nullptr;
+	}
+}
+
+void AOreBase::PlayMineAnimation()
+{
+	if(IsStone)
+	{
+		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), StoneMiningParticleSystem, GetActorLocation());
+	}
+	else if(IsIron)
+	{
+		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), IronMiningParticleSystem, GetActorLocation());
+	}
+	else if(IsCopper)
+	{
+		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), CopperMiningParticleSystem, GetActorLocation());
+	}
+	else if(IsAmethyst)
+	{
+		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), AmethystMiningParticleSystem, GetActorLocation());
+	}
+	else if(IsPlatin)
+	{
+		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), PlatinMiningParticleSystem, GetActorLocation());
+	}
+}
+
+void AOreBase::RemoveMineAnimation()
+{
+	if(CreatedMiningParticleSystem)
+	{
+		CreatedMiningParticleSystem->Deactivate();
+		CreatedMiningParticleSystem->DestroyComponent();
+		CreatedMiningParticleSystem = nullptr;
+	}
 }
 

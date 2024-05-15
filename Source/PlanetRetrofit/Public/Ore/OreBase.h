@@ -28,10 +28,14 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class UBillboardComponent* OreTypeText;
 	UPROPERTY(VisibleAnywhere)
-	class USphereComponent* FishRadius;
+	class USphereComponent* PlayerRadius;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
 	class UNiagaraSystem* FishParticleSystem;
+
+
+	UPROPERTY()
+	AActor* Player = nullptr;
 
 #pragma region OreType
 public:
@@ -98,6 +102,9 @@ public:
 	virtual bool DoneMining() override;
 	virtual FString OreType();
 
+	void PlayMineAnimation();
+	void RemoveMineAnimation();
+
 	UPROPERTY(EditAnywhere, Category = "Mining", meta = (EditCondition = "IsStone", EditConditionHides))
 	int32 StoneAmountPerOreMined = 1;
 	UPROPERTY(EditAnywhere, Category = "Mining", meta = (EditCondition = "IsIron", EditConditionHides))
@@ -111,6 +118,21 @@ public:
 
 private:
 	void MiningScaleAndRotation();
+
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+
+	void PlayFishNiagara();
+	void RemoveFishNiagara();
+
+
+	class UNiagaraComponent* CreatedFishParticleSystem = nullptr;
+	class UNiagaraComponent* CreatedMiningParticleSystem = nullptr;
+
+
 
 	float DestroyTime = 0.3f;
 

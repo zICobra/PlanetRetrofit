@@ -47,6 +47,8 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
             SaveGame->CopperAmount = LoadedGame->CopperAmount;
             SaveGame->AmethystAmount = LoadedGame->AmethystAmount;
             SaveGame->PlatinAmount = LoadedGame->PlatinAmount;
+
+            SaveGame->OxygenDepletionMultiplier = LoadedGame->OxygenDepletionMultiplier;
         }
         else
         {
@@ -55,6 +57,8 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
             SaveGame->CopperAmount = 0;
             SaveGame->AmethystAmount = 0;
             SaveGame->PlatinAmount = 0;
+
+            SaveGame->OxygenDepletionMultiplier = 8.0f;
         }
     }
     else
@@ -64,6 +68,8 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
         SaveGame->CopperAmount = 0;
         SaveGame->AmethystAmount = 0;
         SaveGame->PlatinAmount = 0;
+
+        SaveGame->OxygenDepletionMultiplier = 8.0f;
     }
 
     if(UDefaultSaveGame* LoadedGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SettingsSaveSlotName, 0)))
