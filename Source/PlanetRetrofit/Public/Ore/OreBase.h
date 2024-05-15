@@ -98,6 +98,17 @@ public:
 	virtual bool DoneMining() override;
 	virtual FString OreType();
 
+	UPROPERTY(EditAnywhere, Category = "Mining", meta = (EditCondition = "IsStone", EditConditionHides))
+	int32 StoneAmountPerOreMined = 1;
+	UPROPERTY(EditAnywhere, Category = "Mining", meta = (EditCondition = "IsIron", EditConditionHides))
+	int32 IronAmountPerOreMined = 1;
+	UPROPERTY(EditAnywhere, Category = "Mining", meta = (EditCondition = "IsCopper", EditConditionHides))
+	int32 CopperAmountPerOreMined = 1;
+	UPROPERTY(EditAnywhere, Category = "Mining", meta = (EditCondition = "IsAmethyst", EditConditionHides))
+	int32 AmethystAmountPerOreMined = 1;
+	UPROPERTY(EditAnywhere, Category = "Mining", meta = (EditCondition = "IsPlatin", EditConditionHides))
+	int32 PlatinAmountPerOreMined = 1;
+
 private:
 	void MiningScaleAndRotation();
 
