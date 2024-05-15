@@ -4,6 +4,7 @@
 #include "Ore/OreBase.h"
 
 #include "Components/BillboardComponent.h"
+#include "Components/SphereComponent.h"
 #include "NiagaraSystem.h"
 #include "Sound/SoundCue.h"
 
@@ -22,6 +23,9 @@ AOreBase::AOreBase()
 
 	OreTypeText = CreateDefaultSubobject<UBillboardComponent>(TEXT("OreTypeText"));
 	OreTypeText->SetupAttachment(Root);
+
+	FishRadius = CreateDefaultSubobject<USphereComponent>(TEXT("Fish Radius"));
+	FishRadius->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned
@@ -54,6 +58,11 @@ void AOreBase::OutlineTarget()
 void AOreBase::RemoveOutline()
 {
 	Mesh->SetRenderCustomDepth(false);
+}
+
+bool AOreBase::CanOutline()
+{
+	return true;
 }
 
 void AOreBase::StartMining(const FVector MinerPosition)

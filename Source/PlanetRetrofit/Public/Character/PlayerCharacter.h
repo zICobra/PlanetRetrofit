@@ -60,17 +60,6 @@ protected:
 		return; 
 	}
 
-	UPROPERTY(EditDefaultsOnly, Category = "Mining")
-	int32 StoneAmountPerOreMined = 1;
-	UPROPERTY(EditDefaultsOnly, Category = "Mining")
-	int32 IronAmountPerOreMined = 1;
-	UPROPERTY(EditDefaultsOnly, Category = "Mining")
-	int32 CopperAmountPerOreMined = 1;
-	UPROPERTY(EditDefaultsOnly, Category = "Mining")
-	int32 AmethystAmountPerOreMined = 1;
-	UPROPERTY(EditDefaultsOnly, Category = "Mining")
-	int32 PlatinAmountPerOreMined = 1;
-
 	UPROPERTY()
 	AActor* HitActor = nullptr;
 
@@ -190,6 +179,8 @@ private:
 	void ShowBuildingMenu();
 	UFUNCTION()
 	void ClearBuildingMenu();
+	UFUNCTION()
+	void SpawnBuilding(int32 BuildingIndex);
 
 };
 

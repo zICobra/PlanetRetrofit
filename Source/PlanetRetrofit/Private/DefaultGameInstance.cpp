@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundClass.h"
 
+#include "DataAssets/BuildingsConfig.h"
+
 
 
 void UDefaultGameInstance::LoadSettingsInMenu()
