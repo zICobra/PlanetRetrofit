@@ -497,13 +497,17 @@ void APlayerCharacter::RemoveGameplayTag()
 void APlayerCharacter::ShowBuildingMenu()
 {
 	CreatedGameUIBase->PushBuildingMenu(CreatedBuildingWidget);
+	ActivePlayerController->SetShowMouseCursor(true);
+	ActivePlayerController->SetInputMode(GameAndUIInputMode);
 	CreatedBuildingWidget->OnBackButtonClicked.BindUObject(this, &APlayerCharacter::ClearBuildingMenu);
 }
 
 void APlayerCharacter::ClearBuildingMenu()
 {
 	CreatedGameUIBase->ClearBuildingMenu();
-	
+	ActivePlayerController->SetInputMode(GameOnlyInputMode);
+	ActivePlayerController->SetShowMouseCursor(false);
+
 	CreatedBuildingWidget->OnBackButtonClicked.Unbind();
 	BuildingBase->Interacting.Unbind();
 	BuildingBase->StoppedOverlapping.Unbind();

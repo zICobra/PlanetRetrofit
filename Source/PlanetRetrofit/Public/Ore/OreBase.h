@@ -27,6 +27,11 @@ protected:
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(VisibleAnywhere)
 	class UBillboardComponent* OreTypeText;
+	UPROPERTY(VisibleAnywhere)
+	class USphereComponent* FishRadius;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
+	class UNiagaraSystem* FishParticleSystem;
 
 #pragma region OreType
 public:
