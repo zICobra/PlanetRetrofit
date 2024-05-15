@@ -58,7 +58,7 @@ void UCommonUserWidgetBase::PushBuildingMenu(class UCommonActivatableWidgetBase*
 
 void UCommonUserWidgetBase::ClearBuildingMenu()
 {
-    BuildingMenuActive = true;
+    BuildingMenuActive = false;
     PauseMenuStack->ClearWidgets();    
 }
 

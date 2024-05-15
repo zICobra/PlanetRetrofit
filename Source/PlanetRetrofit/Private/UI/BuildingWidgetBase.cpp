@@ -21,71 +21,28 @@ void UBuildingWidgetBase::NativeConstruct()
 
     if(GameInstance->BuildingConfig && GameInstance->BuildingConfig->Buildings.Num() > BuildingIndex)
     {
-        BuildingName->SetText(FText::FromString(GameInstance->BuildingConfig->Buildings[BuildingIndex].BuildingName));
+        SetText();
 
-        if(GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount >= GameInstance->SaveGame->StoneAmount)
+        if(EnoughtStone && EnoughtIron && EnoughtCopper && EnoughtAmethyst && EnoughtPlatin)
         {
-            FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount);
-            StoneAmountNeeded->SetText(FText::FromString(NewText));
-            // StoneAmountNeeded->SetColor(FLinearColor::Green);
+            BuildButton->SetVisibility(ESlateVisibility::Visible);
         }
         else
         {
-            FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount);
-            StoneAmountNeeded->SetText(FText::FromString(NewText));
-            // StoneAmountNeeded->SetColor(FLinearColor::Red);
-        }
-        if(GameInstance->BuildingConfig->Buildings[BuildingIndex].IronAmount >= GameInstance->SaveGame->IronAmount)
-        {
-            FString NewText = FString::Printf(TEXT("Iron needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].IronAmount);
-            IronAmountNeeded->SetText(FText::FromString(NewText));
-            // IronAmountNeeded->SetColor(FLinearColor::Green);
-        }
-        else
-        {
-            FString NewText = FString::Printf(TEXT("Iron needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].IronAmount);
-            IronAmountNeeded->SetText(FText::FromString(NewText));
-            // IronAmountNeeded->SetColor(FLinearColor::Red);
-        }
-        if(GameInstance->BuildingConfig->Buildings[BuildingIndex].CopperAmount >= GameInstance->SaveGame->CopperAmount)
-        {
-            FString NewText = FString::Printf(TEXT("Copper needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].CopperAmount);
-            CopperAmountNeeded->SetText(FText::FromString(NewText));
-            // CopperAmountNeeded->SetColor(FLinearColor::Green);
-        }
-        else
-        {
-            FString NewText = FString::Printf(TEXT("Copper needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].CopperAmount);
-            CopperAmountNeeded->SetText(FText::FromString(NewText));
-            // CopperAmountNeeded->SetColor(FLinearColor::Red);
-        }
-        if(GameInstance->BuildingConfig->Buildings[BuildingIndex].AmethystAmount >= GameInstance->SaveGame->AmethystAmount)
-        {
-            FString NewText = FString::Printf(TEXT("Amethyst needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].AmethystAmount);
-            AmethystAmountNeeded->SetText(FText::FromString(NewText));
-            // AmethystAmountNeeded->SetColor(FLinearColor::Green);
-        }
-        else
-        {
-            FString NewText = FString::Printf(TEXT("Amethyst needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].AmethystAmount);
-            AmethystAmountNeeded->SetText(FText::FromString(NewText));
-            // AmethystAmountNeeded->SetColor(FLinearColor::Red);
-        }
-        if(GameInstance->BuildingConfig->Buildings[BuildingIndex].PlatinAmount >= GameInstance->SaveGame->PlatinAmount)
-        {
-            FString NewText = FString::Printf(TEXT("Platin needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].PlatinAmount);
-            PlatinAmountNeeded->SetText(FText::FromString(NewText));
-            // PlatinAmountNeeded->SetColor(FLinearColor::Green);
-        }
-        else
-        {
-            FString NewText = FString::Printf(TEXT("Platin needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].PlatinAmount);
-            PlatinAmountNeeded->SetText(FText::FromString(NewText));
-            // PlatinAmountNeeded->SetColor(FLinearColor::Red);
+            BuildButton->SetVisibility(ESlateVisibility::Collapsed);
         }
     }
 
-    BackButton->SetFocus();
+    if(IsFarm)
+    {
+        HappyFieldButton->SetFocus();
+        BuildButton->SetVisibility(ESlateVisibility::Collapsed);
+    }
+    else
+    {
+        BackButton->SetFocus();
+    }
+
     AddDelegates();
 }
 
@@ -101,6 +58,9 @@ void UBuildingWidgetBase::RemoveDelegates()
     BuildButton->OnClicked.Unbind();
 }
 
+
+
+
 void UBuildingWidgetBase::OnBackButtonClickedFunction()
 {
     RemoveDelegates();
@@ -110,5 +70,201 @@ void UBuildingWidgetBase::OnBackButtonClickedFunction()
 void UBuildingWidgetBase::OnBuildButtonClickedFunction()
 {
     RemoveDelegates();
-    OnBuildButtonClicked.ExecuteIfBound();
+    OnBuildButtonClicked.ExecuteIfBound(BuildingIndex);
+    DeactivateWidget();
+}
+
+void UBuildingWidgetBase::OnHappyPlantFieldButtonClicked()
+{
+    RemoveDelegates();
+    OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
+    DeactivateWidget();
+}
+
+void UBuildingWidgetBase::OnSaladFieldButtonClicked()
+{
+    RemoveDelegates();
+    OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
+    DeactivateWidget();
+}
+
+void UBuildingWidgetBase::OnCarrotFieldButtonClicked()
+{
+    RemoveDelegates();
+    OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
+    DeactivateWidget();
+}
+
+
+
+
+void UBuildingWidgetBase::HappyFieldButtonSelected()
+{
+    FieldSelectionIndex = 1;
+    SetTextForField();
+}
+
+void UBuildingWidgetBase::SaladFieldButtonSelected()
+{
+    FieldSelectionIndex = 2;
+    SetTextForField();
+}
+
+void UBuildingWidgetBase::CarrotFieldButtonSelected()
+{
+    FieldSelectionIndex = 3;
+    SetTextForField();
+}
+
+
+
+
+void UBuildingWidgetBase::SetText()
+{
+    if(GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount <= GameInstance->SaveGame->StoneAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount);
+        StoneAmountNeeded->SetText(FText::FromString(NewText));
+        StoneAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtStone = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount);
+        StoneAmountNeeded->SetText(FText::FromString(NewText));
+        StoneAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtStone = false;
+    }
+    if(GameInstance->BuildingConfig->Buildings[BuildingIndex].IronAmount <= GameInstance->SaveGame->IronAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Iron needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].IronAmount);
+        IronAmountNeeded->SetText(FText::FromString(NewText));
+        IronAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtIron = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Iron needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].IronAmount);
+        IronAmountNeeded->SetText(FText::FromString(NewText));
+        IronAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtIron = false;
+    }
+    if(GameInstance->BuildingConfig->Buildings[BuildingIndex].CopperAmount <= GameInstance->SaveGame->CopperAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Copper needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].CopperAmount);
+        CopperAmountNeeded->SetText(FText::FromString(NewText));
+        CopperAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtCopper = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Copper needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].CopperAmount);
+        CopperAmountNeeded->SetText(FText::FromString(NewText));
+        CopperAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtCopper = false;
+    }
+    if(GameInstance->BuildingConfig->Buildings[BuildingIndex].AmethystAmount <= GameInstance->SaveGame->AmethystAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Amethyst needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].AmethystAmount);
+        AmethystAmountNeeded->SetText(FText::FromString(NewText));
+        AmethystAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtAmethyst = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Amethyst needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].AmethystAmount);
+        AmethystAmountNeeded->SetText(FText::FromString(NewText));
+        AmethystAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtAmethyst = false;
+    }
+    if(GameInstance->BuildingConfig->Buildings[BuildingIndex].PlatinAmount <= GameInstance->SaveGame->PlatinAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Platin needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].PlatinAmount);
+        PlatinAmountNeeded->SetText(FText::FromString(NewText));
+        PlatinAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtPlatin = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Platin needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].PlatinAmount);
+        PlatinAmountNeeded->SetText(FText::FromString(NewText));
+        PlatinAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtPlatin = false;
+    }
+}
+
+
+
+void UBuildingWidgetBase::SetTextForField()
+{
+    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].StoneAmount <= GameInstance->SaveGame->StoneAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].StoneAmount);
+        StoneAmountNeeded->SetText(FText::FromString(NewText));
+        StoneAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtStone = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].StoneAmount);
+        StoneAmountNeeded->SetText(FText::FromString(NewText));
+        StoneAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtStone = false;
+    }
+    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].IronAmount <= GameInstance->SaveGame->IronAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Iron needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].IronAmount);
+        IronAmountNeeded->SetText(FText::FromString(NewText));
+        IronAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtIron = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Iron needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].IronAmount);
+        IronAmountNeeded->SetText(FText::FromString(NewText));
+        IronAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtIron = false;
+    }
+    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].CopperAmount <= GameInstance->SaveGame->CopperAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Copper needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].CopperAmount);
+        CopperAmountNeeded->SetText(FText::FromString(NewText));
+        CopperAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtCopper = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Copper needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].CopperAmount);
+        CopperAmountNeeded->SetText(FText::FromString(NewText));
+        CopperAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtCopper = false;
+    }
+    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].AmethystAmount <= GameInstance->SaveGame->AmethystAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Amethyst needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].AmethystAmount);
+        AmethystAmountNeeded->SetText(FText::FromString(NewText));
+        AmethystAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtAmethyst = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Amethyst needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].AmethystAmount);
+        AmethystAmountNeeded->SetText(FText::FromString(NewText));
+        AmethystAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtAmethyst = false;
+    }
+    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].PlatinAmount <= GameInstance->SaveGame->PlatinAmount)
+    {
+        FString NewText = FString::Printf(TEXT("Platin needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].PlatinAmount);
+        PlatinAmountNeeded->SetText(FText::FromString(NewText));
+        PlatinAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
+        EnoughtPlatin = true;
+    }
+    else
+    {
+        FString NewText = FString::Printf(TEXT("Platin needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].PlatinAmount);
+        PlatinAmountNeeded->SetText(FText::FromString(NewText));
+        PlatinAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
+        EnoughtPlatin = false;
+    }
 }

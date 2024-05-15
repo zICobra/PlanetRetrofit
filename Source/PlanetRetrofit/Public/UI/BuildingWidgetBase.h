@@ -39,6 +39,13 @@ protected:
 	class UButtonBase* BackButton;
 	UPROPERTY(meta = (BindWidget))
 	class UButtonBase* BuildButton;
+	
+	UPROPERTY(meta = (BindWidget))
+	class UButtonBase* HappyFieldButton;
+	UPROPERTY(meta = (BindWidget))
+	class UButtonBase* SaladButton;
+	UPROPERTY(meta = (BindWidget))
+	class UButtonBase* CarrotFieldButton;
 
 
 
@@ -48,10 +55,12 @@ public:
 	UPROPERTY()
 	int32 BuildingIndex = 0;
 	UPROPERTY()
+	int32 FieldSelectionIndex = 1;
+	UPROPERTY()
 	bool IsFarm = false;
 
 	DECLARE_DELEGATE(FOnBackButtonClicked);
-	DECLARE_DELEGATE(FOnBuildButtonClicked);
+	DECLARE_DELEGATE_OneParam(FOnBuildButtonClicked, int32 BuildingIndex);
 
 	FOnBackButtonClicked OnBackButtonClicked;
 	FOnBuildButtonClicked OnBuildButtonClicked;
@@ -62,5 +71,28 @@ protected:
 	void OnBackButtonClickedFunction();
 	UFUNCTION()
 	void OnBuildButtonClickedFunction();
+	UFUNCTION()
+	void OnHappyPlantFieldButtonClicked();
+	UFUNCTION()
+	void OnSaladFieldButtonClicked();
+	UFUNCTION()
+	void OnCarrotFieldButtonClicked();
+
+	UFUNCTION(BlueprintCallable)
+	void HappyFieldButtonSelected();
+	UFUNCTION(BlueprintCallable)
+	void SaladFieldButtonSelected();
+	UFUNCTION(BlueprintCallable)
+	void CarrotFieldButtonSelected();
+
+	void SetText();
+	void SetTextForField();
+
+private:
+	bool EnoughtStone = false;
+	bool EnoughtIron = false;
+	bool EnoughtCopper = false;
+	bool EnoughtAmethyst = false;
+	bool EnoughtPlatin = false;
 	
 };
