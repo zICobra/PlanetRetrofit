@@ -32,9 +32,9 @@
 
 #include "Interfaces/InteractableInterface.h"
 #include "Interfaces/OutlineInterface.h"
-#include "Interfaces/OreInterface.h"
 
 #include "Interactables/BuildingInteractableBase.h"
+#include "Ore/OreBase.h"
 
 #include "Sound/SoundCue.h"
 #include "NiagaraSystem.h"
@@ -405,31 +405,31 @@ void APlayerCharacter::Mine()
 
 	if(bSuccess && HitResult.GetActor())
 	{
-		if(IOreInterface* Ore = Cast<IOreInterface>(HitResult.GetActor()))
+		if(AOreBase* Ore = Cast<AOreBase>(HitResult.GetActor()))
 		{	
 			if(!Ore->DoneMining())
 			{
 				Ore->StartMining(GetActorLocation());
 				if(Ore->DoneMining() && Ore->OreType() == "Stone")
 				{
-					GameInstance->SaveGame->StoneAmount += StoneAmountPerOreMined;
+					GameInstance->SaveGame->StoneAmount += Ore->StoneAmountPerOreMined;
 					UE_LOG(LogTemp, Warning, TEXT("%d"), GameInstance->SaveGame->StoneAmount);
 				}
 				else if(Ore->DoneMining() && Ore->OreType() == "Iron")
 				{
-					GameInstance->SaveGame->IronAmount += IronAmountPerOreMined;
+					GameInstance->SaveGame->IronAmount += Ore->IronAmountPerOreMined;
 				}
 				else if(Ore->DoneMining() && Ore->OreType() == "Copper")
 				{
-					GameInstance->SaveGame->CopperAmount += CopperAmountPerOreMined;
+					GameInstance->SaveGame->CopperAmount += Ore->CopperAmountPerOreMined;
 				}
 				else if(Ore->DoneMining() && Ore->OreType() == "Amethyst")
 				{
-					GameInstance->SaveGame->AmethystAmount += AmethystAmountPerOreMined;
+					GameInstance->SaveGame->AmethystAmount += Ore->AmethystAmountPerOreMined;
 				}
 				else if(Ore->DoneMining() && Ore->OreType() == "Platin")
 				{
-					GameInstance->SaveGame->PlatinAmount += PlatinAmountPerOreMined;
+					GameInstance->SaveGame->PlatinAmount += Ore->PlatinAmountPerOreMined;
 				}
 			}
 		}
