@@ -29,7 +29,6 @@ protected:
 
 	UPROPERTY()
 	class UDefaultGameInstance* GameInstance = nullptr;
-	class UDefaultSaveGame* LoadedGameInstance = nullptr;
 
 #pragma region Variables
 
@@ -48,6 +47,8 @@ protected:
 	class UOverlay* Overlay;
 	UPROPERTY(meta = (BindWidget))
 	class UVerticalBox* ButtonVerticalBox;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UCommonTextBlock* NewGameWarning;
 
 #pragma region Components
 
@@ -58,11 +59,14 @@ protected:
 
 protected:
 	UPROPERTY(meta = (BindWidget))
-	class UButtonBase* BP_PlayButton;
+	class UButtonBase* BP_NewGameButton;
+	UPROPERTY(meta = (BindWidget))
+	class UButtonBase* BP_LoadGameButton;
 	UPROPERTY(meta = (BindWidget))
 	class UButtonBase* BP_SettingsButton;
 	UPROPERTY(meta = (BindWidget))
 	class UButtonBase* BP_ExitButton;
+
 
 #pragma endregion Buttons
 
@@ -73,11 +77,18 @@ protected:
 
 protected:
 	UFUNCTION(BlueprintCallable)
-	void OnPlayButtonClicked();
+	void OnNewGameButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void OnLoadGameButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void OnSettingsButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void OnExitButtonClicked();
+
+	UFUNCTION(BlueprintCallable)
+	void OnNewGameButtonHovered();
+	UFUNCTION(BlueprintCallable)
+	void OnNewGameButtonUnHovered();
 
 
 #pragma endregion Functions

@@ -23,6 +23,7 @@
 #include "UI/CommonUserWidgetBase.h"
 #include "UI/GamePlayWidgetBase.h"
 #include "UI/SettingsMenuBase.h"
+#include "UI/DeathScreenBase.h"
 #include "UI/PauseMenuBase.h"
 
 #include "Math/UnrealMathUtility.h"
@@ -97,6 +98,11 @@ void APlayerCharacter::BeginPlay()
 	{
 		CreatedGamePlayMenu = Cast<UGamePlayWidgetBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), GamePlayUI));
 	}
+	if(DeathScreen)
+	{
+		CreatedDeathScreen = Cast<UDeathScreenBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), DeathScreen));
+	}
+
 
 	CreatedGameUIBase->PushGamePlayMenu(CreatedGamePlayMenu);
 	
@@ -167,7 +173,7 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 	if(!GameplayTags.HasTag(OxygenTag))
 	{
-		CurrentOxygen -= DeltaTime;
+		CurrentOxygen -= DeltaTime * 10;
 		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
 		if(CurrentOxygen <= 0)
 		{
@@ -175,7 +181,8 @@ void APlayerCharacter::Tick(float DeltaTime)
 			CreatedGamePlayMenu->SetHealthBar(MaxHealth, CurrentHealth);
 			if(CurrentHealth <= 0)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Dead"));
+				CreatedGameUIBase->PushDeathScreen(CreatedDeathScreen);
+				ActivePlayerController->SetPause(true);
 			}
 		}
 	}
@@ -221,7 +228,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PEI->BindAction(InputActions->InputPullUpMaterialUI, ETriggerEvent::Started, this, &APlayerCharacter::PullUpMaterialUI);
 
-	PEI->BindAction(InputActions->InputMine, ETriggerEvent::Started, this, &APlayerCharacter::Mine);
+	PEI->BindAction(InputActions->InputMine, ETriggerEvent::Triggered, this, &APlayerCharacter::Mine);
 
 	PEI->BindAction(InputActions->InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PEI->BindAction(InputActions->InputPauseMenu, ETriggerEvent::Started, this, &APlayerCharacter::CallPauseMenu);
@@ -360,20 +367,66 @@ void APlayerCharacter::PullUpMaterialUI()
 	}
 	else if(CreatedGamePlayMenu)
 	{
-		CreatedGamePlayMenu->PullUpMaterialUI(StoneAmount, IronAmount, CopperAmount, AmethystAmount, PlatinAmount);
+		CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
 	}
 }
 
 void APlayerCharacter::Mine()
 {
-	
+	static FVector StartPoint = FVector::Zero();
+	static FVector EndPoint = FVector::Zero();
+	static FRotator PlayerRotation = FRotator::ZeroRotator;
+
+	Controller->GetPlayerViewPoint(StartPoint, PlayerRotation);
+
+	EndPoint = StartPoint + PlayerRotation.Vector() * InteractionRange;
+
+	FHitResult HitResult;
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(GetOwner());
+
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
+
+	if(bSuccess && HitResult.GetActor())
+	{
+		if(IOreInterface* Ore = Cast<IOreInterface>(HitResult.GetActor()))
+		{	
+			if(!Ore->DoneMining())
+			{
+				Ore->StartMining(GetActorLocation());
+				if(Ore->DoneMining() && Ore->OreType() == "Stone")
+				{
+					GameInstance->SaveGame->StoneAmount += StoneAmountPerOreMined;
+					UE_LOG(LogTemp, Warning, TEXT("%d"), GameInstance->SaveGame->StoneAmount);
+				}
+				else if(Ore->DoneMining() && Ore->OreType() == "Iron")
+				{
+					GameInstance->SaveGame->IronAmount += IronAmountPerOreMined;
+				}
+				else if(Ore->DoneMining() && Ore->OreType() == "Copper")
+				{
+					GameInstance->SaveGame->CopperAmount += CopperAmountPerOreMined;
+				}
+				else if(Ore->DoneMining() && Ore->OreType() == "Amethyst")
+				{
+					GameInstance->SaveGame->AmethystAmount += AmethystAmountPerOreMined;
+				}
+				else if(Ore->DoneMining() && Ore->OreType() == "Platin")
+				{
+					GameInstance->SaveGame->PlatinAmount += PlatinAmountPerOreMined;
+				}
+			}
+		}
+	}
 }
 
 #pragma region UI
 
 void APlayerCharacter::CallPauseMenu()
 {
-	if(!CreatedPauseMenu || !ActivePlayerController || !CreatedGameUIBase)
+	if(!CreatedPauseMenu || !ActivePlayerController || !CreatedGameUIBase || CreatedGameUIBase->DeathScreenActive)
 	{
 		return;
 	}

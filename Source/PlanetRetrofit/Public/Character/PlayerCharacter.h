@@ -60,16 +60,16 @@ protected:
 		return; 
 	}
 
-	UPROPERTY()
-	int32 StoneAmount = 0;
-	UPROPERTY()
-	int32 IronAmount = 0;
-	UPROPERTY()
-	int32 CopperAmount = 0;
-	UPROPERTY()
-	int32 AmethystAmount = 0;
-	UPROPERTY()
-	int32 PlatinAmount = 0;
+	UPROPERTY(EditDefaultsOnly, Category = "Mining")
+	int32 StoneAmountPerOreMined = 1;
+	UPROPERTY(EditDefaultsOnly, Category = "Mining")
+	int32 IronAmountPerOreMined = 1;
+	UPROPERTY(EditDefaultsOnly, Category = "Mining")
+	int32 CopperAmountPerOreMined = 1;
+	UPROPERTY(EditDefaultsOnly, Category = "Mining")
+	int32 AmethystAmountPerOreMined = 1;
+	UPROPERTY(EditDefaultsOnly, Category = "Mining")
+	int32 PlatinAmountPerOreMined = 1;
 
 	UPROPERTY()
 	AActor* HitActor = nullptr;
@@ -143,6 +143,8 @@ protected:
 	TSubclassOf<class UCommonActivatableWidgetBase> SettingsMenu;
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<class UGamePlayWidgetBase> GamePlayUI;
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UDeathScreenBase> DeathScreen;
 	
 	UPROPERTY()	
 	class UCommonUserWidgetBase* CreatedGameUIBase = nullptr;
@@ -152,6 +154,8 @@ protected:
 	class USettingsMenuBase* CreatedSettingsMenu = nullptr;
 	UPROPERTY()	
 	class UGamePlayWidgetBase* CreatedGamePlayMenu = nullptr;
+	UPROPERTY()
+	class UDeathScreenBase* CreatedDeathScreen = nullptr;
 
 #pragma endregion UI
 

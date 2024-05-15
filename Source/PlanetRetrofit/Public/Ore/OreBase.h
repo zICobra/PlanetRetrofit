@@ -29,6 +29,7 @@ protected:
 	class UBillboardComponent* OreTypeText;
 
 #pragma region OreType
+public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "!IsIron && !IsCopper && !IsAmethyst && !IsPlatin", EditConditionHides))
 	bool IsStone;
@@ -41,16 +42,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "!IsStone && !IsIron && !IsCopper && !IsAmethyst", EditConditionHides))
 	bool IsPlatin;
 
+protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
-	float StoneMiningDuration = 1.0f;
+	float StoneMiningDuration = 3.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsIron", EditConditionHides))
-	float IronMiningDuration = 1.5f;
+	float IronMiningDuration = 5.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsCopper", EditConditionHides))
-	float CopperMiningDuration = 2.0f;
+	float CopperMiningDuration = 7.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsAmethyst", EditConditionHides))
-	float AmethystMiningDuration = 2.5f;
+	float AmethystMiningDuration = 9.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsPlatin", EditConditionHides))
-	float PlatinMiningDuration = 3.0f;
+	float PlatinMiningDuration = 12.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
 	class UNiagaraSystem* StoneMiningParticleSystem;
@@ -86,6 +88,14 @@ public:
 	virtual void OutlineTarget() override;
 	virtual void RemoveOutline() override;
 
-	virtual void StartMining() override;
+	virtual void StartMining(const FVector MinerPosition) override;
+	virtual bool DoneMining() override;
+	virtual FString OreType();
 
+private:
+	void MiningScaleAndRotation();
+
+	float DestroyTime = 0.3f;
+
+	bool IsMined = false;
 };

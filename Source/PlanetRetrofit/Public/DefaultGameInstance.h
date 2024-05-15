@@ -22,6 +22,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
 	class USoundClass* SFXSoundClass;
 
+	bool LoadGame = false;
 	FString SettingsSaveSlotName = "SavedSettings";
 	
 	void LoadSettingsInMenu();

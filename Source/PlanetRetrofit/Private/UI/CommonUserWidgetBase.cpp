@@ -47,6 +47,15 @@ void UCommonUserWidgetBase::ClearSettingsMenu()
     PauseMenuStack->ClearWidgets();
 }
 
+void UCommonUserWidgetBase::PushDeathScreen(class UCommonActivatableWidgetBase* DeathScreen)
+{
+    if(DeathScreen)
+    {
+        DeathScreenActive = true;
+        PauseMenuStack->AddWidgetInstance(*DeathScreen);
+    }
+}
+
 
 
 
