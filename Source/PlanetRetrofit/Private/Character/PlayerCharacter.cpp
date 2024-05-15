@@ -140,12 +140,12 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Params.AddIgnoredActor(GetOwner());
 
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
-	// DrawDebugLine(GetWorld(), StartPoint, EndPoint, FColor::Red, false, 10, 0, 1);
+	
 	if(bSuccess)
 	{
 		if(IOutlineInterface* OutlineActor = Cast<IOutlineInterface>(HitResult.GetActor()))
 		{
-			if(OutlineActor != PreviouslyOutlinedActor)
+			if(OutlineActor != PreviouslyOutlinedActor && OutlineActor->CanOutline())
 			{
 				OutlineActor->OutlineTarget();
 				PreviouslyOutlinedActor = OutlineActor;
@@ -154,10 +154,9 @@ void APlayerCharacter::Tick(float DeltaTime)
 			{
 
 			}
-			else
+			else if(PreviouslyOutlinedActor)
 			{
 				PreviouslyOutlinedActor->RemoveOutline();
-				UE_LOG(LogTemp, Warning, TEXT("remove"));
 				PreviouslyOutlinedActor = nullptr;
 			}
 		}
@@ -360,7 +359,7 @@ void APlayerCharacter::Interact()
 	if(bSuccess && HitResult.GetActor())
 	{
 		BuildingBase = Cast<ABuildingInteractableBase>(HitResult.GetActor());
-		if(BuildingBase)
+		if(BuildingBase && !BuildingBase->Spawned)
 		{
 			BuildingBase->Interacting.BindUObject(this, &APlayerCharacter::ShowBuildingMenu);
 			BuildingBase->StoppedOverlapping.BindUObject(this, &APlayerCharacter::ClearBuildingMenu);
@@ -499,6 +498,7 @@ void APlayerCharacter::ShowBuildingMenu()
 	CreatedGameUIBase->PushBuildingMenu(CreatedBuildingWidget);
 	ActivePlayerController->SetShowMouseCursor(true);
 	ActivePlayerController->SetInputMode(GameAndUIInputMode);
+	CreatedBuildingWidget->OnBuildButtonClicked.BindUObject(this, &APlayerCharacter::SpawnBuilding);
 	CreatedBuildingWidget->OnBackButtonClicked.BindUObject(this, &APlayerCharacter::ClearBuildingMenu);
 }
 
@@ -511,4 +511,21 @@ void APlayerCharacter::ClearBuildingMenu()
 	CreatedBuildingWidget->OnBackButtonClicked.Unbind();
 	BuildingBase->Interacting.Unbind();
 	BuildingBase->StoppedOverlapping.Unbind();
+}
+
+void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
+{
+	ClearBuildingMenu();
+
+	if(BuildingBase->IsFarm)
+	{
+		BuildingBase->BuildingIndex = BuildingIndex;
+	}
+	if(PreviouslyOutlinedActor)
+	{
+		PreviouslyOutlinedActor->RemoveOutline();
+		PreviouslyOutlinedActor = nullptr;
+	}
+
+	BuildingBase->BuildBuilding();
 }

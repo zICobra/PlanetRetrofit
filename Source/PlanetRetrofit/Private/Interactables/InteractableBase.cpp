@@ -40,3 +40,8 @@ void AInteractableBase::RemoveOutline()
 	Mesh->SetRenderCustomDepth(false);
 }
 
+bool AInteractableBase::CanOutline()
+{
+	return true;
+}
+

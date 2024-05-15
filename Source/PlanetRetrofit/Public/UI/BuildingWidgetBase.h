@@ -43,7 +43,7 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	class UButtonBase* HappyFieldButton;
 	UPROPERTY(meta = (BindWidget))
-	class UButtonBase* SaladButton;
+	class UButtonBase* SaladFieldButton;
 	UPROPERTY(meta = (BindWidget))
 	class UButtonBase* CarrotFieldButton;
 

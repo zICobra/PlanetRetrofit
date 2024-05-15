@@ -92,6 +92,7 @@ public:
 
 	virtual void OutlineTarget() override;
 	virtual void RemoveOutline() override;
+	virtual bool CanOutline() override;
 
 	virtual void StartMining(const FVector MinerPosition) override;
 	virtual bool DoneMining() override;

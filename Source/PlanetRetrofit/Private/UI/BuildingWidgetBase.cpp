@@ -19,9 +19,18 @@ void UBuildingWidgetBase::NativeConstruct()
 
     GameInstance = Cast<UDefaultGameInstance>(GetGameInstance());
 
+    FieldSelectionIndex = 1;
+
     if(GameInstance->BuildingConfig && GameInstance->BuildingConfig->Buildings.Num() > BuildingIndex)
     {
-        SetText();
+        if(IsFarm)
+        {
+            SetTextForField();
+        }
+        else
+        {
+            SetText();
+        }
 
         if(EnoughtStone && EnoughtIron && EnoughtCopper && EnoughtAmethyst && EnoughtPlatin)
         {
@@ -35,11 +44,19 @@ void UBuildingWidgetBase::NativeConstruct()
 
     if(IsFarm)
     {
+        HappyFieldButton->SetVisibility(ESlateVisibility::Visible);
+        SaladFieldButton->SetVisibility(ESlateVisibility::Visible);
+        CarrotFieldButton->SetVisibility(ESlateVisibility::Visible);
+
         HappyFieldButton->SetFocus();
         BuildButton->SetVisibility(ESlateVisibility::Collapsed);
     }
     else
     {
+        HappyFieldButton->SetVisibility(ESlateVisibility::Collapsed);
+        SaladFieldButton->SetVisibility(ESlateVisibility::Collapsed);
+        CarrotFieldButton->SetVisibility(ESlateVisibility::Collapsed);
+
         BackButton->SetFocus();
     }
 
@@ -50,12 +67,20 @@ void UBuildingWidgetBase::AddDelegates()
 {
     BackButton->OnClicked.BindUObject(this, &UBuildingWidgetBase::OnBackButtonClickedFunction);
     BuildButton->OnClicked.BindUObject(this, &UBuildingWidgetBase::OnBuildButtonClickedFunction);
+
+    HappyFieldButton->OnClicked.BindUObject(this, &UBuildingWidgetBase::OnHappyPlantFieldButtonClicked);
+    SaladFieldButton->OnClicked.BindUObject(this, &UBuildingWidgetBase::OnSaladFieldButtonClicked);
+    CarrotFieldButton->OnClicked.BindUObject(this, &UBuildingWidgetBase::OnCarrotFieldButtonClicked);
 }
 
 void UBuildingWidgetBase::RemoveDelegates()
 {
     BackButton->OnClicked.Unbind();
     BuildButton->OnClicked.Unbind();
+
+    HappyFieldButton->OnClicked.Unbind();
+    SaladFieldButton->OnClicked.Unbind();
+    CarrotFieldButton->OnClicked.Unbind();
 }
 
 
@@ -121,6 +146,8 @@ void UBuildingWidgetBase::CarrotFieldButtonSelected()
 
 void UBuildingWidgetBase::SetText()
 {
+    BuildingName->SetText(FText::FromString(GameInstance->BuildingConfig->Buildings[BuildingIndex].BuildingName));
+
     if(GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount <= GameInstance->SaveGame->StoneAmount)
     {
         FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount);
@@ -197,6 +224,8 @@ void UBuildingWidgetBase::SetText()
 
 void UBuildingWidgetBase::SetTextForField()
 {
+    BuildingName->SetText(FText::FromString(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].BuildingName));
+
     if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].StoneAmount <= GameInstance->SaveGame->StoneAmount)
     {
         FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].StoneAmount);

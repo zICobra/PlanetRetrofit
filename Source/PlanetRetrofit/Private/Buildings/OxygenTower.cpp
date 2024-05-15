@@ -17,8 +17,6 @@ AOxygenTower::AOxygenTower()
     Mesh->SetupAttachment(Root);
     OxygenRange = CreateDefaultSubobject<USphereComponent>(TEXT("Oxygen Range"));
     OxygenRange->SetupAttachment(Root);
-
-
 }
 
 void AOxygenTower::BeginPlay()

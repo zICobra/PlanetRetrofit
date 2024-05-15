@@ -29,11 +29,22 @@ protected:
 	UFUNCTION()
 	void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+
+	UPROPERTY()
+	class UDefaultGameInstance* GameInstance = nullptr;
+
 public:
 	UPROPERTY(EditAnywhere, Category = "Building")
 	int32 BuildingIndex;
 	UPROPERTY(EditAnywhere, Category = "Building")
+	FTransform BuildingTransform;
+	UPROPERTY(EditAnywhere, Category = "Building")
 	bool IsFarm;
+
+	UPROPERTY()
+	bool Spawned = false;
+	UPROPERTY()
+	int32 SpawnedFarmIndex = 0;
 
 	DECLARE_DELEGATE(FOnInteract);
 	DECLARE_DELEGATE(FOnEndOverlap);
@@ -45,5 +56,7 @@ public:
 	virtual void Interact() override;
 
 	void BuildBuilding();
+
+	virtual bool CanOutline() override;
 
 };
