@@ -36,6 +36,7 @@ public:
 	void SaveSettings();
 	void SetSettings();
 
+	UPROPERTY()
 	class UDefaultSaveGame* SaveGame;
 
 };

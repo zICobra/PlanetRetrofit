@@ -39,8 +39,11 @@ AOreBase::AOreBase()
 void AOreBase::BeginPlay()
 {
 	Super::BeginPlay();
+
 	PlayerRadius->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOreBase::OnBeginOverlap);
 	PlayerRadius->OnComponentEndOverlap.AddUniqueDynamic(this, &AOreBase::OnEndOverlap);
+
+	PlayFishNiagara();
 }
 
 // Called every frame
@@ -188,11 +191,11 @@ void AOreBase::MiningScaleAndRotation()
 {
 	if(IsStone || IsIron)
 	{
-		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.01f, Mesh->GetComponentScale().Y - 0.01f, Mesh->GetComponentScale().Z - 0.01f));
+		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.008f, Mesh->GetComponentScale().Y - 0.008f, Mesh->GetComponentScale().Z - 0.008f));
 	}
 	else
 	{
-		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.001f, Mesh->GetComponentScale().Y - 0.001f, Mesh->GetComponentScale().Z - 0.001f));
+		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.002f, Mesh->GetComponentScale().Y - 0.002f, Mesh->GetComponentScale().Z - 0.002f));
 	}
 
 	Mesh->SetWorldRotation(FRotator(Mesh->GetComponentRotation().Pitch, Mesh->GetComponentRotation().Yaw + 5, Mesh->GetComponentRotation().Roll));
@@ -204,29 +207,56 @@ void AOreBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* 
 	{
 		Player = OtherActor;
 		OreTypeText->SetHiddenInGame(false);
-		PlayFishNiagara();
 	}
 }
 
 void AOreBase::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	OreTypeText->SetHiddenInGame(true);
-	RemoveFishNiagara();
+	
 	Player = nullptr;
 }
 
 void AOreBase::PlayFishNiagara()
 {
 	CreatedFishParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), FishParticleSystem, GetActorLocation());
+	if(IsStone)
+	{
+		CreatedFishParticleSystem->SetVariableLinearColor(TEXT("FishColor"), FLinearColor::Red);
+	}
+	else if(IsIron)
+	{
+		CreatedFishParticleSystem->SetVariableLinearColor(TEXT("FishColor"), FLinearColor::Gray);
+	}
+	else if(IsCopper)
+	{
+		CreatedFishParticleSystem->SetVariableLinearColor(TEXT("FishColor"), FLinearColor::Green);
+	}
+	else if(IsAmethyst)
+	{
+		CreatedFishParticleSystem->SetVariableLinearColor(TEXT("FishColor"), FLinearColor::Blue);
+	}
+	else if(IsPlatin)
+	{
+		CreatedFishParticleSystem->SetVariableLinearColor(TEXT("FishColor"), FLinearColor::Yellow);
+	}
 }
 
 void AOreBase::RemoveFishNiagara()
 {
 	if(CreatedFishParticleSystem)
 	{
-		CreatedFishParticleSystem->Deactivate();
-		CreatedFishParticleSystem->DestroyComponent();
-		CreatedFishParticleSystem = nullptr;
+		CreatedFishParticleSystem->SetVariableBool(TEXT("OreMined"), true);
+
+    	float Lifespan = 2.0f; // Lifespan in seconds
+
+    	FTimerHandle TimerHandle;
+    	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() 
+		{
+        	CreatedFishParticleSystem->DestroyComponent();
+			CreatedFishParticleSystem = nullptr;
+    	}, Lifespan, false);
+
 	}
 }
 
@@ -235,23 +265,29 @@ void AOreBase::PlayMineAnimation()
 	if(IsStone)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), StoneMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), StoneStaticMesh);
 	}
 	else if(IsIron)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), IronMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), IronStaticMesh);
 	}
 	else if(IsCopper)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), CopperMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), CopperStaticMesh);
 	}
 	else if(IsAmethyst)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), AmethystMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), AmethystStaticMesh);
 	}
 	else if(IsPlatin)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), PlatinMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), PlatinStaticMesh);
 	}
+
 }
 
 void AOreBase::RemoveMineAnimation()
