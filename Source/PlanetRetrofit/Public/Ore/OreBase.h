@@ -64,6 +64,17 @@ protected:
 	float PlatinMiningDuration = 12.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
+	UStaticMesh* StoneStaticMesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsIron", EditConditionHides))
+	UStaticMesh* IronStaticMesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsCopper", EditConditionHides))
+	UStaticMesh* CopperStaticMesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsAmethyst", EditConditionHides))
+	UStaticMesh* AmethystStaticMesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsPlatin", EditConditionHides))
+	UStaticMesh* PlatinStaticMesh;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
 	class UNiagaraSystem* StoneMiningParticleSystem;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsIron", EditConditionHides))
 	class UNiagaraSystem* IronMiningParticleSystem;

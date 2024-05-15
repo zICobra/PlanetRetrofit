@@ -289,7 +289,7 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 			AddControllerPitchInput(-LookValue.Y * GameInstance->SaveGame->MouseSensitivity);
 		}
 
-		UE_LOG(LogTemp, Warning, TEXT("MouseSens: %f"), GameInstance->SaveGame->MouseSensitivity);
+		// UE_LOG(LogTemp, Warning, TEXT("MouseSens: %f"), GameInstance->SaveGame->MouseSensitivity);
 	}
 }
 
@@ -384,6 +384,8 @@ void APlayerCharacter::PullUpMaterialUI()
 	if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
 	{
 		CreatedGamePlayMenu->RemoveMaterialUI();
+		ActivePlayerController->SetShowMouseCursor(false);
+		ActivePlayerController->SetInputMode(GameOnlyInputMode);
 	}
 	else if(CreatedGamePlayMenu)
 	{
@@ -421,42 +423,78 @@ void APlayerCharacter::StartMine()
 
 void APlayerCharacter::Mine()
 {
-	
-	if(Ore)
-	{	
-		if(!Ore->DoneMining())
-		{
-			Ore->StartMining(GetActorLocation());
-			if(Ore->DoneMining() && Ore->OreType() == "Stone")
+	static FVector StartPoint = FVector::Zero();
+	static FVector EndPoint = FVector::Zero();
+	static FRotator PlayerRotation = FRotator::ZeroRotator;
+
+	Controller->GetPlayerViewPoint(StartPoint, PlayerRotation);
+
+	EndPoint = StartPoint + PlayerRotation.Vector() * InteractionRange;
+
+	FHitResult HitResult;
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(GetOwner());
+
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
+
+	if(bSuccess && HitResult.GetActor())
+	{
+		if(AOreBase* FocusedOre = Cast<AOreBase>(HitResult.GetActor()))
+		{	
+			if(!FocusedOre->DoneMining())
 			{
-				GameInstance->SaveGame->StoneAmount += Ore->StoneAmountPerOreMined;
-				UE_LOG(LogTemp, Warning, TEXT("%d"), GameInstance->SaveGame->StoneAmount);
+				FocusedOre->StartMining(GetActorLocation());
+				if(FocusedOre->DoneMining() && FocusedOre->OreType() == "Stone")
+				{
+					GameInstance->SaveGame->StoneAmount += FocusedOre->StoneAmountPerOreMined;
+					UE_LOG(LogTemp, Warning, TEXT("%d"), GameInstance->SaveGame->StoneAmount);
+				}
+				else if(FocusedOre->DoneMining() && FocusedOre->OreType() == "Iron")
+				{
+					GameInstance->SaveGame->IronAmount += FocusedOre->IronAmountPerOreMined;
+				}
+				else if(FocusedOre->DoneMining() && FocusedOre->OreType() == "Copper")
+				{
+					GameInstance->SaveGame->CopperAmount += FocusedOre->CopperAmountPerOreMined;
+				}
+				else if(FocusedOre->DoneMining() && FocusedOre->OreType() == "Amethyst")
+				{
+					GameInstance->SaveGame->AmethystAmount += FocusedOre->AmethystAmountPerOreMined;
+				}
+				else if(FocusedOre->DoneMining() && FocusedOre->OreType() == "Platin")
+				{
+					GameInstance->SaveGame->PlatinAmount += FocusedOre->PlatinAmountPerOreMined;
+				}
 			}
-			else if(Ore->DoneMining() && Ore->OreType() == "Iron")
+			else if(Ore)
 			{
-				GameInstance->SaveGame->IronAmount += Ore->IronAmountPerOreMined;
-			}
-			else if(Ore->DoneMining() && Ore->OreType() == "Copper")
-			{
-				GameInstance->SaveGame->CopperAmount += Ore->CopperAmountPerOreMined;
-			}
-			else if(Ore->DoneMining() && Ore->OreType() == "Amethyst")
-			{
-				GameInstance->SaveGame->AmethystAmount += Ore->AmethystAmountPerOreMined;
-			}
-			else if(Ore->DoneMining() && Ore->OreType() == "Platin")
-			{
-				GameInstance->SaveGame->PlatinAmount += Ore->PlatinAmountPerOreMined;
+				Ore->RemoveMineAnimation();
+				Ore = nullptr;
+				if(CreatedGamePlayMenu->MaterialUIIsActive)
+				{
+					CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
+				}				
 			}
 		}
 		else
 		{
+			if(Ore)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Remove"));
+				Ore->RemoveMineAnimation();
+				Ore = nullptr;
+			}
+		}
+	}
+	else
+	{
+		if(Ore)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Remove"));
 			Ore->RemoveMineAnimation();
 			Ore = nullptr;
-			if(CreatedGamePlayMenu->MaterialUIIsActive)
-			{
-				CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
-			}
 		}
 	}
 	
