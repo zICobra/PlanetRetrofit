@@ -76,7 +76,7 @@ protected:
 
 
 	class IOutlineInterface* PreviouslyOutlinedActor = nullptr;
-
+	class ABuildingInteractableBase* BuildingBase = nullptr;
 
 #pragma endregion Variables
 
@@ -119,6 +119,7 @@ private:
 	UFUNCTION()
 	void CallSettingsMenu();
 
+
 #pragma endregion Inputs
 
 #pragma region Components
@@ -145,6 +146,8 @@ protected:
 	TSubclassOf<class UGamePlayWidgetBase> GamePlayUI;
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<class UDeathScreenBase> DeathScreen;
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UBuildingWidgetBase> BuildingWidget;
 	
 	UPROPERTY()	
 	class UCommonUserWidgetBase* CreatedGameUIBase = nullptr;
@@ -156,6 +159,8 @@ protected:
 	class UGamePlayWidgetBase* CreatedGamePlayMenu = nullptr;
 	UPROPERTY()
 	class UDeathScreenBase* CreatedDeathScreen = nullptr;
+	UPROPERTY()
+	class UBuildingWidgetBase* CreatedBuildingWidget = nullptr;
 
 #pragma endregion UI
 
@@ -180,6 +185,11 @@ private:
 public:
 	virtual void AddGameplayTag() override;
 	virtual void RemoveGameplayTag() override;
+
+private:
+	void ShowBuildingMenu();
+	UFUNCTION()
+	void ClearBuildingMenu();
 
 };
 

@@ -22,6 +22,7 @@
 
 #include "UI/CommonUserWidgetBase.h"
 #include "UI/GamePlayWidgetBase.h"
+#include "UI/BuildingWidgetBase.h"
 #include "UI/SettingsMenuBase.h"
 #include "UI/DeathScreenBase.h"
 #include "UI/PauseMenuBase.h"
@@ -32,6 +33,8 @@
 #include "Interfaces/InteractableInterface.h"
 #include "Interfaces/OutlineInterface.h"
 #include "Interfaces/OreInterface.h"
+
+#include "Interactables/BuildingInteractableBase.h"
 
 #include "Sound/SoundCue.h"
 #include "NiagaraSystem.h"
@@ -101,6 +104,10 @@ void APlayerCharacter::BeginPlay()
 	if(DeathScreen)
 	{
 		CreatedDeathScreen = Cast<UDeathScreenBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), DeathScreen));
+	}
+	if(BuildingWidget)
+	{
+		CreatedBuildingWidget = Cast<UBuildingWidgetBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), BuildingWidget));
 	}
 
 
@@ -352,6 +359,13 @@ void APlayerCharacter::Interact()
 
 	if(bSuccess && HitResult.GetActor())
 	{
+		if(BuildingBase = Cast<ABuildingInteractableBase>(HitResult.GetActor()))
+		{
+			BuildingBase->Interacting.BindUObject(this, &APlayerCharacter::ShowBuildingMenu);
+			BuildingBase->StoppedOverlapping.BindUObject(this, &APlayerCharacter::ClearBuildingMenu);
+			CreatedBuildingWidget->BuildingIndex = BuildingBase->BuildingIndex;
+			CreatedBuildingWidget->IsFarm = BuildingBase->IsFarm;
+		}
 		if(IInteractableInterface* Interactable = Cast<IInteractableInterface>(HitResult.GetActor()))
 		{
 			Interactable->Interact();
@@ -426,7 +440,7 @@ void APlayerCharacter::Mine()
 
 void APlayerCharacter::CallPauseMenu()
 {
-	if(!CreatedPauseMenu || !ActivePlayerController || !CreatedGameUIBase || CreatedGameUIBase->DeathScreenActive)
+	if(!CreatedPauseMenu || !ActivePlayerController || !CreatedGameUIBase || CreatedGameUIBase->DeathScreenActive || CreatedGameUIBase->BuildingMenuActive)
 	{
 		return;
 	}
@@ -477,4 +491,19 @@ void APlayerCharacter::AddGameplayTag()
 void APlayerCharacter::RemoveGameplayTag()
 {
 	GameplayTags.RemoveTag(OxygenTag);
+}
+
+void APlayerCharacter::ShowBuildingMenu()
+{
+	CreatedGameUIBase->PushBuildingMenu(CreatedBuildingWidget);
+	CreatedBuildingWidget->OnBackButtonClicked.BindUObject(this, &APlayerCharacter::ClearBuildingMenu);
+}
+
+void APlayerCharacter::ClearBuildingMenu()
+{
+	CreatedGameUIBase->ClearBuildingMenu();
+	
+	CreatedBuildingWidget->OnBackButtonClicked.Unbind();
+	BuildingBase->Interacting.Unbind();
+	BuildingBase->StoppedOverlapping.Unbind();
 }
