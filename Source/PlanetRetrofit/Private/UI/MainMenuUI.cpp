@@ -22,30 +22,45 @@ void UMainMenuUI::NativeConstruct()
     if(GameInstance)
     {
         GameInstance->LoadSettingsInMenu();
+        if(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveGame->SaveSlotName, 0))
+        {
+            BP_LoadGameButton->SetVisibility(ESlateVisibility::Visible);
+        }
     }
 
-    BP_PlayButton->SetFocus();
+    BP_NewGameButton->SetFocus();
     AddDelegates();
 }
 
 void UMainMenuUI::AddDelegates()
 {
-    BP_PlayButton->OnClicked.BindUObject(this, &UMainMenuUI::OnPlayButtonClicked);
+    BP_NewGameButton->OnClicked.BindUObject(this, &UMainMenuUI::OnNewGameButtonClicked);
+    BP_LoadGameButton->OnClicked.BindUObject(this, &UMainMenuUI::OnLoadGameButtonClicked);
     BP_SettingsButton->OnClicked.BindUObject(this, &UMainMenuUI::OnSettingsButtonClicked);
     BP_ExitButton->OnClicked.BindUObject(this, &UMainMenuUI::OnExitButtonClicked);
 }
 
 void UMainMenuUI::RemoveDelegates()
 {
-    BP_PlayButton->OnClicked.Unbind();
+    BP_NewGameButton->OnClicked.Unbind();
+    BP_LoadGameButton->OnClicked.Unbind();
     BP_SettingsButton->OnClicked.Unbind();
     BP_ExitButton->OnClicked.Unbind();
 }
 
 
 #pragma region StartRegion
-void UMainMenuUI::OnPlayButtonClicked()
+void UMainMenuUI::OnNewGameButtonClicked()
 {
+    RemoveDelegates();
+    GameInstance->LoadGame = false;
+    LoadMainLevel();
+}
+
+void UMainMenuUI::OnLoadGameButtonClicked()
+{
+    RemoveDelegates();
+    GameInstance->LoadGame = true;
     LoadMainLevel();
 }
 
@@ -60,5 +75,21 @@ void UMainMenuUI::OnExitButtonClicked()
 {
     RemoveDelegates();
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->ConsoleCommand("quit");
+}
+
+void UMainMenuUI::OnNewGameButtonHovered()
+{
+    if(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveGame->SaveSlotName, 0))
+    {
+        NewGameWarning->SetVisibility(ESlateVisibility::Visible);
+    }
+}
+
+void UMainMenuUI::OnNewGameButtonUnHovered()
+{
+    if(UGameplayStatics::LoadGameFromSlot(GameInstance->SaveGame->SaveSlotName, 0))
+    {
+        NewGameWarning->SetVisibility(ESlateVisibility::Collapsed);
+    }
 }
 #pragma endregion StartRegion

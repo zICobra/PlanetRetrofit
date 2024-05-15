@@ -22,5 +22,13 @@ class PLANETRETROFIT_API IOreInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void StartMining() {};
+	virtual void StartMining(const FVector MinerPosition) {};
+	virtual bool DoneMining() 
+	{
+		return false;
+	};
+	virtual FString OreType() 
+	{
+		return "";
+	};
 };

@@ -47,6 +47,30 @@ void UCommonUserWidgetBase::ClearSettingsMenu()
     PauseMenuStack->ClearWidgets();
 }
 
+void UCommonUserWidgetBase::PushBuildingMenu(class UCommonActivatableWidgetBase* BuildingMenu)
+{
+    if(BuildingMenu)
+    {
+        BuildingMenuActive = true;
+        PauseMenuStack->AddWidgetInstance(*BuildingMenu);
+    }
+}
+
+void UCommonUserWidgetBase::ClearBuildingMenu()
+{
+    BuildingMenuActive = true;
+    PauseMenuStack->ClearWidgets();    
+}
+
+void UCommonUserWidgetBase::PushDeathScreen(class UCommonActivatableWidgetBase* DeathScreen)
+{
+    if(DeathScreen)
+    {
+        DeathScreenActive = true;
+        PauseMenuStack->AddWidgetInstance(*DeathScreen);
+    }
+}
+
 
 
 

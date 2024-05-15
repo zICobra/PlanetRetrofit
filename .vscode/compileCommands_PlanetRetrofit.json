@@ -24,6 +24,14 @@
 		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
 	},
 	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Buildings\\DoorActorBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Buildings\\OxygenTower.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
@@ -64,7 +72,31 @@
 		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
 	},
 	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interactables\\BedBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interactables\\BuildingInteractableBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interactables\\InteractableBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Interfaces\\GamplayTagsInterface.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
 			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
@@ -144,6 +176,14 @@
 		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
 	},
 	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\DeathScreenBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\GamePlayWidgetBase.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
@@ -192,6 +232,14 @@
 		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
 	},
 	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Buildings\\DoorActorBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Buildings\\OxygenTower.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
@@ -232,7 +280,31 @@
 		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
 	},
 	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Interactables\\BedBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Interactables\\BuildingInteractableBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Interactables\\InteractableBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Interfaces\\GamplayTagsInterface.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
 			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
@@ -305,6 +377,14 @@
 	},
 	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\CommonUserWidgetBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\DeathScreenBase.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
 			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"

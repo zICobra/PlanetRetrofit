@@ -36,7 +36,13 @@ public:
 
 	void PushSettingsMenu(class UCommonActivatableWidgetBase* SettingsMenu);
 	void ClearSettingsMenu();
+
+	void PushBuildingMenu(class UCommonActivatableWidgetBase* BuildingMenu);
+	void ClearBuildingMenu();
+	
+	void PushDeathScreen(class UCommonActivatableWidgetBase* DeathScreen);
 	
 	bool PauseMenuActive = false;
-	
+	bool DeathScreenActive = false;
+	bool BuildingMenuActive = false;
 };
