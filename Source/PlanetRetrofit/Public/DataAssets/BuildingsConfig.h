@@ -31,7 +31,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 PlatinAmount = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<AStaticMeshActor> ActorToSpawn;
+	TSubclassOf<AActor> ActorToSpawn;
 
 };
 

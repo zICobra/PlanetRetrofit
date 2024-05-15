@@ -60,6 +60,11 @@ void AOreBase::RemoveOutline()
 	Mesh->SetRenderCustomDepth(false);
 }
 
+bool AOreBase::CanOutline()
+{
+	return true;
+}
+
 void AOreBase::StartMining(const FVector MinerPosition)
 {
 	if(IsStone)

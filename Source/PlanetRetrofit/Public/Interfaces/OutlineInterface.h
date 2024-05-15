@@ -24,4 +24,8 @@ class PLANETRETROFIT_API IOutlineInterface
 public:
 	virtual void OutlineTarget() {};
 	virtual void RemoveOutline() {};
+	virtual bool CanOutline() 
+	{
+		return true;
+	};
 };

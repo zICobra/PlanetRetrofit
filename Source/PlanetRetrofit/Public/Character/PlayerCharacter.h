@@ -190,6 +190,8 @@ private:
 	void ShowBuildingMenu();
 	UFUNCTION()
 	void ClearBuildingMenu();
+	UFUNCTION()
+	void SpawnBuilding(int32 BuildingIndex);
 
 };
 
