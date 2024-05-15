@@ -59,8 +59,8 @@ public:
 
 protected:
 	UFUNCTION()
-	void OnBackButtonClicked();
+	void OnBackButtonClickedFunction();
 	UFUNCTION()
-	void OnBuildButtonClicked();
+	void OnBuildButtonClickedFunction();
 	
 };

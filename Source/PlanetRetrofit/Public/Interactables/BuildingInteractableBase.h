@@ -44,4 +44,6 @@ public:
 
 	virtual void Interact() override;
 
+	void BuildBuilding();
+
 };

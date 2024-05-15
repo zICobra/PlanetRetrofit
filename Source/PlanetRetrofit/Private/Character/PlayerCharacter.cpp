@@ -359,7 +359,8 @@ void APlayerCharacter::Interact()
 
 	if(bSuccess && HitResult.GetActor())
 	{
-		if(BuildingBase = Cast<ABuildingInteractableBase>(HitResult.GetActor()))
+		BuildingBase = Cast<ABuildingInteractableBase>(HitResult.GetActor());
+		if(BuildingBase)
 		{
 			BuildingBase->Interacting.BindUObject(this, &APlayerCharacter::ShowBuildingMenu);
 			BuildingBase->StoppedOverlapping.BindUObject(this, &APlayerCharacter::ClearBuildingMenu);

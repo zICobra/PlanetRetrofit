@@ -21,6 +21,8 @@ public:
 	class USoundClass* MusicSoundClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
 	class USoundClass* SFXSoundClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DataAssets")
+	class UBuildingsConfig* BuildingConfig = nullptr;
 
 	bool LoadGame = false;
 	FString SettingsSaveSlotName = "SavedSettings";

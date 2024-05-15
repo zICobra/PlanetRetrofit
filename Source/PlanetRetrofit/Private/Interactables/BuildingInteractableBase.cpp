@@ -6,6 +6,8 @@
 #include "Components/WidgetComponent.h"
 #include "Components/BoxComponent.h"
 
+#include "DataAssets/BuildingsConfig.h"
+
 
 ABuildingInteractableBase::ABuildingInteractableBase()
 {
@@ -26,7 +28,7 @@ void ABuildingInteractableBase::BeginPlay()
 
 void ABuildingInteractableBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-    Interacting.ExecuteIfBound();
+
 }
 
 void ABuildingInteractableBase::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
@@ -36,5 +38,10 @@ void ABuildingInteractableBase::OnEndOverlap(UPrimitiveComponent* OverlappedComp
 
 void ABuildingInteractableBase::Interact()
 {
-    // Interacting.ExecuteIfBound();
+    Interacting.ExecuteIfBound();
+}
+
+void ABuildingInteractableBase::BuildBuilding()
+{
+    
 }
