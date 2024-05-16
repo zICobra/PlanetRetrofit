@@ -32,6 +32,14 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
 	class UNiagaraSystem* FishParticleSystem;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore")
+	int32 FishAmount;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore")
+	float FishScale;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore")
+	bool SpawnFishParticle;
 
 
 	UPROPERTY()
@@ -54,13 +62,13 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
 	float StoneMiningDuration = 3.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsIron", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsIron", EditConditionHides))
 	float IronMiningDuration = 5.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsCopper", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsCopper", EditConditionHides))
 	float CopperMiningDuration = 7.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsAmethyst", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsAmethyst", EditConditionHides))
 	float AmethystMiningDuration = 9.0f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsPlatin", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsPlatin", EditConditionHides))
 	float PlatinMiningDuration = 12.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))

@@ -17,7 +17,7 @@ class PLANETRETROFIT_API UButtonBase : public UCommonButtonBase
 protected:
 	virtual void NativePreConstruct() override;
 	virtual void NativeOnClicked() override;
-	// virtual void NativeOnHovered() override;
+	virtual void NativeOnHovered() override;
 
 
 	UPROPERTY(meta = (BindWidget))
@@ -35,8 +35,10 @@ public:
 	FString ButtonText = "Default";
 
 	DECLARE_DELEGATE(FOnClicked);
+	DECLARE_DELEGATE(FOnHovered);
 
 	FOnClicked OnClicked;
+	FOnHovered OnHovered;
 
 	void OverrideButtonText(FString NewButtonName);
 };
