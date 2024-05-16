@@ -56,12 +56,12 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
         else
         {
             SaveGame->StoneAmount = 0;
-            SaveGame->IronAmount = 0;
-            SaveGame->CopperAmount = 0;
+            SaveGame->IronAmount = 12;
+            SaveGame->CopperAmount = 5;
             SaveGame->AmethystAmount = 0;
-            SaveGame->PlatinAmount = 0;
+            SaveGame->PlatinAmount = 4;
 
-            SaveGame->OxygenDepletionMultiplier = 8.0f;
+            SaveGame->OxygenDepletionMultiplier = 6.0f;
 
             SaveGame->TerminalSaveDataArray.Empty();
             SaveGame->OreSaveDataArray.Empty();
@@ -73,12 +73,12 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
     else
     {
         SaveGame->StoneAmount = 0;
-        SaveGame->IronAmount = 0;
-        SaveGame->CopperAmount = 0;
+        SaveGame->IronAmount = 12;
+        SaveGame->CopperAmount = 5;
         SaveGame->AmethystAmount = 0;
-        SaveGame->PlatinAmount = 0;
+        SaveGame->PlatinAmount = 4;
 
-        SaveGame->OxygenDepletionMultiplier = 8.0f;
+        SaveGame->OxygenDepletionMultiplier = 6.0f;
 
         SaveGame->TerminalSaveDataArray.Empty();
         SaveGame->OreSaveDataArray.Empty();
