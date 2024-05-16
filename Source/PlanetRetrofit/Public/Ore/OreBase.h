@@ -64,7 +64,7 @@ public:
 	bool IsPlatin;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
 	float StoneMiningDuration = 3.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsIron", EditConditionHides))
 	float IronMiningDuration = 5.0f;
@@ -155,7 +155,8 @@ private:
 
 	void PlayFishNiagara();
 	void RemoveFishNiagara();
-
+	
+	void FinishedMining();
 
 	class UNiagaraComponent* CreatedFishParticleSystem = nullptr;
 	class UNiagaraComponent* CreatedMiningParticleSystem = nullptr;

@@ -86,6 +86,15 @@ void UCommonUserWidgetBase::PushDeathScreen(class UCommonActivatableWidgetBase* 
     }
 }
 
+void UCommonUserWidgetBase::PushEndScreen(class UCommonActivatableWidgetBase* EndScreen)
+{
+    if(EndScreen)
+    {
+        EndScreenActive = true;
+        PauseMenuStack->AddWidgetInstance(*EndScreen);
+    }
+}
+
 
 
 
