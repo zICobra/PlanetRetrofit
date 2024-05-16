@@ -85,7 +85,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnExitButtonClicked();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void OnNewGameButtonHovered();
 	UFUNCTION(BlueprintCallable)
 	void OnNewGameButtonUnHovered();

@@ -421,6 +421,13 @@ void APlayerCharacter::Interact()
 			BuildingBase->Interacting.BindUObject(this, &APlayerCharacter::ShowBuildingMenu);
 			CreatedBuildingWidget->BuildingIndex = BuildingBase->BuildingIndex;
 			CreatedBuildingWidget->IsFarm = BuildingBase->IsFarm;
+			if(BuildingBase->IsFarm)
+			{
+				CreatedBuildingWidget->IsFarm1 = BuildingBase->IsFarm1;
+				CreatedBuildingWidget->IsFarm2 = BuildingBase->IsFarm2;
+				CreatedBuildingWidget->IsFarm3 = BuildingBase->IsFarm3;
+				CreatedBuildingWidget->IsFarm4 = BuildingBase->IsFarm4;
+			}
 		}
 		if(IInteractableInterface* Interactable = Cast<IInteractableInterface>(HitResult.GetActor()))
 		{

@@ -34,6 +34,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Building")
 	bool IsFarm;
 
+	UPROPERTY(EditAnywhere, Category = "Building", meta = (EditCondition = "IsFarm", EditConditionHides))
+	bool IsFarm1 = false;
+	UPROPERTY(EditAnywhere, Category = "Building", meta = (EditCondition = "IsFarm", EditConditionHides))
+	bool IsFarm2 = false;
+	UPROPERTY(EditAnywhere, Category = "Building", meta = (EditCondition = "IsFarm", EditConditionHides))
+	bool IsFarm3 = false;
+	UPROPERTY(EditAnywhere, Category = "Building", meta = (EditCondition = "IsFarm", EditConditionHides))
+	bool IsFarm4 = false;
+
 	UPROPERTY()
 	bool Spawned = false;
 	UPROPERTY()

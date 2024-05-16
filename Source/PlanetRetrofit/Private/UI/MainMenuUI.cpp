@@ -38,6 +38,8 @@ void UMainMenuUI::AddDelegates()
     BP_LoadGameButton->OnClicked.BindUObject(this, &UMainMenuUI::OnLoadGameButtonClicked);
     BP_SettingsButton->OnClicked.BindUObject(this, &UMainMenuUI::OnSettingsButtonClicked);
     BP_ExitButton->OnClicked.BindUObject(this, &UMainMenuUI::OnExitButtonClicked);
+
+    BP_NewGameButton->OnHovered.BindUObject(this, &UMainMenuUI::OnNewGameButtonHovered);
 }
 
 void UMainMenuUI::RemoveDelegates()
@@ -46,6 +48,8 @@ void UMainMenuUI::RemoveDelegates()
     BP_LoadGameButton->OnClicked.Unbind();
     BP_SettingsButton->OnClicked.Unbind();
     BP_ExitButton->OnClicked.Unbind();
+
+    BP_NewGameButton->OnHovered.Unbind();
 }
 
 
