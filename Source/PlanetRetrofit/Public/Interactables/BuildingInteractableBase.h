@@ -26,6 +26,9 @@ protected:
 	UPROPERTY()
 	class UDefaultGameInstance* GameInstance = nullptr;
 
+	UPROPERTY()
+	class ACheckTerminalState* TerminalManager = nullptr;
+
 public:
 	UPROPERTY(EditAnywhere, Category = "Building")
 	int32 BuildingIndex;
@@ -57,6 +60,8 @@ public:
 	virtual bool CanOutline() override;
 
 	void BuildBuilding();
+
+	void OnLoadGameCheck();
 
 
 };

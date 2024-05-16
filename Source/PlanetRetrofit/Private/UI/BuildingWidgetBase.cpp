@@ -103,6 +103,7 @@ void UBuildingWidgetBase::OnBackButtonClickedFunction()
 void UBuildingWidgetBase::OnBuildButtonClickedFunction()
 {
     RemoveDelegates();
+    BuildingIndex = FieldSelectionIndex;
     OnBuildButtonClicked.ExecuteIfBound(BuildingIndex);
     DeactivateWidget();
 }
@@ -110,6 +111,7 @@ void UBuildingWidgetBase::OnBuildButtonClickedFunction()
 void UBuildingWidgetBase::OnHappyPlantFieldButtonClicked()
 {
     RemoveDelegates();
+    BuildingIndex = FieldSelectionIndex;
     OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
     DeactivateWidget();
 }
@@ -117,6 +119,7 @@ void UBuildingWidgetBase::OnHappyPlantFieldButtonClicked()
 void UBuildingWidgetBase::OnSaladFieldButtonClicked()
 {
     RemoveDelegates();
+    BuildingIndex = FieldSelectionIndex;
     OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
     DeactivateWidget();
 }
@@ -124,6 +127,7 @@ void UBuildingWidgetBase::OnSaladFieldButtonClicked()
 void UBuildingWidgetBase::OnCarrotFieldButtonClicked()
 {
     RemoveDelegates();
+    BuildingIndex = FieldSelectionIndex;
     OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
     DeactivateWidget();
 }

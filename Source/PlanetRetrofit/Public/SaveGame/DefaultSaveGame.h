@@ -21,6 +21,8 @@ struct FTerminalSaveData
 	bool HasSpawned = false;
 	UPROPERTY()
 	int32 BuildingIndex = 0;
+	UPROPERTY()
+	FVector Location = FVector(0, 0, 0);
 };
 
 USTRUCT()
@@ -31,7 +33,9 @@ struct FOreSaveData
 	UPROPERTY()
 	TSubclassOf<class AOreBase> OreType;
 	UPROPERTY()
-	FTransform Transform;
+	FVector Location;
+	UPROPERTY()
+	bool IsMined = false;
 };
 
 UCLASS()
