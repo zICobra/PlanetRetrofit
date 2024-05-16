@@ -224,6 +224,10 @@ void AOreBase::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 void AOreBase::PlayFishNiagara()
 {
 	CreatedFishParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), FishParticleSystem, GetActorLocation());
+
+	CreatedFishParticleSystem->SetVariableInt(TEXT("FishAmount"), FishAmount);
+	CreatedFishParticleSystem->SetVariableFloat(TEXT("FishScale"), FishScale);
+	
 	if(IsStone)
 	{
 		CreatedFishParticleSystem->SetVariableLinearColor(TEXT("FishColor"), FLinearColor::Red);
