@@ -33,7 +33,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
 	class UNiagaraSystem* FishParticleSystem;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore")
 	bool SpawnFishParticle;
 
 
