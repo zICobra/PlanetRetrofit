@@ -59,6 +59,15 @@ public:
 	UPROPERTY()
 	bool IsFarm = false;
 
+	UPROPERTY()
+	bool IsFarm1 = false;
+	UPROPERTY()
+	bool IsFarm2 = false;
+	UPROPERTY()
+	bool IsFarm3 = false;
+	UPROPERTY()
+	bool IsFarm4 = false;
+
 	DECLARE_DELEGATE(FOnBackButtonClicked);
 	DECLARE_DELEGATE_OneParam(FOnBuildButtonClicked, int32 BuildingIndex);
 
@@ -78,11 +87,11 @@ protected:
 	UFUNCTION()
 	void OnCarrotFieldButtonClicked();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void HappyFieldButtonSelected();
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void SaladFieldButtonSelected();
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void CarrotFieldButtonSelected();
 
 	void SetText();

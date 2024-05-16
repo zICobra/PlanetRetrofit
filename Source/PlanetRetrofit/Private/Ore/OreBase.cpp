@@ -42,8 +42,10 @@ void AOreBase::BeginPlay()
 
 	PlayerRadius->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOreBase::OnBeginOverlap);
 	PlayerRadius->OnComponentEndOverlap.AddUniqueDynamic(this, &AOreBase::OnEndOverlap);
-
-	PlayFishNiagara();
+	if(SpawnFishParticle)
+	{
+		PlayFishNiagara();
+	}
 }
 
 // Called every frame

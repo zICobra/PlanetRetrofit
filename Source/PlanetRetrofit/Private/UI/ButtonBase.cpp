@@ -23,18 +23,11 @@ void UButtonBase::NativeOnClicked()
     OnClicked.ExecuteIfBound();
 }
 
-// void UButtonBase::NativeOnHovered()
-// {
-//     if(HoverSound)
-//     {
-//         UE_LOG(LogTemp, Warning, TEXT("true"));
-//         UGameplayStatics::PlaySound2D(GetWorld(), HoverSound);    
-//     }
-//     else
-//     {
-//         UE_LOG(LogTemp, Warning, TEXT("false"));
-//     }
-// }
+void UButtonBase::NativeOnHovered()
+{
+    UGameplayStatics::PlaySound2D(GetWorld(), HoverSound);    
+    OnHovered.ExecuteIfBound();
+}
 
 
 void UButtonBase::OverrideButtonText(FString NewButtonName)

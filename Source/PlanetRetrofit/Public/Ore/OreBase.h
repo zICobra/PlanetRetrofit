@@ -33,6 +33,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
 	class UNiagaraSystem* FishParticleSystem;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
+	bool SpawnFishParticle;
+
 
 	UPROPERTY()
 	AActor* Player = nullptr;

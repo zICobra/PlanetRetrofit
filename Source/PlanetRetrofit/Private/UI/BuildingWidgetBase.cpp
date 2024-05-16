@@ -71,6 +71,10 @@ void UBuildingWidgetBase::AddDelegates()
     HappyFieldButton->OnClicked.BindUObject(this, &UBuildingWidgetBase::OnHappyPlantFieldButtonClicked);
     SaladFieldButton->OnClicked.BindUObject(this, &UBuildingWidgetBase::OnSaladFieldButtonClicked);
     CarrotFieldButton->OnClicked.BindUObject(this, &UBuildingWidgetBase::OnCarrotFieldButtonClicked);
+
+    HappyFieldButton->OnHovered.BindUObject(this, &UBuildingWidgetBase::HappyFieldButtonSelected);
+    SaladFieldButton->OnHovered.BindUObject(this, &UBuildingWidgetBase::SaladFieldButtonSelected);
+    CarrotFieldButton->OnHovered.BindUObject(this, &UBuildingWidgetBase::CarrotFieldButtonSelected);
 }
 
 void UBuildingWidgetBase::RemoveDelegates()
@@ -81,6 +85,10 @@ void UBuildingWidgetBase::RemoveDelegates()
     HappyFieldButton->OnClicked.Unbind();
     SaladFieldButton->OnClicked.Unbind();
     CarrotFieldButton->OnClicked.Unbind();
+
+    HappyFieldButton->OnHovered.Unbind();
+    SaladFieldButton->OnHovered.Unbind();
+    CarrotFieldButton->OnHovered.Unbind();
 }
 
 
@@ -125,19 +133,64 @@ void UBuildingWidgetBase::OnCarrotFieldButtonClicked()
 
 void UBuildingWidgetBase::HappyFieldButtonSelected()
 {
-    FieldSelectionIndex = 1;
+    if(IsFarm1)
+    {
+        FieldSelectionIndex = 1;
+    }
+    else if(IsFarm2)
+    {
+        FieldSelectionIndex = 4;
+    }
+    else if(IsFarm3)
+    {
+        FieldSelectionIndex = 7;
+    }
+    else if(IsFarm4)
+    {
+        FieldSelectionIndex = 10;
+    }
     SetTextForField();
 }
 
 void UBuildingWidgetBase::SaladFieldButtonSelected()
 {
-    FieldSelectionIndex = 2;
+    if(IsFarm1)
+    {
+        FieldSelectionIndex = 2;
+    }
+    else if(IsFarm2)
+    {
+        FieldSelectionIndex = 5;
+    }
+    else if(IsFarm3)
+    {
+        FieldSelectionIndex = 8;
+    }
+    else if(IsFarm4)
+    {
+        FieldSelectionIndex = 11;
+    }
     SetTextForField();
 }
 
 void UBuildingWidgetBase::CarrotFieldButtonSelected()
-{
-    FieldSelectionIndex = 3;
+{   
+    if(IsFarm1)
+    {
+        FieldSelectionIndex = 3;
+    }
+    else if(IsFarm2)
+    {
+        FieldSelectionIndex = 6;
+    }
+    else if(IsFarm3)
+    {
+        FieldSelectionIndex = 9;
+    }
+    else if(IsFarm4)
+    {
+        FieldSelectionIndex = 12;
+    }
     SetTextForField();
 }
 
