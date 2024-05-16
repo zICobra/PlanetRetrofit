@@ -44,6 +44,8 @@ protected:
 
 	UPROPERTY()
 	AActor* Player = nullptr;
+	UPROPERTY()
+	class AOreManager* OreManager;
 
 #pragma region OreType
 public:
@@ -151,9 +153,8 @@ private:
 	class UNiagaraComponent* CreatedFishParticleSystem = nullptr;
 	class UNiagaraComponent* CreatedMiningParticleSystem = nullptr;
 
-
-
 	float DestroyTime = 0.3f;
 
+public:
 	bool IsMined = false;
 };

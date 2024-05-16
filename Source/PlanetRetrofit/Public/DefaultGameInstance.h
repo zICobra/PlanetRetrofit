@@ -39,4 +39,8 @@ public:
 	UPROPERTY()
 	class UDefaultSaveGame* SaveGame;
 
+	DECLARE_DELEGATE(FOnSettingsMainMenu);
+	FOnSettingsMainMenu OreLoadedSettingsDelegate;
+	FOnSettingsMainMenu TerminalLoadedSettingsDelegate;
+
 };

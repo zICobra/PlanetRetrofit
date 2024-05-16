@@ -14,6 +14,8 @@
 
 #include "DataAssets/BuildingsConfig.h"
 
+#include "Buildings/CheckTerminalState.h"
+
 
 ABuildingInteractableBase::ABuildingInteractableBase()
 {
@@ -25,6 +27,8 @@ void ABuildingInteractableBase::BeginPlay()
     Super::BeginPlay();
 
     GameInstance = Cast<UDefaultGameInstance>(GetGameInstance());
+
+    TerminalManager = Cast<ACheckTerminalState>(UGameplayStatics::GetActorOfClass(GetWorld(), ACheckTerminalState::StaticClass()));
 }
 
 
@@ -46,6 +50,7 @@ void ABuildingInteractableBase::BuildBuilding()
     }
 
     UGameplayStatics::PlaySoundAtLocation(GetWorld(), BuildingSound, GetActorLocation());
+    Spawned = true;
     FTimerHandle TimerHandle;
 
     GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() 
@@ -55,8 +60,20 @@ void ABuildingInteractableBase::BuildBuilding()
         SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
         GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
-        Spawned = true;
+        TerminalManager->SpawnedBuilding(this);
     }, 1.5f, false);
+}
+
+void ABuildingInteractableBase::OnLoadGameCheck()
+{
+    if(Spawned)
+    {
+        FActorSpawnParameters SpawnParams;
+
+        SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+        GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
+    }
 }
 
 bool ABuildingInteractableBase::CanOutline()

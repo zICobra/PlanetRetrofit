@@ -66,6 +66,9 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
             SaveGame->TerminalSaveDataArray.Empty();
             SaveGame->OreSaveDataArray.Empty();
         }
+
+        OreLoadedSettingsDelegate.ExecuteIfBound();
+        TerminalLoadedSettingsDelegate.ExecuteIfBound();
     }
     else
     {
@@ -79,6 +82,9 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
 
         SaveGame->TerminalSaveDataArray.Empty();
         SaveGame->OreSaveDataArray.Empty();
+
+        OreLoadedSettingsDelegate.ExecuteIfBound();
+        TerminalLoadedSettingsDelegate.ExecuteIfBound();
     }
 
     if(UDefaultSaveGame* LoadedGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SettingsSaveSlotName, 0)))

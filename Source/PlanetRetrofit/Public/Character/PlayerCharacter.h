@@ -87,6 +87,8 @@ protected:
 
 	UPROPERTY()
 	AActor* HitActor = nullptr;
+	UPROPERTY()
+	class ACheckTerminalState* TerminalManager = nullptr;
 
 
 	class IOutlineInterface* PreviouslyOutlinedActor = nullptr;
@@ -137,6 +139,8 @@ private:
 	void CallPauseMenu();
 	UFUNCTION()
 	void CallSettingsMenu();
+
+	void PushFinishScreen();
 
 
 #pragma endregion Inputs

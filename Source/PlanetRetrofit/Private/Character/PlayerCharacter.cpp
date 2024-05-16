@@ -40,6 +40,8 @@
 
 #include "LandscapeProxy.h"
 
+#include "Buildings/CheckTerminalState.h"
+
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
 #include "NiagaraSystem.h"
@@ -77,6 +79,8 @@ void APlayerCharacter::BeginPlay()
 			GameInstance->LoadSettingsInMainLevel();
 		}
 	}
+
+	TerminalManager = Cast<ACheckTerminalState>(UGameplayStatics::GetActorOfClass(GetWorld(), ACheckTerminalState::StaticClass()));
 
 	if(ActivePlayerController)
 	{
@@ -197,7 +201,6 @@ void APlayerCharacter::Tick(float DeltaTime)
 	if(!GameplayTags.HasTag(OxygenTag))
 	{
 		CurrentOxygen -= DeltaTime * GameInstance->SaveGame->OxygenDepletionMultiplier;
-		UE_LOG(LogTemp, Warning, TEXT("OxygenMutilpier: %f"), GameInstance->SaveGame->OxygenDepletionMultiplier);
 		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
 		if(CurrentOxygen <= 0)
 		{
@@ -631,6 +634,14 @@ void APlayerCharacter::CallSettingsMenu()
 	CreatedGameUIBase->PushSettingsMenu(CreatedSettingsMenu);
 }
 
+void APlayerCharacter::PushFinishScreen()
+{
+	ActivePlayerController->SetShowMouseCursor(true);
+	ActivePlayerController->SetInputMode(GameAndUIInputMode);
+
+	UE_LOG(LogTemp, Warning, TEXT("DONE"));
+}
+
 #pragma endregion UI
 
 UGameplayTagsManager& APlayerCharacter::GetGameplayTagsManager()
@@ -668,6 +679,11 @@ void APlayerCharacter::ClearBuildingMenu()
 
 	CreatedBuildingWidget->OnBackButtonClicked.Unbind();
 	BuildingBase->Interacting.Unbind();
+
+	if(TerminalManager->AllBuildingsBuild())
+	{
+		PushFinishScreen();
+	}
 }
 
 void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)

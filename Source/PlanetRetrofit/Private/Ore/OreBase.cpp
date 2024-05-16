@@ -15,6 +15,8 @@
 
 #include "Interfaces/GamplayTagsInterface.h" 
 
+#include "Ore/OreManager.h"
+
 
 // Sets default values
 AOreBase::AOreBase()
@@ -46,6 +48,8 @@ void AOreBase::BeginPlay()
 	{
 		PlayFishNiagara();
 	}
+
+	OreManager = Cast<AOreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AOreManager::StaticClass()));
 }
 
 // Called every frame
@@ -62,8 +66,9 @@ void AOreBase::Tick(float DeltaTime)
 
 		if(CreatedMiningParticleSystem)
 		{
-			CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), FVector(0, 0, 0));
-			// CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), Player->GetActorLocation());
+			// CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), FVector(0, 0, 0));
+			FVector RelativeLocation = Player->GetActorLocation() - GetActorLocation();
+			CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), RelativeLocation);
 		}
 	}
 
