@@ -62,7 +62,8 @@ void AOreBase::Tick(float DeltaTime)
 
 		if(CreatedMiningParticleSystem)
 		{
-			CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), Player->GetActorLocation());
+			CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), FVector(0, 0, 0));
+			// CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), Player->GetActorLocation());
 		}
 	}
 
