@@ -33,7 +33,6 @@ void AOreManager::IsLoadedGame()
 {
 	if(GameInstance)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("FoundOre"));
 		if(GameInstance->LoadGame)
 		{
 			if(GameInstance->SaveGame)
@@ -58,15 +57,16 @@ void AOreManager::LoadOreState()
 	{
         AOreBase* Ore = Cast<AOreBase>(Actor);
         if (Ore)
-        {
+        {	
             for (const FOreSaveData& OreData : GameInstance->SaveGame->OreSaveDataArray)
             {
                 if (Ore->GetActorLocation() == OreData.Location)
                 {
+					UE_LOG(LogTemp, Warning, TEXT("Location"));
                     if (OreData.IsMined)
                     {
-                        Ore->Destroy();
 						UE_LOG(LogTemp, Warning, TEXT("Destroy"));
+                        Ore->Destroy();
                         break;
                     }
                 }
@@ -84,12 +84,15 @@ void AOreManager::NewOreState()
 	{
         AOreBase* Ore = Cast<AOreBase>(Actor);
 
-        FOreSaveData NewOreData;
+		if(Ore)
+		{
+			FOreSaveData NewOreData;
 
-        NewOreData.IsMined = Ore->IsMined;
-        NewOreData.Location = Ore->GetActorLocation();
-        
-        GameInstance->SaveGame->OreSaveDataArray.Add(NewOreData);
+			NewOreData.IsMined = Ore->IsMined;
+			NewOreData.Location = Ore->GetActorLocation();
+			
+			GameInstance->SaveGame->OreSaveDataArray.Add(NewOreData);
+		}
     }
 }
 

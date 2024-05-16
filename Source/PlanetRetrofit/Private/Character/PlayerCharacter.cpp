@@ -27,6 +27,7 @@
 #include "UI/SettingsMenuBase.h"
 #include "UI/DeathScreenBase.h"
 #include "UI/PauseMenuBase.h"
+#include "UI/EndWidgetBase.h"
 
 #include "Math/UnrealMathUtility.h"
 #include "DrawDebugHelpers.h"
@@ -44,6 +45,9 @@
 
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
+
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 #include "NiagaraSystem.h"
 
 
@@ -59,6 +63,12 @@ APlayerCharacter::APlayerCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 
+	Weapon = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon"));
+	Weapon->SetupAttachment(SpringArm);
+	
+	WeaponFire = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Weapon Niagara"));
+	WeaponFire->SetupAttachment(Weapon);
+
 	ActivePlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 
 }
@@ -69,6 +79,8 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+
+	WeaponFire->Deactivate();
 
 	if (UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
 	{
@@ -129,6 +141,10 @@ void APlayerCharacter::BeginPlay()
 	if(UpgradeWidget)
 	{
 		CreatedUpgradeWidget = Cast<UUpgradeWidgetBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), UpgradeWidget));
+	}
+	if(EndWidget)
+	{
+		CreatedEndWidget = Cast<UEndWidgetBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), EndWidget));
 	}
 
 
@@ -366,7 +382,10 @@ void APlayerCharacter::LookController(const FInputActionValue& Value)
 void APlayerCharacter::StartJump()
 {
 	Jump();
-	UGameplayStatics::PlaySoundAtLocation(GetWorld(), JumpSound, GetActorLocation());
+	if(GetMovementComponent()->IsMovingOnGround())
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), JumpSound, GetActorLocation());
+	}
 }
 
 void APlayerCharacter::StopJump()
@@ -480,6 +499,9 @@ void APlayerCharacter::StartMine()
 
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
 
+	WeaponFire->Activate();
+	WeaponFire->SetVectorParameter(TEXT("EndLoc"), EndPoint);
+	
 	if(bSuccess && HitResult.GetActor())
 	{
 		Ore = Cast<AOreBase>(HitResult.GetActor());
@@ -508,6 +530,8 @@ void APlayerCharacter::Mine()
 	Params.AddIgnoredActor(GetOwner());
 
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
+
+	WeaponFire->SetVectorParameter(TEXT("EndLoc"), EndPoint);
 
 	if(bSuccess && HitResult.GetActor())
 	{
@@ -547,7 +571,7 @@ void APlayerCharacter::Mine()
 					GameInstance->SaveGame->PlatinAmount += FocusedOre->PlatinAmountPerOreMined;
 				}
 			}
-			else if(Ore)
+			else if(Ore && !Ore->DoneMining())
 			{
 				Ore->RemoveMineAnimation();
 				Ore = nullptr;
@@ -564,9 +588,8 @@ void APlayerCharacter::Mine()
 		else
 		{
 			CreatedMiningSound->Stop();
-			if(Ore)
+			if(Ore && !Ore->DoneMining())
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Remove"));
 				Ore->RemoveMineAnimation();
 				Ore = nullptr;
 			}
@@ -575,9 +598,8 @@ void APlayerCharacter::Mine()
 	else
 	{
 		CreatedMiningSound->Stop();
-		if(Ore)
+		if(Ore && !Ore->DoneMining())
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Remove"));
 			Ore->RemoveMineAnimation();
 			Ore = nullptr;
 		}
@@ -587,19 +609,21 @@ void APlayerCharacter::Mine()
 
 void APlayerCharacter::StopMine()
 {
-	if(Ore)
+	WeaponFire->Deactivate();
+	if(Ore && !Ore->DoneMining())
 	{
 		Ore->RemoveMineAnimation();
 		Ore = nullptr;
-		CreatedMiningSound->Stop();
 	}
+	
+	CreatedMiningSound->Stop();
 }
 
 #pragma region UI
 
 void APlayerCharacter::CallPauseMenu()
 {
-	if(!CreatedPauseMenu || !ActivePlayerController || !CreatedGameUIBase || CreatedGameUIBase->DeathScreenActive || CreatedGameUIBase->BuildingMenuActive)
+	if(!CreatedPauseMenu || !ActivePlayerController || !CreatedGameUIBase || CreatedGameUIBase->DeathScreenActive || CreatedGameUIBase->BuildingMenuActive || CreatedGameUIBase->UpgradeWidgetActive || CreatedGameUIBase->EndScreenActive)
 	{
 		return;
 	}
@@ -636,10 +660,17 @@ void APlayerCharacter::CallSettingsMenu()
 
 void APlayerCharacter::PushFinishScreen()
 {
-	ActivePlayerController->SetShowMouseCursor(true);
-	ActivePlayerController->SetInputMode(GameAndUIInputMode);
+	FTimerHandle TimerHandle;
 
-	UE_LOG(LogTemp, Warning, TEXT("DONE"));
+    GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() 
+    {
+		ActivePlayerController->SetShowMouseCursor(true);
+		ActivePlayerController->SetInputMode(GameAndUIInputMode);
+
+		ActivePlayerController->SetPause(true);
+
+		CreatedGameUIBase->PushEndScreen(CreatedEndWidget);
+    }, 2.0f, false);
 }
 
 #pragma endregion UI
@@ -679,11 +710,6 @@ void APlayerCharacter::ClearBuildingMenu()
 
 	CreatedBuildingWidget->OnBackButtonClicked.Unbind();
 	BuildingBase->Interacting.Unbind();
-
-	if(TerminalManager->AllBuildingsBuild())
-	{
-		PushFinishScreen();
-	}
 }
 
 void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
@@ -701,6 +727,12 @@ void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
 	}
 
 	BuildingBase->BuildBuilding();
+
+	
+	if(TerminalManager->AllBuildingsBuild())
+	{
+		PushFinishScreen();
+	}
 }
 
 void APlayerCharacter::ClearUpgradeWidget()

@@ -25,9 +25,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// UFUNCTION(BlueprintImplementableEvent)
-	// void RestartLevel();
-
 	UFUNCTION(BlueprintImplementableEvent)
 	void CameraAnimation();
 
@@ -154,6 +151,11 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
 
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* Weapon;
+	UPROPERTY(VisibleAnywhere)
+	class UNiagaraComponent* WeaponFire; 
+
 #pragma endregion Components
 
 #pragma region UI
@@ -173,6 +175,8 @@ protected:
 	TSubclassOf<class UBuildingWidgetBase> BuildingWidget;
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<class UUpgradeWidgetBase> UpgradeWidget;
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UEndWidgetBase> EndWidget;
 	
 	UPROPERTY()	
 	class UCommonUserWidgetBase* CreatedGameUIBase = nullptr;
@@ -188,6 +192,8 @@ protected:
 	class UBuildingWidgetBase* CreatedBuildingWidget = nullptr;
 	UPROPERTY()
 	class UUpgradeWidgetBase* CreatedUpgradeWidget = nullptr;
+	UPROPERTY()
+	class UEndWidgetBase* CreatedEndWidget = nullptr;
 
 #pragma endregion UI
 

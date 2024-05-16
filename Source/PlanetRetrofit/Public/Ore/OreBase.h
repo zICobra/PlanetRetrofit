@@ -29,6 +29,8 @@ protected:
 	class UBillboardComponent* OreTypeText;
 	UPROPERTY(VisibleAnywhere)
 	class USphereComponent* PlayerRadius;
+	UPROPERTY(VisibleAnywhere)
+	class USphereComponent* BillboardRadius;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
 	class UNiagaraSystem* FishParticleSystem;
@@ -62,7 +64,7 @@ public:
 	bool IsPlatin;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsStone", EditConditionHides))
 	float StoneMiningDuration = 3.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore", meta = (EditCondition = "IsIron", EditConditionHides))
 	float IronMiningDuration = 5.0f;
@@ -144,11 +146,17 @@ private:
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 	void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
+	UFUNCTION()
+	void OnBillboardBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnBillboardEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 
 	void PlayFishNiagara();
 	void RemoveFishNiagara();
-
+	
+	void FinishedMining();
 
 	class UNiagaraComponent* CreatedFishParticleSystem = nullptr;
 	class UNiagaraComponent* CreatedMiningParticleSystem = nullptr;

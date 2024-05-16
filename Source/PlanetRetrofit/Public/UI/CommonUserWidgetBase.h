@@ -45,8 +45,11 @@ public:
 
 	void PushDeathScreen(class UCommonActivatableWidgetBase* DeathScreen);
 	
+	void PushEndScreen(class UCommonActivatableWidgetBase* EndScreen);
+	
 	bool PauseMenuActive = false;
 	bool DeathScreenActive = false;
+	bool EndScreenActive = false;
 	bool BuildingMenuActive = false;
 	bool UpgradeWidgetActive = false;
 };

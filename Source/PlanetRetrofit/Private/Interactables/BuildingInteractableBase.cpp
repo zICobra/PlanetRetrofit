@@ -51,6 +51,8 @@ void ABuildingInteractableBase::BuildBuilding()
 
     UGameplayStatics::PlaySoundAtLocation(GetWorld(), BuildingSound, GetActorLocation());
     Spawned = true;
+    TerminalManager->SpawnedBuilding(this);
+    
     FTimerHandle TimerHandle;
 
     GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() 
@@ -60,7 +62,6 @@ void ABuildingInteractableBase::BuildBuilding()
         SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
         GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
-        TerminalManager->SpawnedBuilding(this);
     }, 1.5f, false);
 }
 

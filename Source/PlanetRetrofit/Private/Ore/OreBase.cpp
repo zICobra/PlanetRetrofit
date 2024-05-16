@@ -35,6 +35,9 @@ AOreBase::AOreBase()
 
 	PlayerRadius = CreateDefaultSubobject<USphereComponent>(TEXT("Player Radius"));
 	PlayerRadius->SetupAttachment(Root);
+
+	BillboardRadius = CreateDefaultSubobject<USphereComponent>(TEXT("Billboard Radius"));
+	BillboardRadius->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned
@@ -44,6 +47,10 @@ void AOreBase::BeginPlay()
 
 	PlayerRadius->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOreBase::OnBeginOverlap);
 	PlayerRadius->OnComponentEndOverlap.AddUniqueDynamic(this, &AOreBase::OnEndOverlap);
+
+	BillboardRadius->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOreBase::OnBillboardBeginOverlap);
+	BillboardRadius->OnComponentEndOverlap.AddUniqueDynamic(this, &AOreBase::OnBillboardEndOverlap);
+
 	if(SpawnFishParticle)
 	{
 		PlayFishNiagara();
@@ -80,8 +87,12 @@ void AOreBase::Tick(float DeltaTime)
 			PlayerRadius->OnComponentBeginOverlap.RemoveDynamic(this, &AOreBase::OnBeginOverlap);
 			PlayerRadius->OnComponentEndOverlap.RemoveDynamic(this, &AOreBase::OnEndOverlap);
 
+			BillboardRadius->OnComponentBeginOverlap.RemoveDynamic(this, &AOreBase::OnBillboardBeginOverlap);
+			BillboardRadius->OnComponentEndOverlap.RemoveDynamic(this, &AOreBase::OnBillboardEndOverlap);
+
 			RemoveFishNiagara();
-			RemoveMineAnimation();
+			FinishedMining();
+			OreManager->MinedOre(this);
 			Destroy();
 		}
 	}
@@ -104,6 +115,14 @@ bool AOreBase::CanOutline()
 
 void AOreBase::StartMining(const FVector MinerPosition)
 {
+	if(CreatedMiningParticleSystem && CreatedMiningParticleSystem->IsActive())
+	{
+
+	}
+	else if(CreatedMiningParticleSystem)
+	{
+		CreatedMiningParticleSystem->Activate();
+	}
 	if(IsStone)
 	{
 		StoneMiningDuration -= GetWorld()->GetDeltaSeconds() * 3.5f;
@@ -213,17 +232,30 @@ void AOreBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* 
 	if(IGamplayTagsInterface* Interface = Cast<IGamplayTagsInterface>(OtherActor))
 	{
 		Player = OtherActor;
-		OreTypeText->SetHiddenInGame(false);
 	}
 }
 
 void AOreBase::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	if(Cast<IGamplayTagsInterface>(OtherActor))
+	{		
+		Player = nullptr;
+	}
+}
+
+void AOreBase::OnBillboardBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(IGamplayTagsInterface* Interface = Cast<IGamplayTagsInterface>(OtherActor))
+	{
+		OreTypeText->SetHiddenInGame(false);
+	}
+}
+
+void AOreBase::OnBillboardEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if(IGamplayTagsInterface* Interface = Cast<IGamplayTagsInterface>(OtherActor))
 	{
 		OreTypeText->SetHiddenInGame(true);
-		
-		Player = nullptr;
 	}
 }
 
@@ -279,26 +311,31 @@ void AOreBase::PlayMineAnimation()
 	if(IsStone)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), StoneMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->Activate();
 		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), StoneStaticMesh);
 	}
 	else if(IsIron)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), IronMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->Activate();
 		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), IronStaticMesh);
 	}
 	else if(IsCopper)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), CopperMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->Activate();
 		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), CopperStaticMesh);
 	}
 	else if(IsAmethyst)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), AmethystMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->Activate();
 		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), AmethystStaticMesh);
 	}
 	else if(IsPlatin)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), PlatinMiningParticleSystem, GetActorLocation());
+		CreatedMiningParticleSystem->Activate();
 		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), PlatinStaticMesh);
 	}
 
@@ -308,9 +345,21 @@ void AOreBase::RemoveMineAnimation()
 {
 	if(CreatedMiningParticleSystem)
 	{
-		CreatedMiningParticleSystem->Deactivate();
+		FTimerHandle TimerHandle;
+
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() 
+		{
+			CreatedMiningParticleSystem->Deactivate();
+			CreatedMiningParticleSystem = nullptr;
+		}, 1.0f, false);
+	}
+}
+
+void AOreBase::FinishedMining()
+{
+	if(CreatedMiningParticleSystem)
+	{
 		CreatedMiningParticleSystem->DestroyComponent();
 		CreatedMiningParticleSystem = nullptr;
 	}
 }
-
