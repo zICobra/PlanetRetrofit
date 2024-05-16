@@ -9,6 +9,31 @@
 /**
  * 
  */
+
+USTRUCT()
+struct FTerminalSaveData
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	TSubclassOf<class ABuildingInteractableBase> Terminal;
+	UPROPERTY()
+	bool HasSpawned = false;
+	UPROPERTY()
+	int32 BuildingIndex = 0;
+};
+
+USTRUCT()
+struct FOreSaveData
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	TSubclassOf<class AOreBase> OreType;
+	UPROPERTY()
+	FTransform Transform;
+};
+
 UCLASS()
 class PLANETRETROFIT_API UDefaultSaveGame : public USaveGame
 {
@@ -27,7 +52,11 @@ public:
 	UPROPERTY()
 	int32 PlatinAmount = 0;
 	UPROPERTY()
-	float OxygenDepletionMultiplier = 8.0f;
+	float OxygenDepletionMultiplier = 6.0f;
+	UPROPERTY()
+	TArray<FTerminalSaveData> TerminalSaveDataArray;
+	UPROPERTY()
+	TArray<FOreSaveData> OreSaveDataArray;
 	
 	UPROPERTY()
 	FString SaveSlotName = "SavedGameState";

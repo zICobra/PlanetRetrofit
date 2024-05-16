@@ -50,7 +50,26 @@ protected:
 	float MaxOxygen = 100.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
-	float HeadMovementIntensity = 1.5f;
+	float HeadMovementIntensity = 4.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
+	class USoundCue* DeathSound;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
+	class USoundCue* InteractSound;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
+	class USoundCue* JumpSound;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
+	class USoundCue* MiningSound;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
+	class USoundCue* MiningCompletedSound;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
+	class USoundCue* IndoorFootStepsSound;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
+	class USoundCue* OutdoorFootstepsSound;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool IsOutdoor = true;
 
 	UPROPERTY()
 	float CurrentHealth = MaxHealth;
@@ -73,6 +92,8 @@ protected:
 	class IOutlineInterface* PreviouslyOutlinedActor = nullptr;
 	class ABuildingInteractableBase* BuildingBase = nullptr;
 	class AOreBase* Ore = nullptr;
+	
+	class UAudioComponent* CreatedMiningSound = nullptr;
 
 #pragma endregion Variables
 
@@ -146,6 +167,8 @@ protected:
 	TSubclassOf<class UDeathScreenBase> DeathScreen;
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<class UBuildingWidgetBase> BuildingWidget;
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UUpgradeWidgetBase> UpgradeWidget;
 	
 	UPROPERTY()	
 	class UCommonUserWidgetBase* CreatedGameUIBase = nullptr;
@@ -159,6 +182,8 @@ protected:
 	class UDeathScreenBase* CreatedDeathScreen = nullptr;
 	UPROPERTY()
 	class UBuildingWidgetBase* CreatedBuildingWidget = nullptr;
+	UPROPERTY()
+	class UUpgradeWidgetBase* CreatedUpgradeWidget = nullptr;
 
 #pragma endregion UI
 
@@ -190,6 +215,8 @@ private:
 	void ClearBuildingMenu();
 	UFUNCTION()
 	void SpawnBuilding(int32 BuildingIndex);
+	UFUNCTION()
+	void ClearUpgradeWidget();
 
 
 };

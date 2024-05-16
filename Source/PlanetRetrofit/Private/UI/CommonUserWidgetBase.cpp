@@ -62,6 +62,21 @@ void UCommonUserWidgetBase::ClearBuildingMenu()
     PauseMenuStack->ClearWidgets();    
 }
 
+void UCommonUserWidgetBase::PushUpgradeWidget(class UCommonActivatableWidgetBase* UpgradeWidget)
+{
+    if(UpgradeWidget)
+    {
+        UpgradeWidgetActive = true;
+        PauseMenuStack->AddWidgetInstance(*UpgradeWidget);
+    }
+}
+
+void UCommonUserWidgetBase::ClearUpgradeWidet()
+{
+    UpgradeWidgetActive = false;
+    PauseMenuStack->ClearWidgets();
+}
+
 void UCommonUserWidgetBase::PushDeathScreen(class UCommonActivatableWidgetBase* DeathScreen)
 {
     if(DeathScreen)

@@ -23,6 +23,7 @@
 #include "UI/CommonUserWidgetBase.h"
 #include "UI/GamePlayWidgetBase.h"
 #include "UI/BuildingWidgetBase.h"
+#include "UI/UpgradeWidgetBase.h"
 #include "UI/SettingsMenuBase.h"
 #include "UI/DeathScreenBase.h"
 #include "UI/PauseMenuBase.h"
@@ -34,9 +35,13 @@
 #include "Interfaces/OutlineInterface.h"
 
 #include "Interactables/BuildingInteractableBase.h"
+#include "Interactables/UpgradeStationBase.h"
 #include "Ore/OreBase.h"
 
+#include "LandscapeProxy.h"
+
 #include "Sound/SoundCue.h"
+#include "Components/AudioComponent.h"
 #include "NiagaraSystem.h"
 
 
@@ -80,6 +85,12 @@ void APlayerCharacter::BeginPlay()
 	}
 
 	CameraAnimation();
+	CreatedMiningSound = NewObject<UAudioComponent>(this);
+	if(CreatedMiningSound)
+	{
+		CreatedMiningSound->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+		CreatedMiningSound->SetSound(MiningSound);
+	}
 
 	OxygenTag = GetGameplayTagsManager().RequestGameplayTag(FName("HasOxygen"));
 
@@ -110,6 +121,10 @@ void APlayerCharacter::BeginPlay()
 	if(BuildingWidget)
 	{
 		CreatedBuildingWidget = Cast<UBuildingWidgetBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), BuildingWidget));
+	}
+	if(UpgradeWidget)
+	{
+		CreatedUpgradeWidget = Cast<UUpgradeWidgetBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), UpgradeWidget));
 	}
 
 
@@ -182,6 +197,7 @@ void APlayerCharacter::Tick(float DeltaTime)
 	if(!GameplayTags.HasTag(OxygenTag))
 	{
 		CurrentOxygen -= DeltaTime * GameInstance->SaveGame->OxygenDepletionMultiplier;
+		UE_LOG(LogTemp, Warning, TEXT("OxygenMutilpier: %f"), GameInstance->SaveGame->OxygenDepletionMultiplier);
 		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
 		if(CurrentOxygen <= 0)
 		{
@@ -190,19 +206,53 @@ void APlayerCharacter::Tick(float DeltaTime)
 			if(CurrentHealth <= 0)
 			{
 				CreatedGameUIBase->PushDeathScreen(CreatedDeathScreen);
+				UGameplayStatics::PlaySound2D(GetWorld(), DeathSound);
 				ActivePlayerController->SetPause(true);
 			}
 		}
 	}
 	else
 	{
-		CurrentOxygen = FMath::Clamp(CurrentOxygen + DeltaTime * 2, 0, MaxOxygen);
-		CurrentHealth = FMath::Clamp(CurrentHealth + DeltaTime * 2, 0, MaxHealth);
+		CurrentOxygen = FMath::Clamp(CurrentOxygen + DeltaTime * 5, 0, MaxOxygen);
+		CurrentHealth = FMath::Clamp(CurrentHealth + DeltaTime * 5, 0, MaxHealth);
 		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
 		CreatedGamePlayMenu->SetHealthBar(MaxHealth, CurrentHealth);
 	}
 
 #pragma endregion Oxygen
+
+
+#pragma region Footsteps
+
+	static FVector StartPointFootsteps = FVector::Zero();
+	static FVector EndPointFootsteps = FVector::Zero();
+
+	StartPointFootsteps = GetActorLocation();
+
+	EndPointFootsteps = FVector(StartPointFootsteps.X, StartPointFootsteps.Y, StartPointFootsteps.Z - 150);
+
+	FHitResult HitResultFootsteps;
+
+
+	bool bSuccessFootsteps = GetWorld()->LineTraceSingleByChannel(HitResultFootsteps, StartPointFootsteps, EndPointFootsteps, ECC_Visibility, Params);
+	DrawDebugLine(GetWorld(), StartPointFootsteps, EndPointFootsteps, FColor::Red, false, 4);
+	
+	if(bSuccessFootsteps)
+	{
+		if(Cast<ALandscapeProxy>(HitResultFootsteps.GetActor()))
+		{
+			IsOutdoor = true;
+		}
+		else
+		{
+			IsOutdoor = false;
+		}
+	}
+
+
+#pragma endregion Footsteps
+
+
 
 }
 
@@ -314,6 +364,7 @@ void APlayerCharacter::LookController(const FInputActionValue& Value)
 void APlayerCharacter::StartJump()
 {
 	Jump();
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), JumpSound, GetActorLocation());
 }
 
 void APlayerCharacter::StopJump()
@@ -368,13 +419,22 @@ void APlayerCharacter::Interact()
 		if(BuildingBase && !BuildingBase->Spawned)
 		{
 			BuildingBase->Interacting.BindUObject(this, &APlayerCharacter::ShowBuildingMenu);
-			BuildingBase->StoppedOverlapping.BindUObject(this, &APlayerCharacter::ClearBuildingMenu);
 			CreatedBuildingWidget->BuildingIndex = BuildingBase->BuildingIndex;
 			CreatedBuildingWidget->IsFarm = BuildingBase->IsFarm;
 		}
 		if(IInteractableInterface* Interactable = Cast<IInteractableInterface>(HitResult.GetActor()))
 		{
 			Interactable->Interact();
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), InteractSound, GetActorLocation());
+		}
+
+		if(AUpgradeStationBase* UpgradeStation = Cast<AUpgradeStationBase>(HitResult.GetActor()))
+		{
+			UpgradeStation->Interact();
+			CreatedGameUIBase->PushUpgradeWidget(CreatedUpgradeWidget);
+			ActivePlayerController->SetShowMouseCursor(true);
+			ActivePlayerController->SetInputMode(GameAndUIInputMode);
+			CreatedUpgradeWidget->OnUpgradeUIBackButtonClicked.BindUObject(this, &APlayerCharacter::ClearUpgradeWidget);
 		}
 	}
 }
@@ -417,6 +477,7 @@ void APlayerCharacter::StartMine()
 		if(Ore)
 		{
 			Ore->PlayMineAnimation();
+			CreatedMiningSound->Play();
 		}
 	}
 }
@@ -445,6 +506,15 @@ void APlayerCharacter::Mine()
 		{	
 			if(!FocusedOre->DoneMining())
 			{
+				if(CreatedMiningSound->IsPlaying())
+				{
+
+				}
+				else
+				{
+					CreatedMiningSound->Play();
+				}
+
 				FocusedOre->StartMining(GetActorLocation());
 				if(FocusedOre->DoneMining() && FocusedOre->OreType() == "Stone")
 				{
@@ -472,6 +542,10 @@ void APlayerCharacter::Mine()
 			{
 				Ore->RemoveMineAnimation();
 				Ore = nullptr;
+				
+				CreatedMiningSound->Stop();
+				UGameplayStatics::PlaySoundAtLocation(GetWorld(), MiningCompletedSound, GetActorLocation());
+
 				if(CreatedGamePlayMenu->MaterialUIIsActive)
 				{
 					CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
@@ -485,6 +559,7 @@ void APlayerCharacter::Mine()
 				UE_LOG(LogTemp, Warning, TEXT("Remove"));
 				Ore->RemoveMineAnimation();
 				Ore = nullptr;
+				CreatedMiningSound->Stop();
 			}
 		}
 	}
@@ -495,6 +570,7 @@ void APlayerCharacter::Mine()
 			UE_LOG(LogTemp, Warning, TEXT("Remove"));
 			Ore->RemoveMineAnimation();
 			Ore = nullptr;
+			CreatedMiningSound->Stop();
 		}
 	}
 	
@@ -506,6 +582,7 @@ void APlayerCharacter::StopMine()
 	{
 		Ore->RemoveMineAnimation();
 		Ore = nullptr;
+		CreatedMiningSound->Stop();
 	}
 }
 
@@ -569,8 +646,10 @@ void APlayerCharacter::RemoveGameplayTag()
 void APlayerCharacter::ShowBuildingMenu()
 {
 	CreatedGameUIBase->PushBuildingMenu(CreatedBuildingWidget);
+	
 	ActivePlayerController->SetShowMouseCursor(true);
 	ActivePlayerController->SetInputMode(GameAndUIInputMode);
+
 	CreatedBuildingWidget->OnBuildButtonClicked.BindUObject(this, &APlayerCharacter::SpawnBuilding);
 	CreatedBuildingWidget->OnBackButtonClicked.BindUObject(this, &APlayerCharacter::ClearBuildingMenu);
 }
@@ -583,7 +662,6 @@ void APlayerCharacter::ClearBuildingMenu()
 
 	CreatedBuildingWidget->OnBackButtonClicked.Unbind();
 	BuildingBase->Interacting.Unbind();
-	BuildingBase->StoppedOverlapping.Unbind();
 }
 
 void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
@@ -601,4 +679,14 @@ void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
 	}
 
 	BuildingBase->BuildBuilding();
+}
+
+void APlayerCharacter::ClearUpgradeWidget()
+{
+	CreatedGameUIBase->ClearUpgradeWidet();
+
+	ActivePlayerController->SetInputMode(GameOnlyInputMode);
+	ActivePlayerController->SetShowMouseCursor(false);
+
+	CreatedUpgradeWidget->OnUpgradeUIBackButtonClicked.Unbind();
 }

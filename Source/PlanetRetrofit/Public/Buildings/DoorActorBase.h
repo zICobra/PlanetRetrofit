@@ -41,6 +41,8 @@ protected:
 	float BigDoorOpeningCooldown = 2.0f;
 	UPROPERTY(EditAnywhere, Category = "Door")
 	float OpeningSpeed = 2.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Door")
+	class USoundCue* BuildingSound;
 
 	bool Entered = false;
 	bool Exited = false;

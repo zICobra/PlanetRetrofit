@@ -49,6 +49,9 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
             SaveGame->PlatinAmount = LoadedGame->PlatinAmount;
 
             SaveGame->OxygenDepletionMultiplier = LoadedGame->OxygenDepletionMultiplier;
+
+            SaveGame->TerminalSaveDataArray = LoadedGame->TerminalSaveDataArray;
+            SaveGame->OreSaveDataArray = LoadedGame->OreSaveDataArray;
         }
         else
         {
@@ -59,6 +62,9 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
             SaveGame->PlatinAmount = 0;
 
             SaveGame->OxygenDepletionMultiplier = 8.0f;
+
+            SaveGame->TerminalSaveDataArray.Empty();
+            SaveGame->OreSaveDataArray.Empty();
         }
     }
     else
@@ -70,6 +76,9 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
         SaveGame->PlatinAmount = 0;
 
         SaveGame->OxygenDepletionMultiplier = 8.0f;
+
+        SaveGame->TerminalSaveDataArray.Empty();
+        SaveGame->OreSaveDataArray.Empty();
     }
 
     if(UDefaultSaveGame* LoadedGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SettingsSaveSlotName, 0)))

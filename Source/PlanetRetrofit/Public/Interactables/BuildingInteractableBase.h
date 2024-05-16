@@ -19,15 +19,8 @@ protected:
 
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere)
-	class UBoxComponent* TriggerBox;
-	UPROPERTY(VisibleAnywhere)
-	class UWidgetComponent* WidgetComponent;
-
-	UFUNCTION()
-	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	UFUNCTION()
-	void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Building")
+	class USoundCue* BuildingSound;
 
 
 	UPROPERTY()
@@ -47,16 +40,14 @@ public:
 	int32 SpawnedFarmIndex = 0;
 
 	DECLARE_DELEGATE(FOnInteract);
-	DECLARE_DELEGATE(FOnEndOverlap);
 
 	FOnInteract Interacting;
-	FOnEndOverlap StoppedOverlapping;
 
 
 	virtual void Interact() override;
+	virtual bool CanOutline() override;
 
 	void BuildBuilding();
 
-	virtual bool CanOutline() override;
 
 };

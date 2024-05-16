@@ -191,14 +191,13 @@ void AOreBase::MiningScaleAndRotation()
 {
 	if(IsStone || IsIron)
 	{
-		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.008f, Mesh->GetComponentScale().Y - 0.008f, Mesh->GetComponentScale().Z - 0.008f));
+		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.009f, Mesh->GetComponentScale().Y - 0.009f, Mesh->GetComponentScale().Z - 0.009f));
 	}
 	else
 	{
 		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.002f, Mesh->GetComponentScale().Y - 0.002f, Mesh->GetComponentScale().Z - 0.002f));
 	}
 
-	Mesh->SetWorldRotation(FRotator(Mesh->GetComponentRotation().Pitch, Mesh->GetComponentRotation().Yaw + 5, Mesh->GetComponentRotation().Roll));
 }
 
 void AOreBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -212,9 +211,12 @@ void AOreBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* 
 
 void AOreBase::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	OreTypeText->SetHiddenInGame(true);
-	
-	Player = nullptr;
+	if(Cast<IGamplayTagsInterface>(OtherActor))
+	{
+		OreTypeText->SetHiddenInGame(true);
+		
+		Player = nullptr;
+	}
 }
 
 void AOreBase::PlayFishNiagara()

@@ -8,7 +8,7 @@ public class PlanetRetrofit : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "CommonUI", "Niagara", "GameplayTags", "GameplayTasks" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "CommonUI", "Niagara", "GameplayTags", "GameplayTasks", "Landscape" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

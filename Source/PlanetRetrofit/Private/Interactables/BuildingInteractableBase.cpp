@@ -8,17 +8,16 @@
 
 
 #include "DefaultGameInstance.h"
+#include "Kismet/GameplayStatics.h"
+
+#include "Sound/SoundCue.h"
 
 #include "DataAssets/BuildingsConfig.h"
 
 
 ABuildingInteractableBase::ABuildingInteractableBase()
 {
-    TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Box"));
-    TriggerBox->SetupAttachment(Root);
 
-    WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget Component"));
-    WidgetComponent->SetupAttachment(Root);
 }
 
 void ABuildingInteractableBase::BeginPlay()
@@ -26,20 +25,8 @@ void ABuildingInteractableBase::BeginPlay()
     Super::BeginPlay();
 
     GameInstance = Cast<UDefaultGameInstance>(GetGameInstance());
-
-    TriggerBox->OnComponentBeginOverlap.AddUniqueDynamic(this, &ABuildingInteractableBase::OnBeginOverlap);
-    TriggerBox->OnComponentEndOverlap.AddUniqueDynamic(this, &ABuildingInteractableBase::OnEndOverlap);
 }
 
-void ABuildingInteractableBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-
-}
-
-void ABuildingInteractableBase::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-    StoppedOverlapping.ExecuteIfBound();
-}
 
 void ABuildingInteractableBase::Interact()
 {
@@ -52,18 +39,24 @@ void ABuildingInteractableBase::Interact()
 
 void ABuildingInteractableBase::BuildBuilding()
 {
-    FActorSpawnParameters SpawnParams;
-
-    SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn; // Set collision handling
-
     if(!GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn)
     {
         UE_LOG(LogTemp, Error, TEXT("Actor to Spawn for %s is Empty!!!"), *GameInstance->BuildingConfig->Buildings[BuildingIndex].BuildingName);
         return;
     }
 
-    GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
-    Spawned = true;
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), BuildingSound, GetActorLocation());
+    FTimerHandle TimerHandle;
+
+    GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() 
+    {
+        FActorSpawnParameters SpawnParams;
+
+        SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+        GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
+        Spawned = true;
+    }, 1.5f, false);
 }
 
 bool ABuildingInteractableBase::CanOutline()

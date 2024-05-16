@@ -17,12 +17,18 @@ class PLANETRETROFIT_API UButtonBase : public UCommonButtonBase
 protected:
 	virtual void NativePreConstruct() override;
 	virtual void NativeOnClicked() override;
+	// virtual void NativeOnHovered() override;
 
 
 	UPROPERTY(meta = (BindWidget))
 	class UOverlay* Overlay;
 	UPROPERTY(meta = (BindWidget))
 	class UCommonTextBlock* ButtonNameText;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+	class USoundCue* HoverSound;
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+	class USoundCue* ClickSound;
 
 public:
 	UPROPERTY(EditAnywhere, Category = "Text")

@@ -40,9 +40,13 @@ public:
 	void PushBuildingMenu(class UCommonActivatableWidgetBase* BuildingMenu);
 	void ClearBuildingMenu();
 	
+	void PushUpgradeWidget(class UCommonActivatableWidgetBase* UpgradeWidget);
+	void ClearUpgradeWidet();
+
 	void PushDeathScreen(class UCommonActivatableWidgetBase* DeathScreen);
 	
 	bool PauseMenuActive = false;
 	bool DeathScreenActive = false;
 	bool BuildingMenuActive = false;
+	bool UpgradeWidgetActive = false;
 };
