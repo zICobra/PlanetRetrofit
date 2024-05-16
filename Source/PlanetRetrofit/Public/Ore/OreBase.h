@@ -29,6 +29,8 @@ protected:
 	class UBillboardComponent* OreTypeText;
 	UPROPERTY(VisibleAnywhere)
 	class USphereComponent* PlayerRadius;
+	UPROPERTY(VisibleAnywhere)
+	class USphereComponent* BillboardRadius;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ore")
 	class UNiagaraSystem* FishParticleSystem;
@@ -144,6 +146,11 @@ private:
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 	void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
+	UFUNCTION()
+	void OnBillboardBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnBillboardEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 
 	void PlayFishNiagara();

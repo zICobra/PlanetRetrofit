@@ -679,11 +679,6 @@ void APlayerCharacter::ClearBuildingMenu()
 
 	CreatedBuildingWidget->OnBackButtonClicked.Unbind();
 	BuildingBase->Interacting.Unbind();
-
-	if(TerminalManager->AllBuildingsBuild())
-	{
-		PushFinishScreen();
-	}
 }
 
 void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
@@ -701,6 +696,13 @@ void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
 	}
 
 	BuildingBase->BuildBuilding();
+
+	UE_LOG(LogTemp, Warning, TEXT("Build"));
+	
+	if(TerminalManager->AllBuildingsBuild())
+	{
+		PushFinishScreen();
+	}
 }
 
 void APlayerCharacter::ClearUpgradeWidget()

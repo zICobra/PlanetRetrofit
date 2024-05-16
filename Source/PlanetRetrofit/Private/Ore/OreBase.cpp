@@ -35,6 +35,9 @@ AOreBase::AOreBase()
 
 	PlayerRadius = CreateDefaultSubobject<USphereComponent>(TEXT("Player Radius"));
 	PlayerRadius->SetupAttachment(Root);
+
+	BillboardRadius = CreateDefaultSubobject<USphereComponent>(TEXT("Billboard Radius"));
+	BillboardRadius->SetupAttachment(Root);
 }
 
 // Called when the game starts or when spawned
@@ -44,6 +47,10 @@ void AOreBase::BeginPlay()
 
 	PlayerRadius->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOreBase::OnBeginOverlap);
 	PlayerRadius->OnComponentEndOverlap.AddUniqueDynamic(this, &AOreBase::OnEndOverlap);
+
+	BillboardRadius->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOreBase::OnBillboardBeginOverlap);
+	BillboardRadius->OnComponentEndOverlap.AddUniqueDynamic(this, &AOreBase::OnBillboardEndOverlap);
+
 	if(SpawnFishParticle)
 	{
 		PlayFishNiagara();
@@ -80,8 +87,12 @@ void AOreBase::Tick(float DeltaTime)
 			PlayerRadius->OnComponentBeginOverlap.RemoveDynamic(this, &AOreBase::OnBeginOverlap);
 			PlayerRadius->OnComponentEndOverlap.RemoveDynamic(this, &AOreBase::OnEndOverlap);
 
+			BillboardRadius->OnComponentBeginOverlap.RemoveDynamic(this, &AOreBase::OnBillboardBeginOverlap);
+			BillboardRadius->OnComponentEndOverlap.RemoveDynamic(this, &AOreBase::OnBillboardEndOverlap);
+
 			RemoveFishNiagara();
 			RemoveMineAnimation();
+			OreManager->MinedOre(this);
 			Destroy();
 		}
 	}
@@ -213,17 +224,30 @@ void AOreBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* 
 	if(IGamplayTagsInterface* Interface = Cast<IGamplayTagsInterface>(OtherActor))
 	{
 		Player = OtherActor;
-		OreTypeText->SetHiddenInGame(false);
 	}
 }
 
 void AOreBase::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	if(Cast<IGamplayTagsInterface>(OtherActor))
+	{		
+		Player = nullptr;
+	}
+}
+
+void AOreBase::OnBillboardBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(IGamplayTagsInterface* Interface = Cast<IGamplayTagsInterface>(OtherActor))
+	{
+		OreTypeText->SetHiddenInGame(false);
+	}
+}
+
+void AOreBase::OnBillboardEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if(IGamplayTagsInterface* Interface = Cast<IGamplayTagsInterface>(OtherActor))
 	{
 		OreTypeText->SetHiddenInGame(true);
-		
-		Player = nullptr;
 	}
 }
 

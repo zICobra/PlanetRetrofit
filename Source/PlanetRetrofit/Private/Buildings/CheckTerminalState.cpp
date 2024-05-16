@@ -65,7 +65,6 @@ void ACheckTerminalState::LoadTerminalState()
                 Terminal->Spawned = TerminalData.HasSpawned;
 				Terminal->BuildingIndex = TerminalData.BuildingIndex;
 				Terminal->OnLoadGameCheck();
-				UE_LOG(LogTemp, Warning, TEXT("Check"));
                 break;
             }
         }
@@ -109,10 +108,12 @@ bool ACheckTerminalState::AllBuildingsBuild()
 	{
 		if (!TerminalData.HasSpawned)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("false"));
 			return false;
 		}
 	}
 
+	UE_LOG(LogTemp, Warning, TEXT("true"));
 	return true;
 }
 
