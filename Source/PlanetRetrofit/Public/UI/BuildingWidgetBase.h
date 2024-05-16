@@ -95,7 +95,8 @@ protected:
 	void CarrotFieldButtonSelected();
 
 	void SetText();
-	void SetTextForField();
+
+	void RemoveMaterials();
 
 private:
 	bool EnoughtStone = false;
