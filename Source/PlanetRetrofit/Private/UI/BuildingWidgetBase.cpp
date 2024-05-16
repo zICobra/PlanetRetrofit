@@ -19,18 +19,9 @@ void UBuildingWidgetBase::NativeConstruct()
 
     GameInstance = Cast<UDefaultGameInstance>(GetGameInstance());
 
-    FieldSelectionIndex = 1;
-
     if(GameInstance->BuildingConfig && GameInstance->BuildingConfig->Buildings.Num() > BuildingIndex)
     {
-        if(IsFarm)
-        {
-            SetTextForField();
-        }
-        else
-        {
-            SetText();
-        }
+        SetText();
 
         if(EnoughtStone && EnoughtIron && EnoughtCopper && EnoughtAmethyst && EnoughtPlatin)
         {
@@ -103,32 +94,32 @@ void UBuildingWidgetBase::OnBackButtonClickedFunction()
 void UBuildingWidgetBase::OnBuildButtonClickedFunction()
 {
     RemoveDelegates();
-    BuildingIndex = FieldSelectionIndex;
     OnBuildButtonClicked.ExecuteIfBound(BuildingIndex);
+    RemoveMaterials();
     DeactivateWidget();
 }
 
 void UBuildingWidgetBase::OnHappyPlantFieldButtonClicked()
 {
     RemoveDelegates();
-    BuildingIndex = FieldSelectionIndex;
-    OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
+    OnBuildButtonClicked.ExecuteIfBound(BuildingIndex);
+    RemoveMaterials();
     DeactivateWidget();
 }
 
 void UBuildingWidgetBase::OnSaladFieldButtonClicked()
 {
     RemoveDelegates();
-    BuildingIndex = FieldSelectionIndex;
-    OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
+    OnBuildButtonClicked.ExecuteIfBound(BuildingIndex);
+    RemoveMaterials();
     DeactivateWidget();
 }
 
 void UBuildingWidgetBase::OnCarrotFieldButtonClicked()
 {
     RemoveDelegates();
-    BuildingIndex = FieldSelectionIndex;
-    OnBuildButtonClicked.ExecuteIfBound(FieldSelectionIndex);
+    OnBuildButtonClicked.ExecuteIfBound(BuildingIndex);
+    RemoveMaterials();
     DeactivateWidget();
 }
 
@@ -139,63 +130,63 @@ void UBuildingWidgetBase::HappyFieldButtonSelected()
 {
     if(IsFarm1)
     {
-        FieldSelectionIndex = 1;
+        BuildingIndex = 1;
     }
     else if(IsFarm2)
     {
-        FieldSelectionIndex = 4;
+        BuildingIndex = 4;
     }
     else if(IsFarm3)
     {
-        FieldSelectionIndex = 7;
+        BuildingIndex = 7;
     }
     else if(IsFarm4)
     {
-        FieldSelectionIndex = 10;
+        BuildingIndex = 10;
     }
-    SetTextForField();
+    SetText();
 }
 
 void UBuildingWidgetBase::SaladFieldButtonSelected()
 {
     if(IsFarm1)
     {
-        FieldSelectionIndex = 2;
+        BuildingIndex = 2;
     }
     else if(IsFarm2)
     {
-        FieldSelectionIndex = 5;
+        BuildingIndex = 5;
     }
     else if(IsFarm3)
     {
-        FieldSelectionIndex = 8;
+        BuildingIndex = 8;
     }
     else if(IsFarm4)
     {
-        FieldSelectionIndex = 11;
+        BuildingIndex = 11;
     }
-    SetTextForField();
+    SetText();
 }
 
 void UBuildingWidgetBase::CarrotFieldButtonSelected()
 {   
     if(IsFarm1)
     {
-        FieldSelectionIndex = 3;
+        BuildingIndex = 3;
     }
     else if(IsFarm2)
     {
-        FieldSelectionIndex = 6;
+        BuildingIndex = 6;
     }
     else if(IsFarm3)
     {
-        FieldSelectionIndex = 9;
+        BuildingIndex = 9;
     }
     else if(IsFarm4)
     {
-        FieldSelectionIndex = 12;
+        BuildingIndex = 12;
     }
-    SetTextForField();
+    SetText();
 }
 
 
@@ -203,6 +194,7 @@ void UBuildingWidgetBase::CarrotFieldButtonSelected()
 
 void UBuildingWidgetBase::SetText()
 {
+    UE_LOG(LogTemp, Warning, TEXT("%d"), BuildingIndex);
     BuildingName->SetText(FText::FromString(GameInstance->BuildingConfig->Buildings[BuildingIndex].BuildingName));
 
     if(GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount <= GameInstance->SaveGame->StoneAmount)
@@ -278,79 +270,14 @@ void UBuildingWidgetBase::SetText()
 }
 
 
-
-void UBuildingWidgetBase::SetTextForField()
+void UBuildingWidgetBase::RemoveMaterials()
 {
-    BuildingName->SetText(FText::FromString(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].BuildingName));
-
-    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].StoneAmount <= GameInstance->SaveGame->StoneAmount)
+    if(GameInstance)
     {
-        FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].StoneAmount);
-        StoneAmountNeeded->SetText(FText::FromString(NewText));
-        StoneAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
-        EnoughtStone = true;
-    }
-    else
-    {
-        FString NewText = FString::Printf(TEXT("Stone needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].StoneAmount);
-        StoneAmountNeeded->SetText(FText::FromString(NewText));
-        StoneAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
-        EnoughtStone = false;
-    }
-    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].IronAmount <= GameInstance->SaveGame->IronAmount)
-    {
-        FString NewText = FString::Printf(TEXT("Iron needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].IronAmount);
-        IronAmountNeeded->SetText(FText::FromString(NewText));
-        IronAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
-        EnoughtIron = true;
-    }
-    else
-    {
-        FString NewText = FString::Printf(TEXT("Iron needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].IronAmount);
-        IronAmountNeeded->SetText(FText::FromString(NewText));
-        IronAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
-        EnoughtIron = false;
-    }
-    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].CopperAmount <= GameInstance->SaveGame->CopperAmount)
-    {
-        FString NewText = FString::Printf(TEXT("Copper needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].CopperAmount);
-        CopperAmountNeeded->SetText(FText::FromString(NewText));
-        CopperAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
-        EnoughtCopper = true;
-    }
-    else
-    {
-        FString NewText = FString::Printf(TEXT("Copper needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].CopperAmount);
-        CopperAmountNeeded->SetText(FText::FromString(NewText));
-        CopperAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
-        EnoughtCopper = false;
-    }
-    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].AmethystAmount <= GameInstance->SaveGame->AmethystAmount)
-    {
-        FString NewText = FString::Printf(TEXT("Amethyst needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].AmethystAmount);
-        AmethystAmountNeeded->SetText(FText::FromString(NewText));
-        AmethystAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
-        EnoughtAmethyst = true;
-    }
-    else
-    {
-        FString NewText = FString::Printf(TEXT("Amethyst needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].AmethystAmount);
-        AmethystAmountNeeded->SetText(FText::FromString(NewText));
-        AmethystAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
-        EnoughtAmethyst = false;
-    }
-    if(GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].PlatinAmount <= GameInstance->SaveGame->PlatinAmount)
-    {
-        FString NewText = FString::Printf(TEXT("Platin needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].PlatinAmount);
-        PlatinAmountNeeded->SetText(FText::FromString(NewText));
-        PlatinAmountNeeded->SetColorAndOpacity(FLinearColor::Green);
-        EnoughtPlatin = true;
-    }
-    else
-    {
-        FString NewText = FString::Printf(TEXT("Platin needed: %d"), GameInstance->BuildingConfig->Buildings[FieldSelectionIndex].PlatinAmount);
-        PlatinAmountNeeded->SetText(FText::FromString(NewText));
-        PlatinAmountNeeded->SetColorAndOpacity(FLinearColor::Red);
-        EnoughtPlatin = false;
+        GameInstance->SaveGame->StoneAmount -= GameInstance->BuildingConfig->Buildings[BuildingIndex].StoneAmount;
+        GameInstance->SaveGame->IronAmount -= GameInstance->BuildingConfig->Buildings[BuildingIndex].IronAmount;
+        GameInstance->SaveGame->CopperAmount -= GameInstance->BuildingConfig->Buildings[BuildingIndex].CopperAmount;
+        GameInstance->SaveGame->AmethystAmount -= GameInstance->BuildingConfig->Buildings[BuildingIndex].AmethystAmount;
+        GameInstance->SaveGame->PlatinAmount -= GameInstance->BuildingConfig->Buildings[BuildingIndex].PlatinAmount;
     }
 }
