@@ -62,10 +62,9 @@ void AOreManager::LoadOreState()
             {
                 if (Ore->GetActorLocation() == OreData.Location)
                 {
-					UE_LOG(LogTemp, Warning, TEXT("Location"));
                     if (OreData.IsMined)
                     {
-						UE_LOG(LogTemp, Warning, TEXT("Destroy"));
+						Ore->SpawnFishParticle = false;
                         Ore->Destroy();
                         break;
                     }

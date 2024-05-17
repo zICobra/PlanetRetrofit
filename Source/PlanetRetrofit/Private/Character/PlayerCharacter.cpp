@@ -248,8 +248,8 @@ void APlayerCharacter::Tick(float DeltaTime)
 	}
 	else
 	{
-		CurrentOxygen = FMath::Clamp(CurrentOxygen + DeltaTime * 5, 0, MaxOxygen);
-		CurrentHealth = FMath::Clamp(CurrentHealth + DeltaTime * 5, 0, MaxHealth);
+		CurrentOxygen = FMath::Clamp(CurrentOxygen + DeltaTime * 10, 0, MaxOxygen);
+		CurrentHealth = FMath::Clamp(CurrentHealth + DeltaTime * 10, 0, MaxHealth);
 		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
 		CreatedGamePlayMenu->SetHealthBar(MaxHealth, CurrentHealth);
 	}
@@ -397,7 +397,7 @@ void APlayerCharacter::LookController(const FInputActionValue& Value)
 void APlayerCharacter::StartJump()
 {
 	Jump();
-	if(GetMovementComponent()->IsMovingOnGround())
+	if(GetMovementComponent() && GetMovementComponent()->IsMovingOnGround() && JumpSound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), JumpSound, GetActorLocation());
 	}
@@ -584,6 +584,7 @@ void APlayerCharacter::Mine()
 				}
 
 				FocusedOre->StartMining(GetActorLocation());
+				FocusedOre->PlayMineAnimation();
 				if(FocusedOre->DoneMining() && FocusedOre->OreType() == "Stone")
 				{
 					GameInstance->SaveGame->StoneAmount += FocusedOre->StoneAmountPerOreMined;
@@ -609,7 +610,6 @@ void APlayerCharacter::Mine()
 			else if(Ore && !Ore->DoneMining())
 			{
 				Ore->RemoveMineAnimation();
-				Ore = nullptr;
 				
 				CreatedMiningSound->Stop();
 				UGameplayStatics::PlaySoundAtLocation(GetWorld(), MiningCompletedSound, GetActorLocation());
@@ -617,11 +617,12 @@ void APlayerCharacter::Mine()
 			}
 			else if(Ore && Ore->DoneMining())
 			{
-				Ore = nullptr;
-				if(CreatedGamePlayMenu->MaterialUIIsActive)
+				if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
 				{
 					CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
-				}	
+				}
+
+				Ore = nullptr;
 				CreatedMiningSound->Stop();
 				UGameplayStatics::PlaySoundAtLocation(GetWorld(), MiningCompletedSound, GetActorLocation());
 			}
@@ -629,10 +630,10 @@ void APlayerCharacter::Mine()
 		else
 		{
 			CreatedMiningSound->Stop();
+			
 			if(Ore && !Ore->DoneMining())
 			{
-				Ore->RemoveMineAnimation();
-				Ore = nullptr;
+				Ore->RemoveMineAnimation(); 
 			}
 		}
 	}
@@ -642,7 +643,6 @@ void APlayerCharacter::Mine()
 		if(Ore && !Ore->DoneMining())
 		{
 			Ore->RemoveMineAnimation();
-			Ore = nullptr;
 		}
 	}
 	
@@ -772,11 +772,6 @@ void APlayerCharacter::ClearBuildingMenu()
 
 	CreatedBuildingWidget->OnBackButtonClicked.Unbind();
 	BuildingBase->Interacting.Unbind();
-
-	if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
-	{
-		CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
-	}
 }
 
 void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
@@ -795,6 +790,10 @@ void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
 
 	BuildingBase->BuildBuilding();
 
+	if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
+	{
+		CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
+	}
 	
 	if(TerminalManager->AllBuildingsBuild())
 	{

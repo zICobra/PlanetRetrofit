@@ -61,7 +61,7 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
             SaveGame->AmethystAmount = 0;
             SaveGame->PlatinAmount = 4;
 
-            SaveGame->OxygenDepletionMultiplier = 6.0f;
+            SaveGame->OxygenDepletionMultiplier = 4.0f;
 
             SaveGame->TerminalSaveDataArray.Empty();
             SaveGame->OreSaveDataArray.Empty();
@@ -78,7 +78,7 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
         SaveGame->AmethystAmount = 0;
         SaveGame->PlatinAmount = 4;
 
-        SaveGame->OxygenDepletionMultiplier = 6.0f;
+        SaveGame->OxygenDepletionMultiplier = 4.0f;
 
         SaveGame->TerminalSaveDataArray.Empty();
         SaveGame->OreSaveDataArray.Empty();

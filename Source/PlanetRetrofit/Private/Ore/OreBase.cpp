@@ -313,6 +313,11 @@ void AOreBase::RemoveFishNiagara()
 
 void AOreBase::PlayMineAnimation()
 {
+	if(CreatedMiningParticleSystem && CreatedMiningParticleSystem->IsActive())
+	{
+		return;
+	}
+
 	if(IsStone)
 	{
 		CreatedMiningParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), StoneMiningParticleSystem, GetActorLocation());
@@ -343,7 +348,6 @@ void AOreBase::PlayMineAnimation()
 		CreatedMiningParticleSystem->Activate();
 		CreatedMiningParticleSystem->SetVariableStaticMesh(TEXT("Ore"), PlatinStaticMesh);
 	}
-
 }
 
 void AOreBase::RemoveMineAnimation()

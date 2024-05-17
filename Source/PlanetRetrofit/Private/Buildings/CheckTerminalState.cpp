@@ -64,6 +64,7 @@ void ACheckTerminalState::LoadTerminalState()
             {
                 Terminal->Spawned = TerminalData.HasSpawned;
 				Terminal->BuildingIndex = TerminalData.BuildingIndex;
+				UE_LOG(LogTemp, Warning, TEXT("%d"), Terminal->BuildingIndex);
 				Terminal->OnLoadGameCheck();
                 break;
             }
@@ -83,6 +84,7 @@ void ACheckTerminalState::NewGameTerminalState()
         FTerminalSaveData NewTerminalData;
 
         NewTerminalData.HasSpawned = Terminal->Spawned;
+		NewTerminalData.BuildingIndex = Terminal->BuildingIndex;
         NewTerminalData.Location = Terminal->GetActorLocation();
         
         GameInstance->SaveGame->TerminalSaveDataArray.Add(NewTerminalData);
