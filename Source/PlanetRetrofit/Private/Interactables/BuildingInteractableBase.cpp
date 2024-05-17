@@ -61,7 +61,25 @@ void ABuildingInteractableBase::BuildBuilding()
 
         SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-        GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
+        if(IsFarm)
+        {
+            if(BuildingIndex == 1 || BuildingIndex == 4 || BuildingIndex == 7 || BuildingIndex == 10)
+            {
+                GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransformFarmHappy, SpawnParams);
+            }
+            else if(BuildingIndex == 3 || BuildingIndex == 6 || BuildingIndex == 9 || BuildingIndex == 12)
+            {
+                GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransformFarmCarrot, SpawnParams);
+            }
+            else
+            {
+                GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
+            }
+        }
+        else
+        {
+            GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
+        }
     }, 1.5f, false);
 }
 
@@ -73,7 +91,25 @@ void ABuildingInteractableBase::OnLoadGameCheck()
 
         SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-        GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
+        if(IsFarm)
+        {
+            if(BuildingIndex == 1 || BuildingIndex == 4 || BuildingIndex == 7 || BuildingIndex == 10)
+            {
+                GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransformFarmHappy, SpawnParams);
+            }
+            else if(BuildingIndex == 3 || BuildingIndex == 6 || BuildingIndex == 9 || BuildingIndex == 12)
+            {
+                GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransformFarmCarrot, SpawnParams);
+            }
+            else
+            {
+                GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
+            }
+        }
+        else
+        {
+            GetWorld()->SpawnActor(GameInstance->BuildingConfig->Buildings[BuildingIndex].ActorToSpawn, &BuildingTransform, SpawnParams);
+        }
     }
 }
 

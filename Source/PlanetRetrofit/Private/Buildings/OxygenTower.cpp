@@ -8,6 +8,9 @@
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "SaveGame/DefaultSaveGame.h"
+#include "DefaultGameInstance.h"
+
 AOxygenTower::AOxygenTower()
 {
     PrimaryActorTick.bCanEverTick = false;
@@ -27,6 +30,11 @@ void AOxygenTower::BeginPlay()
     OxygenRange->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOxygenTower::OnBeginOverlap);
     OxygenRange->OnComponentEndOverlap.AddUniqueDynamic(this, &AOxygenTower::OnEndOverlap);
 
+    GameInstance = Cast<UDefaultGameInstance>(GetGameInstance());
+    if(GameInstance)
+    {
+        GameInstance->SaveGame->OxygenTowerBuild = true;
+    }
     UGameplayStatics::PlaySound2D(GetWorld(), BGMusic);
 
 }

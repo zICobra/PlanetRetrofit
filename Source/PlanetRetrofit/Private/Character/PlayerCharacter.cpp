@@ -23,6 +23,7 @@
 #include "UI/CommonUserWidgetBase.h"
 #include "UI/GamePlayWidgetBase.h"
 #include "UI/BuildingWidgetBase.h"
+#include "UI/TutorialWidgetBase.h"
 #include "UI/UpgradeWidgetBase.h"
 #include "UI/SettingsMenuBase.h"
 #include "UI/DeathScreenBase.h"
@@ -91,7 +92,7 @@ void APlayerCharacter::BeginPlay()
 		if(GameInstance)
 		{
 			GameInstance->LoadSettingsInMainLevel();
-			if(GameInstance->LoadGame)
+			if(GameInstance->LoadGame && GameInstance->SaveGame->OxygenTowerBuild)
 			{
 				GameplayTags.AddTag(OxygenTag);
 			}
@@ -158,9 +159,25 @@ void APlayerCharacter::BeginPlay()
 	{
 		CreatedEndWidget = Cast<UEndWidgetBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), EndWidget));
 	}
+	if(TutorialWidget)
+	{
+		CreatedTutorialWidget = Cast<UTutorialWidgetBase>(CreateWidget<UCommonActivatableWidgetBase>(GetWorld(), TutorialWidget));
+	}
+	
+	if(GameInstance->LoadGame)
+	{
+		PushGameplayWidget();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Push"));
+		CreatedTutorialWidget->OnTutorialPlayButtonClicked.BindUObject(this, &APlayerCharacter::PushGameplayWidget);
+		CreatedGameUIBase->PushTutorialScreen(CreatedTutorialWidget);
 
-
-	CreatedGameUIBase->PushGamePlayMenu(CreatedGamePlayMenu);
+		ActivePlayerController->SetShowMouseCursor(true);
+		ActivePlayerController->SetInputMode(GameAndUIInputMode);
+		ActivePlayerController->SetPause(true);
+	}
 	
 #pragma endregion UI
 
@@ -668,7 +685,7 @@ void APlayerCharacter::StopMine()
 
 void APlayerCharacter::CallPauseMenu()
 {
-	if(!CreatedPauseMenu || !ActivePlayerController || !CreatedGameUIBase || CreatedGameUIBase->DeathScreenActive || CreatedGameUIBase->BuildingMenuActive || CreatedGameUIBase->UpgradeWidgetActive || CreatedGameUIBase->EndScreenActive)
+	if(!CreatedPauseMenu || !ActivePlayerController || !CreatedGameUIBase || CreatedGameUIBase->DeathScreenActive || CreatedGameUIBase->BuildingMenuActive || CreatedGameUIBase->UpgradeWidgetActive || CreatedGameUIBase->EndScreenActive || CreatedGameUIBase->TutorialScreenActive)
 	{
 		return;
 	}
@@ -809,4 +826,14 @@ void APlayerCharacter::ClearUpgradeWidget()
 	ActivePlayerController->SetShowMouseCursor(false);
 
 	CreatedUpgradeWidget->OnUpgradeUIBackButtonClicked.Unbind();
+}
+
+void APlayerCharacter::PushGameplayWidget()
+{
+	ActivePlayerController->SetShowMouseCursor(false);
+	ActivePlayerController->SetInputMode(GameOnlyInputMode);
+	ActivePlayerController->SetPause(false); 
+	
+	CreatedTutorialWidget->OnTutorialPlayButtonClicked.Unbind();
+	CreatedGameUIBase->PushGamePlayMenu(CreatedGamePlayMenu);
 }

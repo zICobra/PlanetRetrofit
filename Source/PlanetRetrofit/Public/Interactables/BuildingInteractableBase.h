@@ -38,6 +38,11 @@ public:
 	bool IsFarm;
 
 	UPROPERTY(EditAnywhere, Category = "Building", meta = (EditCondition = "IsFarm", EditConditionHides))
+	FTransform BuildingTransformFarmHappy;
+	UPROPERTY(EditAnywhere, Category = "Building", meta = (EditCondition = "IsFarm", EditConditionHides))
+	FTransform BuildingTransformFarmCarrot;
+
+	UPROPERTY(EditAnywhere, Category = "Building", meta = (EditCondition = "IsFarm", EditConditionHides))
 	bool IsFarm1 = false;
 	UPROPERTY(EditAnywhere, Category = "Building", meta = (EditCondition = "IsFarm", EditConditionHides))
 	bool IsFarm2 = false;

@@ -36,4 +36,7 @@ protected:
 	UFUNCTION()
 	void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	UPROPERTY()
+	class UDefaultGameInstance* GameInstance = nullptr;
+	
 };

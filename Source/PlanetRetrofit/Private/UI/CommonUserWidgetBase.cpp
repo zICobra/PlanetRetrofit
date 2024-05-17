@@ -10,6 +10,8 @@
 
 void UCommonUserWidgetBase::PushGamePlayMenu(UCommonActivatableWidgetBase* GamePlayMenu)
 {
+    TutorialScreenActive = false;
+    PauseMenuStack->ClearWidgets();
     if(GameplayStack->GetWidgetList().IsEmpty())
     {
         GameplayStack->AddWidgetInstance(*GamePlayMenu);
@@ -92,6 +94,15 @@ void UCommonUserWidgetBase::PushEndScreen(class UCommonActivatableWidgetBase* En
     {
         EndScreenActive = true;
         PauseMenuStack->AddWidgetInstance(*EndScreen);
+    }
+}
+
+void UCommonUserWidgetBase::PushTutorialScreen(class UCommonActivatableWidgetBase* TutorialScreen)
+{
+    if(TutorialScreen)
+    {
+        TutorialScreenActive = true;
+        PauseMenuStack->AddWidgetInstance(*TutorialScreen);
     }
 }
 

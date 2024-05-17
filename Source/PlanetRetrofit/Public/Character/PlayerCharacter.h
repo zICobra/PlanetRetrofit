@@ -91,11 +91,15 @@ protected:
 
 
 	class IOutlineInterface* PreviouslyOutlinedActor = nullptr;
+	UPROPERTY()
 	class ABuildingInteractableBase* BuildingBase = nullptr;
+	UPROPERTY()
 	class AOreBase* Ore = nullptr;
 	
+	UPROPERTY()
 	class UAudioComponent* CreatedMiningSound = nullptr;
 
+	UPROPERTY()
 	class UAudioComponent* CreatedShootingSound = nullptr;
 
 #pragma endregion Variables
@@ -183,6 +187,9 @@ protected:
 	TSubclassOf<class UUpgradeWidgetBase> UpgradeWidget;
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<class UEndWidgetBase> EndWidget;
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UTutorialWidgetBase> TutorialWidget;
+	
 	
 	UPROPERTY()	
 	class UCommonUserWidgetBase* CreatedGameUIBase = nullptr;
@@ -200,6 +207,8 @@ protected:
 	class UUpgradeWidgetBase* CreatedUpgradeWidget = nullptr;
 	UPROPERTY()
 	class UEndWidgetBase* CreatedEndWidget = nullptr;
+	UPROPERTY()
+	class UTutorialWidgetBase* CreatedTutorialWidget = nullptr;
 
 #pragma endregion UI
 
@@ -209,15 +218,19 @@ public:
 
 private:
 
+	UPROPERTY()
 	AActor* TargetToFocus = nullptr;
 
+	UPROPERTY()
 	APlayerController* ActivePlayerController = nullptr;
+	UPROPERTY()
 	ACharacter* PlayerCharacter = nullptr;
 
 	UPROPERTY()
 	class UDefaultGameInstance* GameInstance = nullptr;
 
 	UGameplayTagsManager& GetGameplayTagsManager();
+
 
 	FGameplayTag OxygenTag;
 
@@ -233,6 +246,8 @@ private:
 	void SpawnBuilding(int32 BuildingIndex);
 	UFUNCTION()
 	void ClearUpgradeWidget();
+	UFUNCTION()
+	void PushGameplayWidget();
 
 
 };

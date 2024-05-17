@@ -49,6 +49,7 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
             SaveGame->PlatinAmount = LoadedGame->PlatinAmount;
 
             SaveGame->OxygenDepletionMultiplier = LoadedGame->OxygenDepletionMultiplier;
+            SaveGame->OxygenTowerBuild = LoadedGame->OxygenTowerBuild;
 
             SaveGame->TerminalSaveDataArray = LoadedGame->TerminalSaveDataArray;
             SaveGame->OreSaveDataArray = LoadedGame->OreSaveDataArray;
@@ -62,6 +63,7 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
             SaveGame->PlatinAmount = 4;
 
             SaveGame->OxygenDepletionMultiplier = 4.0f;
+            SaveGame->OxygenTowerBuild = false;
 
             SaveGame->TerminalSaveDataArray.Empty();
             SaveGame->OreSaveDataArray.Empty();
@@ -79,6 +81,7 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
         SaveGame->PlatinAmount = 4;
 
         SaveGame->OxygenDepletionMultiplier = 4.0f;
+        SaveGame->OxygenTowerBuild = false;
 
         SaveGame->TerminalSaveDataArray.Empty();
         SaveGame->OreSaveDataArray.Empty();

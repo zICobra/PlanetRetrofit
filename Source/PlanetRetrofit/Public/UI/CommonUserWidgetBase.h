@@ -47,9 +47,12 @@ public:
 	
 	void PushEndScreen(class UCommonActivatableWidgetBase* EndScreen);
 	
+	void PushTutorialScreen(class UCommonActivatableWidgetBase* TutorialScreen);
+
 	bool PauseMenuActive = false;
 	bool DeathScreenActive = false;
 	bool EndScreenActive = false;
 	bool BuildingMenuActive = false;
 	bool UpgradeWidgetActive = false;
+	bool TutorialScreenActive = false;
 };

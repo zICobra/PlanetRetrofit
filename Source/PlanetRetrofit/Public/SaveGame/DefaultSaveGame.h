@@ -66,6 +66,9 @@ public:
 	FString SaveSlotName = "SavedGameState";
 
 	UPROPERTY()
+	bool OxygenTowerBuild = false;
+
+	UPROPERTY()
 	float MasterSliderVolume = 0.5f;
 	UPROPERTY()
 	float MusicSliderVolume = 0.5f;
