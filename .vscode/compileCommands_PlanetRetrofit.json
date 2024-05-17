@@ -168,6 +168,14 @@
 		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
 	},
 	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\Ore\\OreManager.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\SaveGame\\DefaultSaveGame.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
@@ -209,6 +217,14 @@
 	},
 	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\DeathScreenBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Private\\UI\\EndWidgetBase.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
 			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
@@ -416,6 +432,14 @@
 		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
 	},
 	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\Ore\\OreManager.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\SaveGame\\DefaultSaveGame.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
@@ -457,6 +481,14 @@
 	},
 	{
 		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\DeathScreenBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"
+		],
+		"directory": "E:\\UnrealProjects\\UE_5.3\\Engine\\Source"
+	},
+	{
+		"file": "E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\Source\\PlanetRetrofit\\Public\\UI\\EndWidgetBase.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
 			"@E:\\UnrealProjects\\GameJams\\PlanetRetrofit\\.vscode\\compileCommands_PlanetRetrofit\\PlanetRetrofit.1.rsp"

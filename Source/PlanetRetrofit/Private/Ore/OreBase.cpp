@@ -123,6 +123,8 @@ void AOreBase::StartMining(const FVector MinerPosition)
 	{
 		CreatedMiningParticleSystem->Activate();
 	}
+
+
 	if(IsStone)
 	{
 		StoneMiningDuration -= GetWorld()->GetDeltaSeconds() * 3.5f;
@@ -216,13 +218,16 @@ FString AOreBase::OreType()
 
 void AOreBase::MiningScaleAndRotation()
 {
-	if(IsStone || IsIron)
+	if(Mesh->GetRelativeScale3D().X >= 0.2f && Mesh->GetRelativeScale3D().Y >= 0.2f && Mesh->GetRelativeScale3D().Z >= 0.2f)
 	{
-		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.009f, Mesh->GetComponentScale().Y - 0.009f, Mesh->GetComponentScale().Z - 0.009f));
-	}
-	else
-	{
-		Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.002f, Mesh->GetComponentScale().Y - 0.002f, Mesh->GetComponentScale().Z - 0.002f));
+		if(IsStone || IsIron)
+		{
+			Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.009f, Mesh->GetComponentScale().Y - 0.009f, Mesh->GetComponentScale().Z - 0.009f));
+		}
+		else
+		{
+			Mesh->SetWorldScale3D(FVector(Mesh->GetComponentScale().X - 0.002f, Mesh->GetComponentScale().Y - 0.002f, Mesh->GetComponentScale().Z - 0.002f));
+		}
 	}
 
 }
@@ -349,8 +354,11 @@ void AOreBase::RemoveMineAnimation()
 
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() 
 		{
-			CreatedMiningParticleSystem->Deactivate();
-			CreatedMiningParticleSystem = nullptr;
+			if(CreatedMiningParticleSystem)
+			{
+				CreatedMiningParticleSystem->Deactivate();
+				CreatedMiningParticleSystem = nullptr;
+			}
 		}, 1.0f, false);
 	}
 }

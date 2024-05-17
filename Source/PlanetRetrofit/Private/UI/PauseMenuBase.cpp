@@ -14,6 +14,15 @@ void UPauseMenuBase::NativeConstruct()
     ResumeButton->OnClicked.BindUObject(this, &UPauseMenuBase::OnResumeButtonClicked);
     SettingsButton->OnClicked.BindUObject(this, &UPauseMenuBase::OnSettingsButtonClicked);
     MainMenuButton->OnClicked.BindUObject(this, &UPauseMenuBase::OnMainMenuButtonClicked);
+    ImStuckButton->OnClicked.BindUObject(this, &UPauseMenuBase::OnImStuckButtonClicked);
+    if(HasOxygenTag)
+    {
+        ImStuckButton->SetVisibility(ESlateVisibility::Visible);
+    }
+    else
+    {
+        ImStuckButton->SetVisibility(ESlateVisibility::Collapsed);
+    }
     ResumeButton->SetFocus();
 }
 
@@ -22,6 +31,7 @@ void UPauseMenuBase::RemoveDelegates()
     ResumeButton->OnClicked.Unbind();
     SettingsButton->OnClicked.Unbind();
     MainMenuButton->OnClicked.Unbind();
+    ImStuckButton->OnClicked.Unbind();
 }
 
 void UPauseMenuBase::OnResumeButtonClicked()
@@ -32,6 +42,11 @@ void UPauseMenuBase::OnResumeButtonClicked()
 void UPauseMenuBase::OnSettingsButtonClicked()
 {
     SettingsButtonClickedDelegate.Broadcast();
+}
+
+void UPauseMenuBase::OnImStuckButtonClicked()
+{
+    ImStuckButtonClickedDelegate.Broadcast();
 }
 
 

@@ -25,6 +25,9 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	UCommonActivatableWidgetStack* ContentStack;
 
+	UPROPERTY(EditDefaultsOnly)
+	class USoundCue* BGMusic;
+
 	void PushMainMenuUI(class UMainMenuUI* MainMenuUI);
 
 	void PushSettingsMenu(class USettingsMenuBase* SettingsMenu);

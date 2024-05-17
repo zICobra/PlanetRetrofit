@@ -56,6 +56,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
 	class USoundCue* JumpSound;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
+	class USoundCue* ShootingSound;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
 	class USoundCue* MiningSound;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sounds")
 	class USoundCue* MiningCompletedSound;
@@ -93,6 +95,8 @@ protected:
 	class AOreBase* Ore = nullptr;
 	
 	class UAudioComponent* CreatedMiningSound = nullptr;
+
+	class UAudioComponent* CreatedShootingSound = nullptr;
 
 #pragma endregion Variables
 
@@ -136,6 +140,8 @@ private:
 	void CallPauseMenu();
 	UFUNCTION()
 	void CallSettingsMenu();
+	UFUNCTION()
+	void ImStuckButton();
 
 	void PushFinishScreen();
 

@@ -6,6 +6,8 @@
 #include "UI/MainMenuUI.h"
 #include "UI/SettingsMenuBase.h"
 
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 void UMainMenuWidgetBase::PushMainMenuUI(UMainMenuUI* MainMenuUI)
 {
@@ -13,6 +15,7 @@ void UMainMenuWidgetBase::PushMainMenuUI(UMainMenuUI* MainMenuUI)
     {
         ContentStack->AddWidgetInstance(*MainMenuUI);
     }
+    UGameplayStatics::PlaySound2D(GetWorld(), BGMusic);
 }
 
 

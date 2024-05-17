@@ -23,6 +23,7 @@ void UDeathScreenBase::NativeConstruct()
             LoadGameButton->SetVisibility(ESlateVisibility::Visible);
         }
     }
+    AddDelegates();
 
     NewGameButton->SetFocus();
 }
