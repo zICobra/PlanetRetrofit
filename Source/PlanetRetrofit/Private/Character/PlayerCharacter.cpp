@@ -677,6 +677,17 @@ void APlayerCharacter::StopMine()
 		Ore->RemoveMineAnimation();
 		Ore = nullptr;
 	}
+	if(Ore && Ore->DoneMining())
+	{
+		if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
+		{
+			CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
+		}
+
+		Ore = nullptr;
+		CreatedMiningSound->Stop();
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), MiningCompletedSound, GetActorLocation());
+	}
 	
 	CreatedMiningSound->Stop();
 }

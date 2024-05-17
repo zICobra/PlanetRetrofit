@@ -317,6 +317,11 @@ void AOreBase::PlayMineAnimation()
 	{
 		return;
 	}
+	else if(CreatedMiningParticleSystem && !CreatedMiningParticleSystem->IsActive())
+	{
+		CreatedMiningParticleSystem->Activate();
+		return;
+	}
 
 	if(IsStone)
 	{
@@ -361,7 +366,6 @@ void AOreBase::RemoveMineAnimation()
 			if(CreatedMiningParticleSystem)
 			{
 				CreatedMiningParticleSystem->Deactivate();
-				CreatedMiningParticleSystem = nullptr;
 			}
 		}, 1.0f, false);
 	}

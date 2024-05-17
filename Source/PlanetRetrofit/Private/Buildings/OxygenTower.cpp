@@ -31,7 +31,7 @@ void AOxygenTower::BeginPlay()
     OxygenRange->OnComponentEndOverlap.AddUniqueDynamic(this, &AOxygenTower::OnEndOverlap);
 
     GameInstance = Cast<UDefaultGameInstance>(GetGameInstance());
-    if(GameInstance)
+    if(GameInstance && GameInstance->SaveGame)
     {
         GameInstance->SaveGame->OxygenTowerBuild = true;
     }
