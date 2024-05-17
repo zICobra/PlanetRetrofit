@@ -5,7 +5,8 @@
 
 #include "Components/SphereComponent.h"
 #include "Interfaces/GamplayTagsInterface.h"
-
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 AOxygenTower::AOxygenTower()
 {
@@ -25,6 +26,8 @@ void AOxygenTower::BeginPlay()
 
     OxygenRange->OnComponentBeginOverlap.AddUniqueDynamic(this, &AOxygenTower::OnBeginOverlap);
     OxygenRange->OnComponentEndOverlap.AddUniqueDynamic(this, &AOxygenTower::OnEndOverlap);
+
+    UGameplayStatics::PlaySound2D(GetWorld(), BGMusic);
 
 }
 

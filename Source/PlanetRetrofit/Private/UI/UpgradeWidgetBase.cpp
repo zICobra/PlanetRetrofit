@@ -29,17 +29,19 @@ void UUpgradeWidgetBase::NativeConstruct()
 
 void UUpgradeWidgetBase::OnUpgradeButtonClicked()
 {
-    if(GameInstance->SaveGame->OxygenDepletionMultiplier == 6 && GameInstance->SaveGame->PlatinAmount >= 2)
+    if(GameInstance->SaveGame->OxygenDepletionMultiplier == 4 && GameInstance->SaveGame->PlatinAmount >= 2)
     {
-        GameInstance->SaveGame->OxygenDepletionMultiplier = 4;
+        GameInstance->SaveGame->OxygenDepletionMultiplier = 1.5;
+        GameInstance->SaveGame->PlatinAmount -= 2; 
         SetText();
     }
-    else if(GameInstance->SaveGame->OxygenDepletionMultiplier == 4 && GameInstance->SaveGame->PlatinAmount >= 4)
+    else if(GameInstance->SaveGame->OxygenDepletionMultiplier == 1.5 && GameInstance->SaveGame->PlatinAmount >= 4)
     {
-        GameInstance->SaveGame->OxygenDepletionMultiplier = 1;
+        GameInstance->SaveGame->OxygenDepletionMultiplier = 0.2;
+        GameInstance->SaveGame->PlatinAmount -= 4; 
         SetText();
     }
-    else if(GameInstance->SaveGame->OxygenDepletionMultiplier == 1)
+    else if(GameInstance->SaveGame->OxygenDepletionMultiplier == 0.2)
     {
         UGameplayStatics::PlaySound2D(GetWorld(), FailedUpgradeSound);
     }
@@ -59,7 +61,7 @@ void UUpgradeWidgetBase::OnBackButtonClicked()
 
 void UUpgradeWidgetBase::SetText()
 {
-    if(GameInstance->SaveGame->OxygenDepletionMultiplier == 6)
+    if(GameInstance->SaveGame->OxygenDepletionMultiplier == 4)
         {
             if(GameInstance->SaveGame->PlatinAmount >= 2)
             {
@@ -74,7 +76,7 @@ void UUpgradeWidgetBase::SetText()
                 UpgradePrice->SetColorAndOpacity(FLinearColor::Red);
             }
         }
-        else if(GameInstance->SaveGame->OxygenDepletionMultiplier == 4)
+        else if(GameInstance->SaveGame->OxygenDepletionMultiplier == 1.5)
         {
             if(GameInstance->SaveGame->PlatinAmount >= 4)
             {
@@ -90,7 +92,7 @@ void UUpgradeWidgetBase::SetText()
             }
 
         }
-        else if(GameInstance->SaveGame->OxygenDepletionMultiplier == 1)
+        else if(GameInstance->SaveGame->OxygenDepletionMultiplier == 0.2)
         {
             FString NewText = FString::Printf(TEXT("No more available upgrades."));     
             UpgradePrice->SetText(FText::FromString(NewText));

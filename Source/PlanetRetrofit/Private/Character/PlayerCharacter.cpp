@@ -80,6 +80,8 @@ void APlayerCharacter::BeginPlay()
 
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
+	OxygenTag = GetGameplayTagsManager().RequestGameplayTag(FName("HasOxygen"));
+
 	WeaponFire->Deactivate();
 
 	if (UGameplayStatics::GetPlayerCharacter(GetWorld(), 0))
@@ -89,6 +91,10 @@ void APlayerCharacter::BeginPlay()
 		if(GameInstance)
 		{
 			GameInstance->LoadSettingsInMainLevel();
+			if(GameInstance->LoadGame)
+			{
+				GameplayTags.AddTag(OxygenTag);
+			}
 		}
 	}
 
@@ -102,13 +108,19 @@ void APlayerCharacter::BeginPlay()
 
 	CameraAnimation();
 	CreatedMiningSound = NewObject<UAudioComponent>(this);
+	
+	CreatedShootingSound = NewObject<UAudioComponent>(this);
+
+	if(CreatedShootingSound)
+	{
+		CreatedShootingSound->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+		CreatedShootingSound->SetSound(ShootingSound);
+	}
 	if(CreatedMiningSound)
 	{
 		CreatedMiningSound->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::SnapToTargetIncludingScale);
 		CreatedMiningSound->SetSound(MiningSound);
 	}
-
-	OxygenTag = GetGameplayTagsManager().RequestGameplayTag(FName("HasOxygen"));
 
 #pragma region UI
 
@@ -224,16 +236,20 @@ void APlayerCharacter::Tick(float DeltaTime)
 			CreatedGamePlayMenu->SetHealthBar(MaxHealth, CurrentHealth);
 			if(CurrentHealth <= 0)
 			{
+				ActivePlayerController->SetShowMouseCursor(true);
+				ActivePlayerController->SetInputMode(GameAndUIInputMode);
+
 				CreatedGameUIBase->PushDeathScreen(CreatedDeathScreen);
 				UGameplayStatics::PlaySound2D(GetWorld(), DeathSound);
+
 				ActivePlayerController->SetPause(true);
 			}
 		}
 	}
 	else
 	{
-		CurrentOxygen = FMath::Clamp(CurrentOxygen + DeltaTime * 5, 0, MaxOxygen);
-		CurrentHealth = FMath::Clamp(CurrentHealth + DeltaTime * 5, 0, MaxHealth);
+		CurrentOxygen = FMath::Clamp(CurrentOxygen + DeltaTime * 10, 0, MaxOxygen);
+		CurrentHealth = FMath::Clamp(CurrentHealth + DeltaTime * 10, 0, MaxHealth);
 		CreatedGamePlayMenu->SetOxygenBar(MaxOxygen, CurrentOxygen);
 		CreatedGamePlayMenu->SetHealthBar(MaxHealth, CurrentHealth);
 	}
@@ -269,8 +285,7 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 
 #pragma endregion Footsteps
-
-
+	
 
 }
 
@@ -382,7 +397,7 @@ void APlayerCharacter::LookController(const FInputActionValue& Value)
 void APlayerCharacter::StartJump()
 {
 	Jump();
-	if(GetMovementComponent()->IsMovingOnGround())
+	if(GetMovementComponent() && GetMovementComponent()->IsMovingOnGround() && JumpSound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), JumpSound, GetActorLocation());
 	}
@@ -500,7 +515,19 @@ void APlayerCharacter::StartMine()
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
 
 	WeaponFire->Activate();
-	WeaponFire->SetVectorParameter(TEXT("EndLoc"), EndPoint);
+	if(CreatedShootingSound)
+	{
+		CreatedShootingSound->Play();
+	}
+	
+	if(bSuccess)
+	{
+		WeaponFire->SetVectorParameter(TEXT("EndLoc"), HitResult.ImpactPoint);
+	}
+	else
+	{
+		WeaponFire->SetVectorParameter(TEXT("EndLoc"), EndPoint);
+	}
 	
 	if(bSuccess && HitResult.GetActor())
 	{
@@ -531,7 +558,15 @@ void APlayerCharacter::Mine()
 
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, StartPoint, EndPoint, ECC_Visibility, Params);
 
-	WeaponFire->SetVectorParameter(TEXT("EndLoc"), EndPoint);
+	if(bSuccess)
+	{
+		WeaponFire->SetVectorParameter(TEXT("EndLoc"), HitResult.ImpactPoint);
+	}
+	else
+	{
+		WeaponFire->SetVectorParameter(TEXT("EndLoc"), EndPoint);
+	}
+
 
 	if(bSuccess && HitResult.GetActor())
 	{
@@ -549,6 +584,7 @@ void APlayerCharacter::Mine()
 				}
 
 				FocusedOre->StartMining(GetActorLocation());
+				FocusedOre->PlayMineAnimation();
 				if(FocusedOre->DoneMining() && FocusedOre->OreType() == "Stone")
 				{
 					GameInstance->SaveGame->StoneAmount += FocusedOre->StoneAmountPerOreMined;
@@ -574,24 +610,30 @@ void APlayerCharacter::Mine()
 			else if(Ore && !Ore->DoneMining())
 			{
 				Ore->RemoveMineAnimation();
-				Ore = nullptr;
 				
 				CreatedMiningSound->Stop();
 				UGameplayStatics::PlaySoundAtLocation(GetWorld(), MiningCompletedSound, GetActorLocation());
-
-				if(CreatedGamePlayMenu->MaterialUIIsActive)
+			
+			}
+			else if(Ore && Ore->DoneMining())
+			{
+				if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
 				{
 					CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
-				}				
+				}
+
+				Ore = nullptr;
+				CreatedMiningSound->Stop();
+				UGameplayStatics::PlaySoundAtLocation(GetWorld(), MiningCompletedSound, GetActorLocation());
 			}
 		}
 		else
 		{
 			CreatedMiningSound->Stop();
+			
 			if(Ore && !Ore->DoneMining())
 			{
-				Ore->RemoveMineAnimation();
-				Ore = nullptr;
+				Ore->RemoveMineAnimation(); 
 			}
 		}
 	}
@@ -601,7 +643,6 @@ void APlayerCharacter::Mine()
 		if(Ore && !Ore->DoneMining())
 		{
 			Ore->RemoveMineAnimation();
-			Ore = nullptr;
 		}
 	}
 	
@@ -610,6 +651,10 @@ void APlayerCharacter::Mine()
 void APlayerCharacter::StopMine()
 {
 	WeaponFire->Deactivate();
+	if(CreatedShootingSound)
+	{
+		CreatedShootingSound->Stop();
+	}
 	if(Ore && !Ore->DoneMining())
 	{
 		Ore->RemoveMineAnimation();
@@ -632,6 +677,8 @@ void APlayerCharacter::CallPauseMenu()
 	{
 		CreatedPauseMenu->ResumButtonClickedDelagate.RemoveDynamic(this, &APlayerCharacter::CallPauseMenu);
 		CreatedPauseMenu->SettingsButtonClickedDelegate.RemoveDynamic(this, &APlayerCharacter::CallSettingsMenu);
+		CreatedPauseMenu->ImStuckButtonClickedDelegate.RemoveDynamic(this, &APlayerCharacter::ImStuckButton);
+
 		CreatedGameUIBase->ClearPauseMenu();
 		ActivePlayerController->SetShowMouseCursor(false);
 		ActivePlayerController->SetInputMode(GameOnlyInputMode);
@@ -639,6 +686,15 @@ void APlayerCharacter::CallPauseMenu()
 	}
 	else
 	{
+		if(GameplayTags.HasTag(OxygenTag))
+		{
+			CreatedPauseMenu->HasOxygenTag = true;
+		}
+		else
+		{
+			CreatedPauseMenu->HasOxygenTag = false;
+		}
+
 		CreatedGameUIBase->PushPauseMenu(CreatedPauseMenu);
 
 		if(CreatedGameUIBase->PauseMenuActive)
@@ -648,6 +704,7 @@ void APlayerCharacter::CallPauseMenu()
 			ActivePlayerController->SetPause(true);
 			CreatedPauseMenu->ResumButtonClickedDelagate.AddUniqueDynamic(this, &APlayerCharacter::CallPauseMenu);
 			CreatedPauseMenu->SettingsButtonClickedDelegate.AddUniqueDynamic(this, &APlayerCharacter::CallSettingsMenu);
+			CreatedPauseMenu->ImStuckButtonClickedDelegate.AddUniqueDynamic(this, &APlayerCharacter::ImStuckButton);
 		}
 	}
 	
@@ -656,6 +713,11 @@ void APlayerCharacter::CallPauseMenu()
 void APlayerCharacter::CallSettingsMenu()
 {
 	CreatedGameUIBase->PushSettingsMenu(CreatedSettingsMenu);
+}
+
+void APlayerCharacter::ImStuckButton()
+{
+	SetActorLocation((FVector(741.988577, 2809.936273, 273.901427)));
 }
 
 void APlayerCharacter::PushFinishScreen()
@@ -728,6 +790,10 @@ void APlayerCharacter::SpawnBuilding(int32 BuildingIndex)
 
 	BuildingBase->BuildBuilding();
 
+	if(CreatedGamePlayMenu && CreatedGamePlayMenu->MaterialUIIsActive)
+	{
+		CreatedGamePlayMenu->PullUpMaterialUI(GameInstance->SaveGame->StoneAmount, GameInstance->SaveGame->IronAmount, GameInstance->SaveGame->CopperAmount, GameInstance->SaveGame->AmethystAmount, GameInstance->SaveGame->PlatinAmount);
+	}
 	
 	if(TerminalManager->AllBuildingsBuild())
 	{

@@ -56,7 +56,7 @@ public:
 	UPROPERTY()
 	int32 PlatinAmount = 0;
 	UPROPERTY()
-	float OxygenDepletionMultiplier = 6.0f;
+	float OxygenDepletionMultiplier = 4.0f;
 	UPROPERTY()
 	TArray<FTerminalSaveData> TerminalSaveDataArray;
 	UPROPERTY()

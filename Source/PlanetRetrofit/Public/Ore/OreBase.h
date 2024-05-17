@@ -40,9 +40,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore")
 	float FishScale;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore")
-	bool SpawnFishParticle;
-
 
 	UPROPERTY()
 	AActor* Player = nullptr;
@@ -165,4 +162,8 @@ private:
 
 public:
 	bool IsMined = false;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ore")
+	bool SpawnFishParticle;
+
 };

@@ -51,6 +51,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	class UCommonTextBlock* PlatinAmountText;
 
+	// UPROPERTY(meta = (BindWidgetAnim))
+    // UWidgetAnimation* FadeInAnimation;
+
 public:
 
 	virtual void NativeConstruct() override;
