@@ -64,7 +64,7 @@ void AOreBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(Player)
+	if(Player && !IsMined)
 	{
 		if(CreatedFishParticleSystem)
 		{
@@ -73,7 +73,6 @@ void AOreBase::Tick(float DeltaTime)
 
 		if(CreatedMiningParticleSystem)
 		{
-			// CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), FVector(0, 0, 0));
 			FVector RelativeLocation = Player->GetActorLocation() - GetActorLocation();
 			CreatedMiningParticleSystem->SetVectorParameter(TEXT("EndLocation"), RelativeLocation);
 		}
