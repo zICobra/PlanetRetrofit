@@ -57,7 +57,7 @@ void UDefaultGameInstance::LoadSettingsInMainLevel()
         else
         {
             SaveGame->StoneAmount = 0;
-            SaveGame->IronAmount = 12;
+            SaveGame->IronAmount = 90;
             SaveGame->CopperAmount = 5;
             SaveGame->AmethystAmount = 0;
             SaveGame->PlatinAmount = 4;
