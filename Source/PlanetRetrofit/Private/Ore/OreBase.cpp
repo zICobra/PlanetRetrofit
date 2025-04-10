@@ -267,11 +267,6 @@ void AOreBase::PlayFishNiagara()
 {
 	CreatedFishParticleSystem = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), FishParticleSystem, GetActorLocation());
 
-	if (!CreatedFishParticleSystem)
-	{
-		return;
-	}
-
 	CreatedFishParticleSystem->SetVariableInt(TEXT("FishAmount"), FishAmount);
 	CreatedFishParticleSystem->SetVariableFloat(TEXT("FishScale"), FishScale);
 	
@@ -308,12 +303,8 @@ void AOreBase::RemoveFishNiagara()
     	FTimerHandle TimerHandle;
     	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() 
 		{
-			if (CreatedFishParticleSystem)
-			{
-				CreatedFishParticleSystem->DestroyComponent();
-				CreatedFishParticleSystem = nullptr;
-			}
-
+        	CreatedFishParticleSystem->DestroyComponent();
+			CreatedFishParticleSystem = nullptr;
     	}, Lifespan, false);
 
 	}

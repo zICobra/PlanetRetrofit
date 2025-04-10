@@ -48,7 +48,7 @@ public:
 	UPROPERTY()
 	int32 StoneAmount = 0;
 	UPROPERTY()
-	int32 IronAmount = 40;
+	int32 IronAmount = 0;
 	UPROPERTY()
 	int32 CopperAmount = 0;
 	UPROPERTY()
